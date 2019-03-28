@@ -5,7 +5,7 @@ export default class Game {
   constructor() {
     this.isRunning = false
     this.children = []
-    this.render = this.render.bind(this)
+    this.renderTick = this.renderTick.bind(this)
   }
 
   start() {
@@ -39,8 +39,16 @@ export default class Game {
     this.queueNextTick()
   }
 
+  renderTick() {
+    this.render()
+
+    if (this.isRunning) {
+      this.requestFrame()
+    }
+  }
+
   requestFrame() {
-    requestAnimationFrame(this.render)
+    requestAnimationFrame(this.renderTick)
   }
 
   update() {
@@ -49,6 +57,5 @@ export default class Game {
 
   render() {
     this.children.forEach(child => child.render())
-    this.requestFrame()
   }
 }

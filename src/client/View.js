@@ -6,6 +6,8 @@ export default class View {
     this.height = height
     this.ctx = canvas.getContext('2d')
     this.adjustCanvasSize = this.adjustCanvasSize.bind(this)
+    this.setFillStyle = this.setFillStyle.bind(this)
+    this.fillCircle = this.fillCircle.bind(this)
     this.init()
   }
 
@@ -25,5 +27,15 @@ export default class View {
   adjustCanvasSize() {
     this.canvas.width = window.innerWidth
     this.canvas.height = window.innerHeight
+  }
+
+  setFillStyle(style) {
+    this.ctx.fillStyle = style
+  }
+
+  fillCircle(x, y, radius) {
+    this.ctx.beginPath()
+    this.ctx.arc(x, y, radius, 0, 2 * Math.PI)
+    this.ctx.fill()
   }
 }

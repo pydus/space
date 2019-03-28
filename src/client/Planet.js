@@ -10,12 +10,8 @@ export default class Space {
 
   }
 
-  render(view) {
-    const { ctx } = view
-
-    ctx.fillStyle = this.color
-    ctx.beginPath()
-    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
-    ctx.fill()
+  render({ fillCircle, setFillStyle }) {
+    setFillStyle(this.color)
+    fillCircle(this.x, this.y, this.radius)
   }
 }

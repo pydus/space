@@ -1,9 +1,9 @@
-import Game from './Game'
+import SpaceGame from './SpaceGame'
 import Space from './Space'
 import Planet from './Planet'
 
 function run() {
-  const game = new Game()
+  const game = new SpaceGame()
   const space = new Space()
 
   const planet = new Planet(500, 500, 1000)

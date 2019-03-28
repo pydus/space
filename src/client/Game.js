@@ -1,54 +1,28 @@
-const UPDATES_PER_SECOND = 60
-const MS_BETWEEN_UPDATES = 1000 / UPDATES_PER_SECOND
+import Loop from './Loop'
 
 export default class Game {
-  constructor() {
+  constructor(loop) {
+    this.loop = loop
     this.isRunning = false
     this.children = []
-    this.renderTick = this.renderTick.bind(this)
+    this.canvas = null
+    this.init()
+  }
+
+  init() {
+    this.loop.add(this)
   }
 
   start() {
-    this.isRunning = true
-    this.loop()
+    this.loop.start()
   }
 
   stop() {
-    this.isRunning = false
+    this.loop.stop()
   }
 
   add(child) {
     this.children.push(child)
-  }
-
-  loop() {
-    this.tick()
-    this.requestFrame()
-  }
-
-  queueNextTick() {
-    setTimeout(() => {
-      if (this.isRunning) {
-        this.tick()
-      }
-    }, MS_BETWEEN_UPDATES)
-  }
-
-  tick() {
-    this.update()
-    this.queueNextTick()
-  }
-
-  renderTick() {
-    this.render()
-
-    if (this.isRunning) {
-      this.requestFrame()
-    }
-  }
-
-  requestFrame() {
-    requestAnimationFrame(this.renderTick)
   }
 
   update() {

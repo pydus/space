@@ -4,15 +4,21 @@ const MS_BETWEEN_UPDATES = 1000 / UPDATES_PER_SECOND
 export default class Game {
   constructor() {
     this.isRunning = false
+    this.render = this.render.bind(this)
   }
 
   start() {
     this.isRunning = true
-    this.tick()
+    this.loop()
   }
 
   stop() {
     this.isRunning = false
+  }
+
+  loop() {
+    this.tick()
+    this.requestFrame()
   }
 
   queueNextTick() {
@@ -25,19 +31,19 @@ export default class Game {
 
   tick() {
     this.update()
-    this.requestFrame()
     this.queueNextTick()
   }
 
   requestFrame() {
-    requestAnimationFrame(this.draw)
+    requestAnimationFrame(this.render)
   }
 
   update() {
 
   }
 
-  draw() {
+  render() {
 
+    this.requestFrame()
   }
 }

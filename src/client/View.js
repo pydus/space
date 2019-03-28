@@ -5,11 +5,9 @@ export default class View {
     this.width = width
     this.height = height
     this.ctx = canvas.getContext('2d')
-    this.init()
   }
 
-  init() {
-    this.canvas.width = this.width
-    this.canvas.height = this.height
+  clear() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
 }

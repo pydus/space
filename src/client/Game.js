@@ -35,6 +35,7 @@ export default class Game {
   }
 
   render() {
+    this.view.clear()
     this.children.forEach(child => child.render(this.view))
   }
 }

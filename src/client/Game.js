@@ -4,6 +4,7 @@ const MS_BETWEEN_UPDATES = 1000 / UPDATES_PER_SECOND
 export default class Game {
   constructor() {
     this.isRunning = false
+    this.children = []
     this.render = this.render.bind(this)
   }
 
@@ -14,6 +15,10 @@ export default class Game {
 
   stop() {
     this.isRunning = false
+  }
+
+  add(child) {
+    this.children.push(child)
   }
 
   loop() {
@@ -39,11 +44,11 @@ export default class Game {
   }
 
   update() {
-
+    this.children.forEach(child => child.update())
   }
 
   render() {
-
+    this.children.forEach(child => child.render())
     this.requestFrame()
   }
 }

@@ -8,7 +8,7 @@ function run() {
   const space = new Space()
 
   const planet = new Planet(1024/2, 720/2, 100)
-  space.add(planet)
+  space.addPlanet(planet)
 
   const player = new Player(700, 350)
   space.addPlayer(player)

@@ -4,7 +4,7 @@ export default class Space {
     this.players = []
   }
 
-  add(planet) {
+  addPlanet(planet) {
     this.planets.push(planet)
   }
 

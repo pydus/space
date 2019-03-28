@@ -1,8 +1,9 @@
 import Loop from './Loop'
 
 export default class Game {
-  constructor(loop) {
+  constructor(loop, canvas) {
     this.loop = loop
+    this.canvas = canvas
     this.isRunning = false
     this.children = []
     this.canvas = null
@@ -23,6 +24,10 @@ export default class Game {
 
   add(child) {
     this.children.push(child)
+  }
+
+  getContext() {
+    return this.canvas.getContext('2d')
   }
 
   update() {

@@ -1,9 +1,9 @@
 import Loop from './Loop'
 
 export default class Game {
-  constructor(loop, canvas) {
+  constructor(loop, view) {
     this.loop = loop
-    this.canvas = canvas
+    this.view = view
     this.isRunning = false
     this.children = []
     this.canvas = null
@@ -35,6 +35,6 @@ export default class Game {
   }
 
   render() {
-    this.children.forEach(child => child.render())
+    this.children.forEach(child => child.render(this.view))
   }
 }

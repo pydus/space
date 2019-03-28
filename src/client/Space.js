@@ -11,7 +11,7 @@ export default class Space {
     this.planets.forEach(planet => planet.update())
   }
 
-  render() {
-    this.planets.forEach(planet => planet.render())
+  render(view) {
+    this.planets.forEach(planet => planet.render(view))
   }
 }

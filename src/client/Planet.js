@@ -9,7 +9,7 @@ export default class Space {
 
   }
 
-  render() {
+  render(view) {
 
   }
 }

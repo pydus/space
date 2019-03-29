@@ -1,62 +1,59 @@
 const UPDATES_PER_SECOND = 60
 const MS_BETWEEN_UPDATES = 1000 / UPDATES_PER_SECOND
 
-export default class Loop {
-  constructor() {
-    this.isRunning = false
-    this.children = []
-    this.canvas = null
-    this.renderTick = this.renderTick.bind(this)
-  }
+export default () => ({
+  isRunning: false,
+  children: [],
+  canvas: null,
 
-  start() {
+  start: function() {
     this.isRunning = true
     this.loop()
-  }
+  },
 
-  stop() {
+  stop: function() {
     this.isRunning = false
-  }
+  },
 
-  add(child) {
+  add: function(child) {
     this.children.push(child)
-  }
+  },
 
-  loop() {
+  loop: function() {
     this.tick()
     this.requestFrame()
-  }
+  },
 
-  queueNextTick() {
+  queueNextTick: function() {
     setTimeout(() => {
       if (this.isRunning) {
         this.tick()
       }
     }, MS_BETWEEN_UPDATES)
-  }
+  },
 
-  tick() {
+  tick: function() {
     this.update()
     this.queueNextTick()
-  }
+  },
 
-  renderTick() {
+  renderTick: function() {
     this.render()
 
     if (this.isRunning) {
       this.requestFrame()
     }
-  }
+  },
 
-  requestFrame() {
-    requestAnimationFrame(this.renderTick)
-  }
+  requestFrame: function() {
+    requestAnimationFrame(this.renderTick.bind(this))
+  },
 
-  update() {
+  update: function() {
     this.children.forEach(child => child.update())
-  }
+  },
 
-  render() {
+  render: function() {
     this.children.forEach(child => child.render())
   }
-}
+})

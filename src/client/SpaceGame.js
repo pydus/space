@@ -5,9 +5,9 @@ import View from './View'
 const canvas = document.getElementById('canvas')
 
 function SpaceGame(width, height) {
-  const loop = new Loop()
-  const view = new View(canvas, width, height)
-  return new Game(loop, view)
+  const loop = Loop()
+  const view = View({ canvas, width, height })
+  return Game({ loop, view })
 }
 
 export default SpaceGame

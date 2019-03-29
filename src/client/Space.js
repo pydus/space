@@ -1,34 +1,32 @@
-export default class Space {
-  constructor() {
-    this.planets = []
-    this.players = []
-  }
+export default () => ({
+  planets: [],
+  players: [],
 
-  addPlanet(planet) {
+  addPlanet: function(planet) {
     this.planets.push(planet)
-  }
+  },
 
-  addPlayer(player) {
+  addPlayer: function(player) {
     this.players.push(player)
-  }
+  },
 
-  handleGravity() {
+  handleGravity: function() {
     this.planets.forEach(planet => {
       this.players.forEach(player => {
         const magnitude = planet.radius
         planet.attract(player, magnitude)
       })
     })
-  }
+  },
 
-  update() {
+  update: function() {
     this.planets.forEach(planet => planet.update())
     this.players.forEach(player => player.update())
     this.handleGravity()
-  }
+  },
 
-  render(view) {
+  render: function(view) {
     this.planets.forEach(planet => planet.render(view))
     this.players.forEach(player => player.render(view))
   }
-}
+})

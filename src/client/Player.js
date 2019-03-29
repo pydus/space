@@ -1,18 +1,15 @@
-export default class Player {
-  constructor(x, y, color = '#ea8') {
-    this.x = x
-    this.y = y
-    this.color = color
-    this.radius = 20
-    this.isMoving = {up: false, down: false, left: false, right: false}
-    this.maxVelocity = 2
-    this.velocity = {x: 0, y: 0}
-    this.acceleration = 0.05
-    this.deceleration = 0.05
-    this.runCommand = this.runCommand.bind(this)
-  }
+export default ({x, y, color = '#ea8'}) => ({
+  x,
+  y,
+  color,
+  radius: 20,
+  isMoving: { up: false, down: false, left: false, right: false },
+  maxVelocity: 2,
+  velocity: { x: 0, y: 0 },
+  acceleration: 0.05,
+  deceleration: 0.05,
 
-  runCommand(command, isKeyDown) {
+  runCommand: function(command, isKeyDown) {
     switch (command) {
       case 'up':
       case 'down':
@@ -22,18 +19,18 @@ export default class Player {
         break
       default:
     }
-  }
+  },
 
-  controlMovement(direction, isKeyDown) {
-    this.isMoving[direction] = isKeyDown;
-  }
+  controlMovement: function(direction, isKeyDown) {
+    this.isMoving[direction] = isKeyDown
+  },
 
-  move() {
+  move: function() {
     this.x += this.velocity.x
     this.y += this.velocity.y
-  }
+  },
 
-  updateVelocities() {
+  updateVelocities: function() {
     if (this.isMoving.up) {
       this.velocity.y -= this.acceleration
     } else if (this.velocity.y < 0) {
@@ -57,9 +54,9 @@ export default class Player {
     } else if (this.velocity.x > 0) {
       this.velocity.x -= this.deceleration
     }
-  }
+  },
 
-  putVelocitiesInBounds() {
+  putVelocitiesInBounds: function() {
     if (this.velocity.y < -this.maxVelocity) {
       this.velocity.y = -this.maxVelocity
     }
@@ -72,21 +69,21 @@ export default class Player {
     if (this.velocity.x > this.maxVelocity) {
       this.velocity.x = this.maxVelocity
     }
-  }
+  },
 
-  collide(thing, distance, angle) {
+  collide: function(thing, distance, angle) {
     this.x = thing.x + (thing.radius + this.radius) * Math.cos(angle)
     this.y = thing.y + (thing.radius + this.radius) * Math.sin(angle)
-  }
+  },
 
-  update() {
+  update: function() {
     this.updateVelocities()
     this.putVelocitiesInBounds()
     this.move()
-  }
+  },
 
-  render({ fillCircle, setFillStyle }) {
+  render: function({ fillCircle, setFillStyle }) {
     setFillStyle(this.color)
     fillCircle(this.x, this.y, this.radius)
   }
-}
+})

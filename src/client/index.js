@@ -7,12 +7,15 @@ import keys from './keys'
 import CollisionHandler from './CollisionHandler'
 
 function run() {
-  const game = new SpaceGame(1024, 720)
-  const space = new Space()
-  const collisionHandler = new CollisionHandler(space)
-  const planet = new Planet(1024/2, 720/2, 150)
-  const player = new Player(700, 550)
-  const keyHandler = new KeyHandler(keys, player.runCommand)
+  const game = SpaceGame(1024, 720)
+  const space = Space()
+  const collisionHandler = CollisionHandler({ world: space })
+  const planet = Planet({ x: 1024/2, y: 720/2, radius: 150 })
+  const player = Player({ x: 700, y: 550 })
+  const keyHandler = KeyHandler({
+    keys,
+    listener: player.runCommand.bind(player)
+  })
 
   space.addPlanet(planet)
   space.addPlayer(player)

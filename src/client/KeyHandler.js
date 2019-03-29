@@ -1,26 +1,27 @@
-export default class KeyHandler {
-  constructor(keys, listener) {
-    this.keys = keys
-    this.listener = listener
-    this.onKeyDown = this.onKeyDown.bind(this)
-    this.onKeyUp = this.onKeyUp.bind(this)
-    this.init()
+export default ({ keys, listener }) => {
+  const KeyHandler = {
+    keys,
+    listener,
+
+    init: function() {
+      addEventListener('keydown', this.onKeyDown.bind(this))
+      addEventListener('keyup', this.onKeyUp.bind(this))
+    },
+
+    onKeyDown: function(e) {
+      const key = e.key.toLowerCase()
+      const command = this.keys[key]
+      this.listener(command, true)
+    },
+
+    onKeyUp: function(e) {
+      const key = e.key.toLowerCase()
+      const command = this.keys[key]
+      this.listener(command, false)
+    }
   }
 
-  init() {
-    addEventListener('keydown', this.onKeyDown)
-    addEventListener('keyup', this.onKeyUp)
-  }
+  KeyHandler.init()
 
-  onKeyDown(e) {
-    const key = e.key.toLowerCase()
-    const command = this.keys[key];
-    this.listener(command, true)
-  }
-
-  onKeyUp(e) {
-    const key = e.key.toLowerCase()
-    const command = this.keys[key];
-    this.listener(command, false)
-  }
+  return KeyHandler
 }

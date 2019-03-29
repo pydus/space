@@ -1,44 +1,47 @@
 import Loop from './Loop'
 
-export default class Game {
-  constructor(loop, view) {
-    this.loop = loop
-    this.view = view
-    this.isRunning = false
-    this.children = []
-    this.init()
-  }
+export default ({ loop, view }) => {
+  const Loop = {
+    loop,
+    view,
+    isRunning: false,
+    children: [],
 
-  init() {
-    this.loop.add(this)
-  }
+    init: function() {
+      this.loop.add(this)
+    },
 
-  start() {
-    this.loop.start()
-  }
+    start: function() {
+      this.loop.start()
+    },
 
-  stop() {
-    this.loop.stop()
-  }
+    stop: function() {
+      this.loop.stop()
+    },
 
-  add(child) {
-    this.children.push(child)
-  }
+    add: function(child) {
+      this.children.push(child)
+    },
 
-  setCollisionHandler(collisionHandler) {
-    this.collisionHandler = collisionHandler
-  }
+    setCollisionHandler: function(collisionHandler) {
+      this.collisionHandler = collisionHandler
+    },
 
-  update() {
-    this.children.forEach(child => child.update())
+    update: function() {
+      this.children.forEach(child => child.update())
 
-    if (this.collisionHandler) {
-      this.collisionHandler.update()
+      if (this.collisionHandler) {
+        this.collisionHandler.update()
+      }
+    },
+
+    render: function() {
+      this.view.clear()
+      this.children.forEach(child => child.render(this.view))
     }
   }
 
-  render() {
-    this.view.clear()
-    this.children.forEach(child => child.render(this.view))
-  }
+  Loop.init()
+
+  return Loop
 }

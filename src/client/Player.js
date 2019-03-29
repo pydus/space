@@ -1,10 +1,17 @@
-export default ({ x, y, color = '#ea8', physics }) => ({
+export default ({
+  x,
+  y,
+  radius = 20,
+  maxVelocity = 2,
+  color = '#ea8',
+  physics
+}) => ({
   x,
   y,
   color,
   physics,
-  radius: 20,
-  maxVelocity: 2,
+  radius,
+  maxVelocity,
 
   controlMovement: function(direction, isKeyDown) {
     this.physics.velocity.isMoving[direction] = isKeyDown

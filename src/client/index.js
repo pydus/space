@@ -10,8 +10,8 @@ function run() {
   const game = new SpaceGame(1024, 720)
   const space = new Space()
   const collisionHandler = new CollisionHandler(space)
-  const planet = new Planet(1024/2, 720/2, 100)
-  const player = new Player(700, 350)
+  const planet = new Planet(1024/2, 720/2, 150)
+  const player = new Player(700, 550)
   const keyHandler = new KeyHandler(keys, player.runCommand)
 
   space.addPlanet(planet)

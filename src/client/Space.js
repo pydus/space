@@ -12,9 +12,19 @@ export default class Space {
     this.players.push(player)
   }
 
+  handleGravity() {
+    this.planets.forEach(planet => {
+      this.players.forEach(player => {
+        const magnitude = planet.radius
+        planet.attract(player, magnitude)
+      })
+    })
+  }
+
   update() {
     this.planets.forEach(planet => planet.update())
     this.players.forEach(player => player.update())
+    this.handleGravity()
   }
 
   render(view) {

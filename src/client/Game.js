@@ -6,7 +6,6 @@ export default class Game {
     this.view = view
     this.isRunning = false
     this.children = []
-    this.canvas = null
     this.init()
   }
 
@@ -24,10 +23,6 @@ export default class Game {
 
   add(child) {
     this.children.push(child)
-  }
-
-  getContext() {
-    return this.canvas.getContext('2d')
   }
 
   update() {

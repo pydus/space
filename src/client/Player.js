@@ -8,10 +8,10 @@ export default class Player {
     this.maxVelocity = 2
     this.velocity = {x: 0, y: 0}
     this.acceleration = 0.05
-    this.performCommand = this.performCommand.bind(this)
+    this.runCommand = this.runCommand.bind(this)
   }
 
-  performCommand(command, isKeyDown) {
+  runCommand(command, isKeyDown) {
     switch (command) {
       case 'up':
       case 'down':

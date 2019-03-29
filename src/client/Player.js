@@ -1,18 +1,18 @@
-export default ({ x, y, color = '#ea8', velocity }) => ({
+export default ({ x, y, color = '#ea8', physics }) => ({
   x,
   y,
   color,
-  velocity,
+  physics,
   radius: 20,
   maxVelocity: 2,
 
   controlMovement: function(direction, isKeyDown) {
-    this.velocity.isMoving[direction] = isKeyDown
+    this.physics.velocity.isMoving[direction] = isKeyDown
   },
 
   updatePosition: function() {
-    this.x += this.velocity.x
-    this.y += this.velocity.y
+    this.x += this.physics.velocity.x
+    this.y += this.physics.velocity.y
   },
 
   collide: function(thing, distance, angle) {
@@ -21,7 +21,7 @@ export default ({ x, y, color = '#ea8', velocity }) => ({
   },
 
   update: function() {
-    this.velocity.update()
+    this.physics.update()
     this.updatePosition()
   },
 

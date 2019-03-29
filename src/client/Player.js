@@ -8,6 +8,7 @@ export default class Player {
     this.maxVelocity = 2
     this.velocity = {x: 0, y: 0}
     this.acceleration = 0.05
+    this.deceleration = 0.05
     this.runCommand = this.runCommand.bind(this)
   }
 
@@ -35,15 +36,26 @@ export default class Player {
   updateVelocities() {
     if (this.isMoving.up) {
       this.velocity.y -= this.acceleration
+    } else if (this.velocity.y < 0) {
+      this.velocity.y += this.deceleration
     }
+
     if (this.isMoving.down) {
       this.velocity.y += this.acceleration
+    } else if (this.velocity.y > 0) {
+      this.velocity.y -= this.deceleration
     }
+
     if (this.isMoving.left) {
       this.velocity.x -= this.acceleration
+    } else if (this.velocity.x < 0) {
+      this.velocity.x += this.deceleration
     }
+
     if (this.isMoving.right) {
       this.velocity.x += this.acceleration
+    } else if (this.velocity.x > 0) {
+      this.velocity.x -= this.deceleration
     }
   }
 

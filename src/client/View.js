@@ -1,5 +1,5 @@
 export default ({ canvas, width, height }) => {
-  const View = {
+  const view = {
     canvas,
     width,
     height,
@@ -36,7 +36,7 @@ export default ({ canvas, width, height }) => {
     }
   }
 
-  View.init()
+  view.init()
 
-  return View
+  return view
 }

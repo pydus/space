@@ -1,5 +1,5 @@
 export default ({ keys, listener }) => {
-  const KeyHandler = {
+  const keyHandler = {
     keys,
     listener,
   }
@@ -16,5 +16,5 @@ export default ({ keys, listener }) => {
 
   init()
 
-  return KeyHandler
+  return keyHandler
 }

@@ -19,10 +19,20 @@ export default () => ({
     })
   },
 
+  handlePlayerOrigins: function() {
+    this.players.forEach(player => {
+      const findOrigin = player.physics.findOrigin
+      if (findOrigin) {
+        findOrigin.call(player.physics, this.planets)
+      }
+    })
+  },
+
   update: function() {
     this.planets.forEach(planet => planet.update())
     this.players.forEach(player => player.update())
     this.handleGravity()
+    this.handlePlayerOrigins()
   },
 
   render: function(view) {

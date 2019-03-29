@@ -6,7 +6,7 @@ export default ({
   physics,
 
   controlMovement: function(direction, isKeyDown) {
-    this.physics.velocity.isMoving[direction] = isKeyDown
+    this.physics.velocity.setMoving(direction, isKeyDown)
   },
 
   update: function() {

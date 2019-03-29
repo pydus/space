@@ -10,7 +10,12 @@ export default ({
   max,
   acc,
   dec,
+
   isMoving: { up: false, down: false, left: false, right: false },
+
+  setMoving: function(direction, bool) {
+    this.isMoving[direction] = bool
+  },
 
   updateVelocities: function() {
     if (this.isMoving.up) {

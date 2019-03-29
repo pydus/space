@@ -63,8 +63,8 @@ export default class Player {
   }
 
   collide(thing, distance, angle) {
-    this.x = thing.x + thing.radius * Math.cos(angle)
-    this.y = thing.y + thing.radius * Math.sin(angle)
+    this.x = thing.x + (thing.radius + this.radius) * Math.cos(angle)
+    this.y = thing.y + (thing.radius + this.radius) * Math.sin(angle)
   }
 
   update() {

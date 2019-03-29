@@ -1,14 +1,23 @@
 import Player from './Player'
-import KeyHandler from './KeyHandler'
+import Controller from './Controller'
 import keys from './keys'
 
 export default args =>  {
   const player = Player(args)
 
-  const keyHandler = KeyHandler({
-    keys,
-    listener: player.runCommand.bind(player)
-  })
+  const mapFunction = (command, isKeyDown) => {
+    switch (command) {
+      case 'up':
+      case 'down':
+      case 'left':
+      case 'right':
+        player.controlMovement(command, isKeyDown)
+        break
+      default:
+    }
+  }
 
-  return player
+  const controller = Controller({ keys, mapFunction })
+
+  return Object.assign(player, controller)
 }

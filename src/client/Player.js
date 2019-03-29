@@ -9,18 +9,6 @@ export default ({x, y, color = '#ea8'}) => ({
   acceleration: 0.05,
   deceleration: 0.05,
 
-  runCommand: function(command, isKeyDown) {
-    switch (command) {
-      case 'up':
-      case 'down':
-      case 'left':
-      case 'right':
-        this.controlMovement(command, isKeyDown)
-        break
-      default:
-    }
-  },
-
   controlMovement: function(direction, isKeyDown) {
     this.isMoving[direction] = isKeyDown
   },

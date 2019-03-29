@@ -1,7 +1,7 @@
 import Loop from './Loop'
 
 export default ({ loop, view }) => {
-  const loop = {
+  const game = {
     loop,
     view,
     isRunning: false,
@@ -41,7 +41,7 @@ export default ({ loop, view }) => {
     }
   }
 
-  loop.init()
+  game.init()
 
-  return loop
+  return game
 }

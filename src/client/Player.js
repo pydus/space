@@ -60,12 +60,15 @@ export default ({x, y, color = '#ea8'}) => ({
     if (this.velocity.y < -this.maxVelocity) {
       this.velocity.y = -this.maxVelocity
     }
+
     if (this.velocity.y > this.maxVelocity) {
       this.velocity.y = this.maxVelocity
     }
+
     if (this.velocity.x < -this.maxVelocity) {
       this.velocity.x = -this.maxVelocity
     }
+
     if (this.velocity.x > this.maxVelocity) {
       this.velocity.x = this.maxVelocity
     }

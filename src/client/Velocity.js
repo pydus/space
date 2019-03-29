@@ -1,11 +1,13 @@
 export default ({
   x = 0,
   y = 0,
+  max = 2,
   acc = 0.05,
   dec = 0.05
 }) => ({
   x,
   y,
+  max,
   acc,
   dec,
   isMoving: { up: false, down: false, left: false, right: false },
@@ -37,20 +39,20 @@ export default ({
   },
 
   putVelocitiesInBounds: function() {
-    if (this.y < -this.maxVelocity) {
-      this.y = -this.maxVelocity
+    if (this.y < -this.max) {
+      this.y = -this.max
     }
 
-    if (this.y > this.maxVelocity) {
-      this.y = this.maxVelocity
+    if (this.y > this.max) {
+      this.y = this.max
     }
 
-    if (this.x < -this.maxVelocity) {
-      this.x = -this.maxVelocity
+    if (this.x < -this.max) {
+      this.x = -this.max
     }
 
-    if (this.x > this.maxVelocity) {
-      this.x = this.maxVelocity
+    if (this.x > this.max) {
+      this.x = this.max
     }
   },
 

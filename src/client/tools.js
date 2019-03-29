@@ -1,9 +1,9 @@
-export function getDistance(c1, c2) {
-  return ((c1.y - c2.y) ** 2 + (c1.x - c2.x) ** 2) ** 0.5
+export function getDistance(p1, p2) {
+  return ((p1.pos.y - p2.pos.y) ** 2 + (p1.pos.x - p2.pos.x) ** 2) ** 0.5
 }
 
-export function getAngle(c1, c2) {
-  return Math.atan2((c2.y - c1.y), (c2.x - c1.x))
+export function getAngle(p1, p2) {
+  return Math.atan2((p2.pos.y - p1.pos.y), (p2.pos.x - p1.pos.x))
 }
 
 export default {

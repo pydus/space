@@ -1,27 +1,28 @@
 import { getAngle, getDistance } from './tools'
 
+// TODO: only accept physics objects of world, not entire world
 export default ({ world }) => ({
   world,
 
-  areOverlapping: function(c1, c2) {
-    const distance = getDistance(c1, c2)
-    return distance < c1.radius + c2.radius
+  areOverlapping: function(p1, p2) {
+    const distance = getDistance(p1, p2)
+    return distance < p1.radius + p2.radius
   },
 
-  tryCollision: function(thing1, thing2) {
-    if (this.areOverlapping(thing1, thing2)) {
-      const distance = getDistance(thing1, thing2)
-      const angle = getAngle(thing1, thing2)
+  tryCollision: function(p1, p2) {
+    if (this.areOverlapping(p1, p2)) {
+      const distance = getDistance(p1, p2)
+      const angle = getAngle(p1, p2)
 
-      thing1.collide(thing2, distance, angle)
-      thing2.collide(thing1, distance, angle)
+      p1.collide(p2, distance, angle)
+      p2.collide(p1, distance, angle)
     }
   },
 
   update: function() {
     this.world.planets.forEach(planet => {
       this.world.players.forEach(player => {
-        this.tryCollision(planet, player)
+        this.tryCollision(planet.physics, player.physics)
       })
     })
   }

@@ -1,13 +1,13 @@
 import Player from './Player'
 import Controller from './Controller'
-import Velocity from './Velocity'
-import Physics from './Physics'
+import PlayerPhysics from './PlayerPhysics'
 import keys from './keys'
 
 export default args => {
-  const velocity = Velocity({ acc: 0.1, dec: 0.1 })
-  const physics = Physics({ velocity })
-  const player = Player({ physics, ...args })
+  const { x, y, radius, ...rest } = args
+
+  const physics = PlayerPhysics({ x, y, radius })
+  const player = Player({ physics, ...rest })
 
   const mapFunction = (command, isKeyDown) => {
     switch (command) {

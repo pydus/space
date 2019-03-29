@@ -1,28 +1,25 @@
-import { getAngle, getDistance } from './tools'
+import Physics from './Physics'
 
-export default ({ x, y, radius, color='#e48' }) => ({
-  x,
-  y,
-  radius,
-  color,
+export default ({ x, y, radius, color='#e48' }) => {
+  const physics = Physics({ pos: { x, y }, radius })
 
-  attract: function(thing, mag) {
-    const angle = getAngle(this, thing)
-    const distance = getDistance(this, thing)
-    thing.x -= mag * Math.cos(angle) / distance
-    thing.y -= mag * Math.sin(angle) / distance
-  },
+  const planet = {
+    physics,
+    color,
 
-  collide: function() {
+    collide: function() {
 
-  },
+    },
 
-  update: function() {
+    update: function() {
 
-  },
+    },
 
-  render: function({ fillCircle, setFillStyle }) {
-    setFillStyle(this.color)
-    fillCircle(this.x, this.y, this.radius)
+    render: function({ fillCircle, setFillStyle }) {
+      setFillStyle(this.color)
+      fillCircle(this.physics.pos.x, this.physics.pos.y, this.physics.radius)
+    }
   }
-})
+
+  return planet
+}

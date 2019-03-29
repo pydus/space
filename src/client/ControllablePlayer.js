@@ -23,5 +23,5 @@ export default args => {
 
   const controller = Controller({ keys, mapFunction })
 
-  return Object.assign(player, controller)
+  return Object.assign({}, player, controller)
 }

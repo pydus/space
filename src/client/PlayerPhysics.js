@@ -1,10 +1,10 @@
 import Physics from './Physics'
 import Velocity from './Velocity'
+import { hardCollide } from './collisions'
 
 export default ({ x, y, radius }) => {
-  function collide(other, distance, angle) {
-    this.pos.x = other.pos.x + (other.radius + this.radius) * Math.cos(angle)
-    this.pos.y = other.pos.y + (other.radius + this.radius) * Math.sin(angle)
+  function collide(...args) {
+    return hardCollide.apply(this, args)
   }
 
   const velocity = Velocity({ acc: 0.1, dec: 0.1 })

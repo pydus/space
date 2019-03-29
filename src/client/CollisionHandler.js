@@ -14,8 +14,8 @@ export default ({ world }) => ({
       const distance = getDistance(p1, p2)
       const angle = getAngle(p1, p2)
 
-      p1.collide(p2, distance, angle)
-      p2.collide(p1, distance, angle)
+      p1.collide(p2, angle, distance)
+      p2.collide(p1, angle, distance)
     }
   },
 

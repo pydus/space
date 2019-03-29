@@ -1,7 +1,6 @@
-const UPDATES_PER_SECOND = 60
-const MS_BETWEEN_UPDATES = 1000 / UPDATES_PER_SECOND
-
-export default () => ({
+export default ({ updatesPerSecond }) => ({
+  updatesPerSecond,
+  msBetweenUpdates: 1000 / updatesPerSecond,
   isRunning: false,
   children: [],
   canvas: null,
@@ -29,7 +28,7 @@ export default () => ({
       if (this.isRunning) {
         this.tick()
       }
-    }, MS_BETWEEN_UPDATES)
+    }, this.msBetweenUpdates)
   },
 
   tick: function() {

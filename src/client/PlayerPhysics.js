@@ -1,5 +1,6 @@
 import Physics from './Physics'
 import Velocity from './Velocity'
+import XYControlSystem from './XYControlSystem'
 import { hardCollide } from './collisions'
 
 export default ({ x, y, radius }) => {
@@ -7,9 +8,15 @@ export default ({ x, y, radius }) => {
     return hardCollide.apply(this, args)
   }
 
-  const velocity = Velocity({ acc: 0.1, dec: 0.1 })
+  const playerPhysics = {
+    origin: null
+  }
+
+  const controlSystem = XYControlSystem()
+
+  const velocity = Velocity({ acc: 0.1, dec: 0.1, controlSystem })
 
   const physics = Physics({ pos: { x, y }, radius, velocity, collide })
 
-  return physics
+  return Object.assign(playerPhysics, physics)
 }

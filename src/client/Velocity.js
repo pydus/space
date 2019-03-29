@@ -3,13 +3,15 @@ export default ({
   y = 0,
   max = 2,
   acc = 0.05,
-  dec = 0.05
+  dec = 0.05,
+  controlSystem
 }) => ({
   x,
   y,
   max,
   acc,
   dec,
+  controlSystem,
 
   isMoving: { up: false, down: false, left: false, right: false },
 
@@ -18,29 +20,14 @@ export default ({
   },
 
   updateVelocities: function() {
-    if (this.isMoving.up) {
-      this.y -= this.acc
-    } else if (this.y < 0) {
-      this.y += this.dec
-    }
+    const { x, y, acc, dec, isMoving } = this
 
-    if (this.isMoving.down) {
-      this.y += this.acc
-    } else if (this.y > 0) {
-      this.y -= this.dec
-    }
+    const api = { x, y, acc, dec, isMoving }
 
-    if (this.isMoving.left) {
-      this.x -= this.acc
-    } else if (this.x < 0) {
-      this.x += this.dec
-    }
+    const [ newX, newY ] = this.controlSystem.update(api)
 
-    if (this.isMoving.right) {
-      this.x += this.acc
-    } else if (this.x > 0) {
-      this.x -= this.dec
-    }
+    this.x = newX
+    this.y = newY
   },
 
   putVelocitiesInBounds: function() {

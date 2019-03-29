@@ -1,7 +1,7 @@
 const UPDATES_PER_SECOND = 60
 const MS_BETWEEN_UPDATES = 1000 / UPDATES_PER_SECOND
 
-export default class Game {
+export default class Loop {
   constructor() {
     this.isRunning = false
     this.children = []

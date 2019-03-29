@@ -1,11 +1,11 @@
 import Player from './Player'
 import Controller from './Controller'
-import VelocityHandler from './VelocityHandler'
+import Velocity from './Velocity'
 import keys from './keys'
 
 export default args => {
-  const velocityHandler = VelocityHandler({ acc: 0.1, dec: 0.1 })
-  const player = Player({ velocityHandler, ...args })
+  const velocity = Velocity({ acc: 0.1, dec: 0.1 })
+  const player = Player({ velocity, ...args })
 
   const mapFunction = (command, isKeyDown) => {
     switch (command) {

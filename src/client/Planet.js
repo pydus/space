@@ -6,6 +6,10 @@ export default class Planet {
     this.color = '#e48'
   }
 
+  collide() {
+
+  }
+
   update() {
 
   }

@@ -25,8 +25,16 @@ export default class Game {
     this.children.push(child)
   }
 
+  setCollisionHandler(collisionHandler) {
+    this.collisionHandler = collisionHandler
+  }
+
   update() {
     this.children.forEach(child => child.update())
+
+    if (this.collisionHandler) {
+      this.collisionHandler.update()
+    }
   }
 
   render() {

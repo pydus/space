@@ -62,6 +62,11 @@ export default class Player {
     }
   }
 
+  collide(thing, distance, angle) {
+    this.x = thing.x + thing.radius * Math.cos(angle)
+    this.y = thing.y + thing.radius * Math.sin(angle)
+  }
+
   update() {
     this.updateVelocities()
     this.putVelocitiesInBounds()

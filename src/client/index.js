@@ -2,6 +2,8 @@ import SpaceGame from './SpaceGame'
 import Space from './Space'
 import Planet from './Planet'
 import Player from './Player'
+import KeyHandler from './KeyHandler'
+import keys from './keys'
 
 function run() {
   const game = new SpaceGame(1024, 720)
@@ -11,6 +13,8 @@ function run() {
   space.addPlanet(planet)
 
   const player = new Player(700, 350)
+  const keyHandler = new KeyHandler(keys, player.performCommand)
+
   space.addPlayer(player)
 
   game.add(space)

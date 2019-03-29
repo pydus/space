@@ -1,65 +1,18 @@
-export default ({x, y, color = '#ea8'}) => ({
+export default ({ x, y, color = '#ea8', velocityHandler }) => ({
   x,
   y,
   color,
+  velocityHandler,
   radius: 20,
-  isMoving: { up: false, down: false, left: false, right: false },
   maxVelocity: 2,
-  velocity: { x: 0, y: 0 },
-  acceleration: 0.05,
-  deceleration: 0.05,
 
   controlMovement: function(direction, isKeyDown) {
-    this.isMoving[direction] = isKeyDown
+    this.velocityHandler.isMoving[direction] = isKeyDown
   },
 
-  move: function() {
-    this.x += this.velocity.x
-    this.y += this.velocity.y
-  },
-
-  updateVelocities: function() {
-    if (this.isMoving.up) {
-      this.velocity.y -= this.acceleration
-    } else if (this.velocity.y < 0) {
-      this.velocity.y += this.deceleration
-    }
-
-    if (this.isMoving.down) {
-      this.velocity.y += this.acceleration
-    } else if (this.velocity.y > 0) {
-      this.velocity.y -= this.deceleration
-    }
-
-    if (this.isMoving.left) {
-      this.velocity.x -= this.acceleration
-    } else if (this.velocity.x < 0) {
-      this.velocity.x += this.deceleration
-    }
-
-    if (this.isMoving.right) {
-      this.velocity.x += this.acceleration
-    } else if (this.velocity.x > 0) {
-      this.velocity.x -= this.deceleration
-    }
-  },
-
-  putVelocitiesInBounds: function() {
-    if (this.velocity.y < -this.maxVelocity) {
-      this.velocity.y = -this.maxVelocity
-    }
-
-    if (this.velocity.y > this.maxVelocity) {
-      this.velocity.y = this.maxVelocity
-    }
-
-    if (this.velocity.x < -this.maxVelocity) {
-      this.velocity.x = -this.maxVelocity
-    }
-
-    if (this.velocity.x > this.maxVelocity) {
-      this.velocity.x = this.maxVelocity
-    }
+  updatePosition: function() {
+    this.x += this.velocityHandler.x
+    this.y += this.velocityHandler.y
   },
 
   collide: function(thing, distance, angle) {
@@ -68,9 +21,8 @@ export default ({x, y, color = '#ea8'}) => ({
   },
 
   update: function() {
-    this.updateVelocities()
-    this.putVelocitiesInBounds()
-    this.move()
+    this.velocityHandler.update()
+    this.updatePosition()
   },
 
   render: function({ fillCircle, setFillStyle }) {

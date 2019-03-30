@@ -1,10 +1,12 @@
 import { getAngle, getDistance } from './tools'
 
+const G = 20
+
 export default ({
   pos,
   vel = {x: 0, y: 0},
   rad = 20,
-  mass = 400,
+  mass = rad,
   collide = () => {},
   controlSystem
 }) => ({
@@ -22,7 +24,7 @@ export default ({
   attract: function(other) {
     const angle = getAngle(this, other)
     const distance = getDistance(this, other)
-    const force = this.mass * other.mass / (distance ** 2)
+    const force = G * this.mass * other.mass / (distance ** 2)
     other.pos.x -= force * Math.cos(angle)
     other.pos.y -= force * Math.sin(angle)
   },

@@ -21,10 +21,10 @@ export default () => ({
 
   handlePlayerOrigins: function() {
     this.players.forEach(player => {
-      const findOrigin = player.physics.findOrigin
-      if (findOrigin) {
+      const originFinder = player.physics.controlSystem.originFinder
+      if (originFinder) {
         const planets = this.planets.map(planet => planet.physics)
-        findOrigin.call(player.physics, planets)
+        originFinder.run.call(player.physics, planets)
       }
     })
   },

@@ -1,5 +1,5 @@
-export default ({ valFn }) => ({
-  valFn,
+export default () => ({
+  listeners: [],
 
   listen: function(fn) {
     this.listeners.push(fn)
@@ -12,8 +12,7 @@ export default ({ valFn }) => ({
     return true
   },
 
-  notifyListeners: function() {
-    const value = this.valFn()
+  notifyListeners: function(value) {
     this.listeners.forEach(fn => fn(value))
   }
 })

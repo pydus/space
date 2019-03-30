@@ -1,18 +1,20 @@
-import ListenerService from './ListenerService'
-
 export default ({ originFinder, maxVel = 2, acc = 0.1, dec = 0.1 }) => {
   const originControlSystem = {
     originFinder,
     maxVel,
     acc,
     dec,
+    origin: null,
     pos: {},
     vel: {},
-    listeners: [],
     isMoving: { up: false, down: false, left: false, right: false },
 
     setMoving: function(direction, bool) {
       this.isMoving[direction] = bool
+    },
+
+    init: function() {
+      this.originFinder.listen(origin => this.origin = origin)
     },
 
     updateVelocities: function() {
@@ -28,8 +30,8 @@ export default ({ originFinder, maxVel = 2, acc = 0.1, dec = 0.1 }) => {
     },
 
     setNewProps: function(pos, vel) {
-      this.pos = pos
-      this.vel = vel
+      this.pos = Object.assign({}, pos)
+      this.vel = Object.assign({}, vel)
     },
 
     update: function({ pos, vel }) {
@@ -37,16 +39,11 @@ export default ({ originFinder, maxVel = 2, acc = 0.1, dec = 0.1 }) => {
       this.updateVelocities()
       this.putVelocitiesInBounds()
       this.updatePosition()
-      this.notifyListeners()
+      return { pos: this.pos, vel: this.vel }
     }
   }
 
-  const valFn = () => ({
-    pos: originControlSystem.pos,
-    vel: originControlSystem.vel
-  })
+  originControlSystem.init()
 
-  const listenerService = ListenerService({ valFn })
-
-  return Object.assign({}, originControlSystem, listenerService)
+  return originControlSystem
 }

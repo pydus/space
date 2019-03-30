@@ -1,4 +1,4 @@
-export default valFn => ({
+export default ({ valFn }) => ({
   valFn,
 
   listen: function(fn) {

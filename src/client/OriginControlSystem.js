@@ -41,9 +41,14 @@ export default ({ originFinder, maxVel = 2, acc = 0.1, dec = 0.1 }) => {
     }
   }
 
-  const listenerService = ListenerService(() => (
-    { pos: originControlSystem.pos, vel: originControlSystem.vel }
-  ))
+  const valFn = function() {
+    return {
+      pos: originControlSystem.pos,
+      vel: originControlSystem.vel
+    }
+  }
+
+  const listenerService = ListenerService({ valFn })
 
   return Object.assign({}, originControlSystem, listenerService)
 }

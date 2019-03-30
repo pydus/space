@@ -77,9 +77,14 @@ export default ({ maxVel = 2, acc = 0.1, dec = 0.1 }) => {
     }
   }
 
-  const listenerService = ListenerService(() => (
-    { pos: xYControlSystem.pos, vel: xYControlSystem.vel }
-  ))
+  const valFn = function() {
+    return {
+      pos: xYControlSystem.pos,
+      vel: xYControlSystem.vel
+    }
+  }
+
+  const listenerService = ListenerService({ valFn })
 
   return Object.assign({}, xYControlSystem, listenerService)
 }

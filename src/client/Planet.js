@@ -1,6 +1,6 @@
 import Physics from './Physics'
 
-export default ({ x, y, rad, mass = rad, color='#e48' }) => {
+export default ({ x, y, rad, mass = rad, color='#84e' }) => {
   const physics = Physics({ pos: { x, y }, rad, mass })
 
   const planet = {

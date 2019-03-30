@@ -12,12 +12,12 @@ function run() {
 
   const planet = Planet({ x: 500, y: 720, rad: 1000, mass: 10000 })
   const planet2 = Planet({ x: 400, y: -800, rad: 400, mass: 4000 })
-  const player = Player({ x: 1300, y: 550 })
+  const player = Player({ x: 1700, y: 550 })
 
-  const camera = Camera({ width: 5000 })
+  const camera = Camera({ width: 2000 })
   const cameraController = CameraController({ p: player.physics, camera })
 
-  const game = SpaceGame({ width: 5000, height: 5000, camera })
+  const game = SpaceGame({ width: 10000, height: 10000, camera })
 
   space.addPlanet(planet)
   space.addPlanet(planet2)

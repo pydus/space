@@ -3,9 +3,9 @@ import { getAngle, getDistance } from './engine/tools'
 export default ({
   originFinder,
   vel = 0,
-  maxVel = 15000,
-  acc = 5000,
-  dec = 5000
+  maxVel = 5000,
+  acc = 2500,
+  dec = 2500
 }) => {
   const originControlSystem = {
     originFinder,

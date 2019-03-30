@@ -1,7 +1,17 @@
 import Player from './Player'
 import Controller from './Controller'
 import PlayerPhysics from './PlayerPhysics'
-import keys from './keys'
+
+const keys = {
+  'w': 'up',
+  's': 'down',
+  'a': 'left',
+  'd': 'right',
+  'arrowup': 'up',
+  'arrowdown': 'down',
+  'arrowleft': 'left',
+  'arrowright': 'right'
+}
 
 export default args => {
   const { x, y, rad, ...rest } = args

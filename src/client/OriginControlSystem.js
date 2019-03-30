@@ -3,9 +3,9 @@ import { getAngle, getDistance } from './engine/tools'
 export default ({
   originFinder,
   vel = 0,
-  maxVel = 0.015,
-  acc = 0.005,
-  dec = 0.005
+  maxVel = 15000,
+  acc = 5000,
+  dec = 5000
 }) => {
   const originControlSystem = {
     originFinder,
@@ -60,8 +60,9 @@ export default ({
     },
 
     updateAngle: function() {
+      const distance = getDistance(this.origin, this)
       this.angle = getAngle(this.origin, this)
-      this.angle += this.vel
+      this.angle += this.vel / (distance ** 2)
     },
 
     updatePosition: function() {

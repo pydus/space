@@ -1,4 +1,4 @@
-import { getAngle, getDistance } from './tools'
+import { getAngle, getDistance } from './engine/tools'
 
 const G = 20
 

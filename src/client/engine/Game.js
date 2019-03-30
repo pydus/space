@@ -6,6 +6,7 @@ export default ({ loop, view }) => {
     view,
     isRunning: false,
     children: [],
+    updatable: [],
 
     init: function() {
       this.loop.add(this)
@@ -23,16 +24,13 @@ export default ({ loop, view }) => {
       this.children.push(child)
     },
 
-    setCollisionHandler: function(collisionHandler) {
-      this.collisionHandler = collisionHandler
+    addUpdatable: function(updatable) {
+      this.updatable.push(updatable)
     },
 
     update: function() {
       this.children.forEach(child => child.update())
-
-      if (this.collisionHandler) {
-        this.collisionHandler.update()
-      }
+      this.updatable.forEach(updatable => updatable.update())
     },
 
     render: function() {

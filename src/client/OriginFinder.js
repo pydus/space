@@ -1,5 +1,5 @@
-import ListenerService from './ListenerService'
-import { getDistance } from './tools'
+import ListenerService from './engine/ListenerService'
+import { getDistance } from './engine/tools'
 
 export default () => {
   const listenerService = ListenerService()

@@ -1,5 +1,5 @@
 import Player from './Player'
-import Controller from './Controller'
+import Controller from './engine/Controller'
 import PlayerPhysics from './PlayerPhysics'
 
 const keys = {

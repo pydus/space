@@ -1,6 +1,6 @@
-import Loop from './Loop'
-import Game from './Game'
-import View from './View'
+import Loop from './engine/Loop'
+import Game from './engine/Game'
+import View from './engine/View'
 
 const canvas = document.getElementById('canvas')
 

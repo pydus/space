@@ -1,4 +1,4 @@
-import { getAngle, getDistance } from './tools'
+import { getAngle, getDistance } from './engine/tools'
 
 // TODO: only accept physics objects of world, not entire world
 export default ({ world }) => ({

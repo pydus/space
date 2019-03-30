@@ -2,7 +2,7 @@ import Physics from './Physics'
 import XYControlSystem from './XYControlSystem'
 import OriginControlSystem from './OriginControlSystem'
 import OriginFinder from './OriginFinder'
-import { hardCollide } from './collisions'
+import { hardCollide } from './engine/collisions'
 
 export default ({ x, y, rad }) => {
   function collide(...args) {

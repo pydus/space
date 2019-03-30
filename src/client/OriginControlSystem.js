@@ -1,15 +1,21 @@
 import { getAngle, getDistance } from './tools'
 
-export default ({ originFinder, maxVel = 0.015, acc = 0.005, dec = 0.005 }) => {
+export default ({
+  originFinder,
+  vel = 0,
+  maxVel = 0.015,
+  acc = 0.005,
+  dec = 0.005
+}) => {
   const originControlSystem = {
     originFinder,
+    vel,
     maxVel,
     acc,
     dec,
     origin: null,
+    angle: null,
     pos: {},
-    vel: 0,
-    angle: 0,
 
     isMoving: { up: false, down: false, left: false, right: false },
 
@@ -18,7 +24,12 @@ export default ({ originFinder, maxVel = 0.015, acc = 0.005, dec = 0.005 }) => {
     },
 
     init: function() {
-      this.originFinder.listen(origin => this.origin = origin)
+      this.originFinder.listen(origin => {
+        if (this.origin !== origin) {
+          this.origin = origin
+          this.angle = getAngle(origin, this)
+        }
+      })
     },
 
     updateAngVel: function() {
@@ -54,7 +65,6 @@ export default ({ originFinder, maxVel = 0.015, acc = 0.005, dec = 0.005 }) => {
     },
 
     updatePosition: function() {
-      if (!this.origin) return
       const distance = getDistance(this.origin, this)
       this.pos.x = this.origin.pos.x + distance * Math.cos(this.angle)
       this.pos.y = this.origin.pos.y + distance * Math.sin(this.angle)
@@ -66,9 +76,11 @@ export default ({ originFinder, maxVel = 0.015, acc = 0.005, dec = 0.005 }) => {
 
     update: function({ pos }) {
       this.setNewProps(pos)
-      this.updateAngVel()
-      this.updateAngle()
-      this.updatePosition()
+      if (this.origin && this.angle !== null) {
+        this.updateAngVel()
+        this.updateAngle()
+        this.updatePosition()
+      }
       return { pos: this.pos }
     }
   }

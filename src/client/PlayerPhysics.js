@@ -10,7 +10,7 @@ export default ({ x, y, rad }) => {
   }
 
   const originFinder = OriginFinder()
-  const controlSystem = OriginControlSystem({ originFinder, acc: 0.1, dec: 0.1 })
+  const controlSystem = OriginControlSystem({ originFinder })
   const physics = Physics({ pos: { x, y }, rad, collide, controlSystem })
 
   return Object.assign({}, physics)

@@ -4,12 +4,14 @@ export default ({
   pos,
   vel = {x: 0, y: 0},
   rad = 20,
+  mass = 400,
   collide = () => {},
   controlSystem
 }) => ({
   pos,
   vel,
   rad,
+  mass,
   collide,
   controlSystem,
 
@@ -17,11 +19,12 @@ export default ({
     this.controlSystem.setMoving(direction, bool)
   },
 
-  attract: function(other, mag) {
+  attract: function(other) {
     const angle = getAngle(this, other)
     const distance = getDistance(this, other)
-    other.pos.x -= mag * Math.cos(angle) / distance
-    other.pos.y -= mag * Math.sin(angle) / distance
+    const force = this.mass * other.mass / (distance ** 2)
+    other.pos.x -= force * Math.cos(angle)
+    other.pos.y -= force * Math.sin(angle)
   },
 
   update: function() {

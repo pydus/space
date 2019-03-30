@@ -8,6 +8,8 @@ export default ({ canvas, width, height }) => {
     init: function() {
       this.setFillStyle = this.setFillStyle.bind(this)
       this.fillCircle = this.fillCircle.bind(this)
+      this.setStrokeStyle = this.setStrokeStyle.bind(this)
+      this.drawLine = this.drawLine.bind(this)
       this.adjustCanvasSize()
       this.adjustCanvasSizeAsNeeded()
     },
@@ -29,10 +31,21 @@ export default ({ canvas, width, height }) => {
       this.ctx.fillStyle = style
     },
 
+    setStrokeStyle: function(style) {
+      this.ctx.strokeStyle = style
+    },
+
     fillCircle: function(x, y, rad) {
       this.ctx.beginPath()
       this.ctx.arc(x, y, rad, 0, 2 * Math.PI)
       this.ctx.fill()
+    },
+
+    drawLine: function(x0, y0, x1, y1) {
+      this.ctx.beginPath()
+      this.ctx.moveTo(x0, y0)
+      this.ctx.lineTo(x1, y1)
+      this.ctx.stroke()
     }
   }
 

@@ -27,7 +27,6 @@ export default ({
       this.originFinder.listen(origin => {
         if (this.origin !== origin) {
           this.origin = origin
-          this.angle = getAngle(origin, this)
         }
       })
     },
@@ -61,6 +60,7 @@ export default ({
     },
 
     updateAngle: function() {
+      this.angle = getAngle(this.origin, this)
       this.angle += this.vel
     },
 
@@ -76,7 +76,7 @@ export default ({
 
     update: function({ pos }) {
       this.setNewProps(pos)
-      if (this.origin && this.angle !== null) {
+      if (this.origin) {
         this.updateAngVel()
         this.updateAngle()
         this.updatePosition()

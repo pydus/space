@@ -15,9 +15,9 @@ export default ({ x, y, rad, mass = rad, color='#e48' }) => {
 
     },
 
-    render: function({ fillCircle, setFillStyle }) {
-      setFillStyle(this.color)
-      fillCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
+    render: function({ drawCircle, setStrokeStyle }) {
+      setStrokeStyle(this.color)
+      drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
     }
   }
 

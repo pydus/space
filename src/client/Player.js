@@ -13,11 +13,11 @@ export default ({
     this.physics.update()
   },
 
-  render: function({ fillCircle, setFillStyle, drawLine, setStrokeStyle }) {
-    setFillStyle(this.color)
-    fillCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
+  render: function({ drawCircle, setStrokeStyle, drawLine }) {
+    setStrokeStyle(this.color)
+    drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
     if (this.physics.controlSystem.origin) {
-      setStrokeStyle('#fff')
+      setStrokeStyle('#48e')
       drawLine(
         this.physics.pos.x,
         this.physics.pos.y,

@@ -6,7 +6,7 @@ export default ({
   physics,
 
   controlMovement: function(direction, isKeyDown) {
-    this.physics.velocity.setMoving(direction, isKeyDown)
+    this.physics.setMoving(direction, isKeyDown)
   },
 
   update: function() {
@@ -15,6 +15,6 @@ export default ({
 
   render: function({ fillCircle, setFillStyle }) {
     setFillStyle(this.color)
-    fillCircle(this.physics.pos.x, this.physics.pos.y, this.physics.radius)
+    fillCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
   }
 })

@@ -29,9 +29,9 @@ export default ({ canvas, width, height }) => {
       this.ctx.fillStyle = style
     },
 
-    fillCircle: function(x, y, radius) {
+    fillCircle: function(x, y, rad) {
       this.ctx.beginPath()
-      this.ctx.arc(x, y, radius, 0, 2 * Math.PI)
+      this.ctx.arc(x, y, rad, 0, 2 * Math.PI)
       this.ctx.fill()
     }
   }

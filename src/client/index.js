@@ -9,7 +9,7 @@ function run() {
   const game = SpaceGame(1024, 720)
   const space = Space()
   const collisionHandler = CollisionHandler({ world: space })
-  const planet = Planet({ x: 1024/2, y: 720/2, radius: 150 })
+  const planet = Planet({ x: 1024/2, y: 720/2, rad: 150 })
   const player = Player({ x: 700, y: 550 })
 
   space.addPlanet(planet)

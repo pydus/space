@@ -13,7 +13,7 @@ export default () => ({
   handleGravity: function() {
     this.planets.forEach(planet => {
       this.players.forEach(player => {
-        const magnitude = planet.physics.radius
+        const magnitude = planet.physics.rad
         planet.physics.attract(player.physics, magnitude)
       })
     })
@@ -23,7 +23,8 @@ export default () => ({
     this.players.forEach(player => {
       const findOrigin = player.physics.findOrigin
       if (findOrigin) {
-        findOrigin.call(player.physics, this.planets)
+        const planets = this.planets.map(planet => planet.physics)
+        findOrigin.call(player.physics, planets)
       }
     })
   },

@@ -1,29 +1,85 @@
-export default () => ({
-  update: function({ x, y, acc, dec, isMoving }) {
-    if (isMoving.up) {
-      y -= acc
-    } else if (y < 0) {
-      y += dec
-    }
+import ListenerService from './ListenerService'
 
-    if (isMoving.down) {
-      y += acc
-    } else if (y > 0) {
-      y -= dec
-    }
+export default ({ maxVel = 2, acc = 0.1, dec = 0.1 }) => {
+  const xYControlSystem = {
+    acc,
+    dec,
+    maxVel,
+    pos: {},
+    vel: {},
+    listeners: [],
+    isMoving: { up: false, down: false, left: false, right: false },
 
-    if (isMoving.left) {
-      x -= acc
-    } else if (x < 0) {
-      x += dec
-    }
+    setMoving: function(direction, bool) {
+      this.isMoving[direction] = bool
+    },
 
-    if (isMoving.right) {
-      x += acc
-    } else if (x > 0) {
-      x -= dec
-    }
+    updateVelocities: function() {
+      if (this.isMoving.up) {
+        this.vel.y -= this.acc
+      } else if (this.vel.y < 0) {
+        this.vel.y += this.dec
+      }
 
-    return [ x, y ]
+      if (this.isMoving.down) {
+        this.vel.y += this.acc
+      } else if (this.vel.y > 0) {
+        this.vel.y -= this.dec
+      }
+
+      if (this.isMoving.left) {
+        this.vel.x -= this.acc
+      } else if (this.vel.x < 0) {
+        this.vel.x += this.dec
+      }
+
+      if (this.isMoving.right) {
+        this.vel.x += this.acc
+      } else if (this.vel.x > 0) {
+        this.vel.x -= this.dec
+      }
+    },
+
+    putVelocitiesInBounds: function() {
+      if (this.vel.y < -this.maxVel) {
+        this.vel.y = -this.maxVel
+      }
+
+      if (this.vel.y > this.maxVel) {
+        this.vel.y = this.maxVel
+      }
+
+      if (this.vel.x < -this.maxVel) {
+        this.vel.x = -this.maxVel
+      }
+
+      if (this.vel.x > this.maxVel) {
+        this.vel.x = this.maxVel
+      }
+    },
+
+    updatePosition: function() {
+      this.pos.x += this.vel.x
+      this.pos.y += this.vel.y
+    },
+
+    setNewProps: function(pos, vel) {
+      this.pos = pos
+      this.vel = vel
+    },
+
+    update: function({ pos, vel }) {
+      this.setNewProps(pos, vel)
+      this.updateVelocities()
+      this.putVelocitiesInBounds()
+      this.updatePosition()
+      this.notifyListeners()
+    }
   }
-})
+
+  const listenerService = ListenerService(() => (
+    { pos: xYControlSystem.pos, vel: xYControlSystem.vel }
+  ))
+
+  return Object.assign({}, xYControlSystem, listenerService)
+}

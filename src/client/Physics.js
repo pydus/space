@@ -1,25 +1,45 @@
 import { getAngle, getDistance } from './tools'
 
-export default ({ pos, velocity, radius = 20, collide = () => {} }) => ({
+export default ({
   pos,
-  velocity,
-  radius,
-  collide,
+  vel = {x: 0, y: 0},
+  rad = 20,
+  collide = () => {},
+  controlSystem
+}) => {
+  const physics = {
+    pos,
+    vel,
+    rad,
+    collide,
+    controlSystem,
 
-  updatePosition: function(pos) {
-    this.pos.x += this.velocity.x
-    this.pos.y += this.velocity.y
-  },
+    init: function() {
+      if (this.controlSystem) {
+        this.controlSystem.listen(({ pos, vel }) => {
+          this.pos = pos
+          this.vel = vel
+        })
+      }
+    },
 
-  attract: function(other, mag) {
-    const angle = getAngle(this, other)
-    const distance = getDistance(this, other)
-    other.pos.x -= mag * Math.cos(angle) / distance
-    other.pos.y -= mag * Math.sin(angle) / distance
-  },
+    setMoving: function(direction, bool) {
+      this.controlSystem.setMoving(direction, bool)
+    },
 
-  update: function(pos) {
-    this.velocity.update()
-    this.updatePosition()
+    attract: function(other, mag) {
+      const angle = getAngle(this, other)
+      const distance = getDistance(this, other)
+      other.pos.x -= mag * Math.cos(angle) / distance
+      other.pos.y -= mag * Math.sin(angle) / distance
+    },
+
+    update: function(pos) {
+      this.controlSystem.update({ pos: this.pos, vel: this.vel })
+    }
   }
-})
+
+  physics.init()
+
+  return physics
+}

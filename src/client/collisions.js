@@ -1,4 +1,4 @@
 export function hardCollide(other, angle, distance) {
-  this.pos.x = other.pos.x + (other.radius + this.radius) * Math.cos(angle)
-  this.pos.y = other.pos.y + (other.radius + this.radius) * Math.sin(angle)
+  this.pos.x = other.pos.x + (other.rad + this.rad) * Math.cos(angle)
+  this.pos.y = other.pos.y + (other.rad + this.rad) * Math.sin(angle)
 }

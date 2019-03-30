@@ -6,7 +6,7 @@ export default ({ world }) => ({
 
   areOverlapping: function(p1, p2) {
     const distance = getDistance(p1, p2)
-    return distance < p1.radius + p2.radius
+    return distance < p1.rad + p2.rad
   },
 
   tryCollision: function(p1, p2) {

@@ -1,7 +1,7 @@
 import Physics from './Physics'
 
-export default ({ x, y, radius, color='#e48' }) => {
-  const physics = Physics({ pos: { x, y }, radius })
+export default ({ x, y, rad, color='#e48' }) => {
+  const physics = Physics({ pos: { x, y }, rad })
 
   const planet = {
     physics,
@@ -17,7 +17,7 @@ export default ({ x, y, radius, color='#e48' }) => {
 
     render: function({ fillCircle, setFillStyle }) {
       setFillStyle(this.color)
-      fillCircle(this.physics.pos.x, this.physics.pos.y, this.physics.radius)
+      fillCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
     }
   }
 

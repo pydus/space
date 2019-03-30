@@ -4,9 +4,9 @@ import PlayerPhysics from './PlayerPhysics'
 import keys from './keys'
 
 export default args => {
-  const { x, y, radius, ...rest } = args
+  const { x, y, rad, ...rest } = args
 
-  const physics = PlayerPhysics({ x, y, radius })
+  const physics = PlayerPhysics({ x, y, rad })
   const player = Player({ physics, ...rest })
 
   const mapFunction = (command, isKeyDown) => {

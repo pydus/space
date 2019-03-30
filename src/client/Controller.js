@@ -6,7 +6,7 @@ export default ({ keys, mapFunction }) => {
     mapFunction(command, isKeyDown)
   }
 
-  const keyHandler = KeyHandler({ keys, listener })
+  const keyHandler = KeyHandler({ listener })
 
   return {
     keys,

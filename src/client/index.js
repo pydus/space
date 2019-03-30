@@ -2,7 +2,6 @@ import SpaceGame from './SpaceGame'
 import Space from './Space'
 import Planet from './Planet'
 import Player from './ControllablePlayer'
-import KeyHandler from './KeyHandler'
 import CollisionHandler from './CollisionHandler'
 
 function run() {

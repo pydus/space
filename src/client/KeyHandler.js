@@ -1,7 +1,6 @@
-export default ({ keys, listener }) => {
+export default ({ listener }) => {
   const keyHandler = {
-    keys,
-    listener,
+    listener
   }
 
   function onKey(e, isKeyDown) {

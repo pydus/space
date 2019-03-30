@@ -1,6 +1,5 @@
 import { getAngle, getDistance } from './engine/tools'
-
-const G = 20
+import { getGravitationalForce } from './space-tools'
 
 export default ({
   pos,
@@ -23,8 +22,7 @@ export default ({
 
   attract: function(other) {
     const angle = getAngle(this, other)
-    const distance = getDistance(this, other)
-    const force = G * this.mass * other.mass / (distance ** 2)
+    const force = getGravitationalForce(this, other)
     other.pos.x -= force * Math.cos(angle)
     other.pos.y -= force * Math.sin(angle)
   },

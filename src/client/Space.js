@@ -64,6 +64,32 @@ export default ({ width, height }) => ({
     })
   },
 
+  keepInBounds: function(physicsObjects) {
+    physicsObjects.forEach(p => {
+      const rad = p.physics.rad
+      let { x, y } = p.physics.pos
+
+      if (x < rad) {
+        x = rad
+      } else if (x > this.width - rad) {
+        x = this.width - rad
+      }
+
+      if (y < rad) {
+        y = rad
+      } else if (y > this.height - rad) {
+        y = this.height - rad
+      }
+
+      p.physics.setPos({ x, y })
+    })
+  },
+
+  handleBounds: function() {
+    this.keepInBounds(this.players)
+    this.keepInBounds(this.spaceships)
+  },
+
   update: function() {
     this.planets.forEach(planet => planet.update())
     this.players.forEach(player => player.update())
@@ -71,6 +97,7 @@ export default ({ width, height }) => ({
     this.handleEntries()
     this.handleGravity()
     this.runOriginFinders()
+    this.handleBounds()
   },
 
   renderBackground: function({ setStrokeStyle, drawLine }) {

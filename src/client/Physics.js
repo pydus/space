@@ -1,7 +1,12 @@
+import XYControlSystem from './XYControlSystem'
+import OriginControlSystem from './OriginControlSystem'
+import RotationalControlSystem from './RotationalControlSystem'
+import OriginFinder from './OriginFinder'
+import { hardCollide } from './engine/collisions'
 import { getAngle, getDistance } from './engine/tools'
 import { getGravitationalForce } from './space-tools'
 
-export default ({
+const Physics = ({
   pos,
   vel = { x: 0, y: 0 },
   rad,
@@ -45,3 +50,28 @@ export default ({
     this.angle = angle
   }
 })
+
+export function PlayerPhysics({ x, y, rad = 20, mass = 100 }) {
+  return Physics({
+    pos: { x, y },
+    rad,
+    mass,
+    collide: hardCollide,
+    controlSystem: OriginControlSystem({
+      originFinder: OriginFinder()
+    })
+  })
+}
+
+export function SpaceshipPhysics({ x, y, rad, mass, angle, engine }) {
+  return Physics({
+    pos: { x, y },
+    mass,
+    rad,
+    angle,
+    collide: hardCollide,
+    controlSystem: RotationalControlSystem(engine)
+  })
+}
+
+export default Physics

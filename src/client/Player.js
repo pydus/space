@@ -1,4 +1,4 @@
-import PlayerPhysics from './PlayerPhysics'
+import { PlayerPhysics } from './Physics'
 
 export default ({
   color = '#4e8',

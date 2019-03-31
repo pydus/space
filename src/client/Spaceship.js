@@ -1,9 +1,8 @@
 import Physics from './Physics'
-import RotationalControlSystem from './RotationalControlSystem'
 import Controller from './engine/Controller'
 import Drivable from './Drivable'
 import Engine from './Engine'
-import { hardCollide } from './engine/collisions'
+import { SpaceshipPhysics } from './Physics'
 
 const e = Engine({
   maxVel: 8,
@@ -22,18 +21,18 @@ const keys = {
   'arrowright': 'right'
 }
 
-export default ({ x, y, rad = 100, mass = 150, color = '#e48', engine = e }) => {
+export default ({ x, y, rad = 100, mass = 150, angle = 0, color = '#e48', engine = e }) => {
   const spaceship = {
     color,
     engine,
 
-    physics: Physics({
-      pos: { x, y },
+    physics: SpaceshipPhysics({
+      x,
+      y,
       mass,
       rad,
-      collide: hardCollide,
-      angle: 0,
-      controlSystem: RotationalControlSystem(engine)
+      angle,
+      engine
     }),
 
     controlMovement: function(direction, isKeyDown) {

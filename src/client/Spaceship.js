@@ -39,6 +39,22 @@ export default ({ x, y, rad = 100, mass = 150, angle = 0, color = '#e48', engine
       this.physics.setMoving(direction, isKeyDown)
     },
 
+    handleEngine: function() {
+      const controlSystem = this.physics.controlSystem
+
+      if (controlSystem.isEnabled) {
+        if (this.engine.isFiring) {
+          if (!controlSystem.isMoving.up) {
+            this.engine.stopFiring()
+          }
+        } else if (controlSystem.isMoving.up) {
+          this.engine.fire()
+        }
+      } else {
+        this.engine.stopFiring()
+      }
+    },
+
     update: function() {
       this.physics.update()
       const p = this.physics
@@ -46,6 +62,7 @@ export default ({ x, y, rad = 100, mass = 150, angle = 0, color = '#e48', engine
       const engineY = p.pos.y - p.rad * Math.sin(p.angle)
       this.engine.physics.setPos({ x: engineX, y: engineY })
       this.engine.physics.setAngle(p.angle - Math.PI)
+      this.handleEngine()
       this.engine.update()
     },
 
@@ -60,11 +77,6 @@ export default ({ x, y, rad = 100, mass = 150, angle = 0, color = '#e48', engine
   const mapFunction = (command, isKeyDown) => {
     switch (command) {
       case 'up':
-        if (isKeyDown) {
-          spaceship.engine.fire()
-        } else {
-          spaceship.engine.stopFiring()
-        }
       case 'left':
       case 'right':
         spaceship.controlMovement(command, isKeyDown)

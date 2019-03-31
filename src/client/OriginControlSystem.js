@@ -17,7 +17,7 @@ export default ({
     angle: null,
     pos: {},
     vel: {},
-    enabled: true,
+    isEnabled: true,
     minDerivedVel: 0.1,
     derivedVelUpdateRatio: 0.99,
 
@@ -28,11 +28,11 @@ export default ({
     },
 
     enable: function() {
-      this.enabled = true
+      this.isEnabled = true
     },
 
     disable: function() {
-      this.enabled = false
+      this.isEnabled = false
     },
 
     init: function() {
@@ -106,7 +106,7 @@ export default ({
       this.setNewProps(pos, vel)
 
       if (this.origin) {
-        if (this.enabled) {
+        if (this.isEnabled) {
           this.updateAngVel()
           this.updateAngle()
         }

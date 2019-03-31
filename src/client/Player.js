@@ -8,9 +8,25 @@ export default ({
   physics,
   originLineColor,
   drawOriginLine,
+  isEntering: false,
+  isInside: false,
 
   controlMovement: function(direction, isKeyDown) {
     this.physics.setMoving(direction, isKeyDown)
+  },
+
+  setIsEntering: function(isEntering) {
+    this.isEntering = isEntering
+  },
+
+  enter: function() {
+    this.isInside = true
+    this.isEntering = false
+  },
+
+  exit: function() {
+    this.isInside = false
+    this.isEntering = false
   },
 
   update: function() {

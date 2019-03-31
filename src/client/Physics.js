@@ -3,9 +3,10 @@ import { getGravitationalForce } from './space-tools'
 
 export default ({
   pos,
-  vel = {x: 0, y: 0},
-  rad = 20,
+  vel = { x: 0, y: 0 },
+  rad,
   mass = rad,
+  angle = 0,
   collide = () => {},
   controlSystem
 }) => ({
@@ -13,11 +14,16 @@ export default ({
   vel,
   rad,
   mass,
+  angle,
   collide,
   controlSystem,
 
   setMoving: function(direction, bool) {
     this.controlSystem.setMoving(direction, bool)
+  },
+
+  setPos: function(pos) {
+    this.pos = pos
   },
 
   attract: function(other) {
@@ -28,11 +34,12 @@ export default ({
   },
 
   update: function() {
-    const { pos, vel } = this.controlSystem.update(
-      { pos: this.pos, vel: this.vel }
+    const { pos, vel, angle } = this.controlSystem.update(
+      { pos: this.pos, vel: this.vel, angle: this.angle }
     )
 
     this.pos = pos
     this.vel = vel
+    this.angle = angle
   }
 })

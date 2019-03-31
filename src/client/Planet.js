@@ -7,10 +7,6 @@ export default ({ x, y, rad, mass = rad, color='#84e' }) => {
     physics,
     color,
 
-    collide: function() {
-
-    },
-
     update: function() {
 
     },

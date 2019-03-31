@@ -24,6 +24,9 @@ export default ({ world }) => ({
       this.world.players.forEach(player => {
         this.tryCollision(planet.physics, player.physics)
       })
+      this.world.spaceships.forEach(spaceship => {
+        this.tryCollision(planet.physics, spaceship.physics)
+      })
     })
   }
 })

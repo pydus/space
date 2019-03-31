@@ -4,10 +4,19 @@ export default ({ maxVel = 2, acc = 0.1, dec = 0.1 }) => ({
   maxVel,
   pos: {},
   vel: {},
+  enabled: true,
   isMoving: { up: false, down: false, left: false, right: false },
 
   setMoving: function(direction, bool) {
     this.isMoving[direction] = bool
+  },
+
+  enable: function() {
+    this.enabled = true
+  },
+
+  disable: function() {
+    this.enabled = false
   },
 
   updateVelocities: function() {
@@ -66,8 +75,10 @@ export default ({ maxVel = 2, acc = 0.1, dec = 0.1 }) => ({
 
   update: function({ pos, vel }) {
     this.setNewProps(pos, vel)
-    this.updateVelocities()
-    this.putVelocitiesInBounds()
+    if (this.enabled) {
+      this.updateVelocities()
+      this.putVelocitiesInBounds()
+    }
     this.updatePosition()
     return { pos: this.pos, vel: this.vel }
   }

@@ -10,13 +10,14 @@ const keys = {
   'arrowup': 'up',
   'arrowdown': 'down',
   'arrowleft': 'left',
-  'arrowright': 'right'
+  'arrowright': 'right',
+  ' ': 'enter'
 }
 
 export default args => {
-  const { x, y, rad, ...rest } = args
+  const { x, y, rad, mass, ...rest } = args
 
-  const physics = PlayerPhysics({ x, y, rad })
+  const physics = PlayerPhysics({ x, y, rad, mass })
   const player = Player({ physics, ...rest })
 
   const mapFunction = (command, isKeyDown) => {
@@ -27,11 +28,13 @@ export default args => {
       case 'right':
         player.controlMovement(command, isKeyDown)
         break
+      case 'enter':
+        player.setIsEntering(isKeyDown)
       default:
     }
   }
 
   const controller = Controller({ keys, mapFunction })
 
-  return Object.assign({}, player, controller)
+  return Object.assign(player, controller)
 }

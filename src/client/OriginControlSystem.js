@@ -9,18 +9,30 @@ export default ({
 }) => {
   const originControlSystem = {
     originFinder,
-    vel,
+    angVel: vel,
     maxVel,
     acc,
     dec,
     origin: null,
     angle: null,
     pos: {},
+    vel: {},
+    enabled: true,
+    minDerivedVel: 0.1,
+    derivedVelUpdateRatio: 0.99,
 
     isMoving: { up: false, down: false, left: false, right: false },
 
     setMoving: function(direction, bool) {
       this.isMoving[direction] = bool
+    },
+
+    enable: function() {
+      this.enabled = true
+    },
+
+    disable: function() {
+      this.enabled = false
     },
 
     init: function() {
@@ -33,36 +45,36 @@ export default ({
 
     updateAngVel: function() {
       if (this.isMoving.left) {
-        this.vel -= this.acc
-        if (this.vel < -this.maxVel) {
-          this.vel = -this.maxVel
+        this.angVel -= this.acc
+        if (this.angVel < -this.maxVel) {
+          this.angVel = -this.maxVel
         }
-      } else if (this.vel <= -this.dec) {
-        this.vel += this.dec
+      } else if (this.angVel <= -this.dec) {
+        this.angVel += this.dec
       }
 
       if (this.isMoving.right) {
-        this.vel += this.acc
-        if (this.vel > this.maxVel) {
-          this.vel = this.maxVel
+        this.angVel += this.acc
+        if (this.angVel > this.maxVel) {
+          this.angVel = this.maxVel
         }
-      } else if (this.vel >= this.dec) {
-        this.vel -= this.dec
+      } else if (this.angVel >= this.dec) {
+        this.angVel -= this.dec
       }
 
       if (
         !this.isMoving.left &&
         !this.isMoving.right &&
-        Math.abs(this.vel) < this.dec
+        Math.abs(this.angVel) < this.dec
       ) {
-        this.vel = 0
+        this.angVel = 0
       }
     },
 
     updateAngle: function() {
       const distance = getDistance(this.origin, this)
       this.angle = getAngle(this.origin, this)
-      this.angle += this.vel / (distance ** 2)
+      this.angle += this.angVel / (distance ** 2)
     },
 
     updatePosition: function() {
@@ -71,18 +83,48 @@ export default ({
       this.pos.y = this.origin.pos.y + distance * Math.sin(this.angle)
     },
 
-    setNewProps: function(pos) {
-      this.pos = Object.assign({}, pos)
+    updateDerivedPosition: function() {
+      if (this.vel.x !== 0) {
+        this.pos.x += this.vel.x
+      }
+      if (this.vel.y !== 0) {
+        this.pos.y += this.vel.y
+      }
     },
 
-    update: function({ pos }) {
-      this.setNewProps(pos)
-      if (this.origin) {
-        this.updateAngVel()
-        this.updateAngle()
-        this.updatePosition()
+    updateDerivedVelocity: function() {
+      if (Math.abs(this.vel.x) > this.minDerivedVel) {
+        this.vel.x *= this.derivedVelUpdateRatio
+      } else {
+        this.vel.x = 0
       }
-      return { pos: this.pos }
+
+      if (Math.abs(this.vel.y) > this.minDerivedVel) {
+        this.vel.y *= this.derivedVelUpdateRatio
+      } else {
+        this.vel.y = 0
+      }
+    },
+
+    setNewProps: function(pos, vel) {
+      this.pos = Object.assign({}, pos)
+      this.vel = Object.assign({}, vel)
+    },
+
+    update: function({ pos, vel }) {
+      this.setNewProps(pos, vel)
+
+      if (this.origin) {
+        if (this.enabled) {
+          this.updateAngVel()
+          this.updateAngle()
+        }
+        this.updatePosition()
+        this.updateDerivedPosition()
+        this.updateDerivedVelocity()
+      }
+
+      return { pos: this.pos, vel: this.vel }
     }
   }
 

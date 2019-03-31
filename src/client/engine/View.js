@@ -12,6 +12,7 @@ export default ({ canvas, width, height, camera }) => {
       this.drawCircle = this.drawCircle.bind(this)
       this.setStrokeStyle = this.setStrokeStyle.bind(this)
       this.drawLine = this.drawLine.bind(this)
+      this.drawRect = this.drawRect.bind(this)
       this.adjustViewSize()
       this.adjustViewSizeAsNeeded()
     },
@@ -63,6 +64,13 @@ export default ({ canvas, width, height, camera }) => {
       this.ctx.beginPath()
       this.ctx.moveTo(tx0, ty0)
       this.ctx.lineTo(tx1, ty1)
+      this.ctx.stroke()
+    },
+
+    drawRect: function(x, y, width, height) {
+      const [ tx, ty ] = this.translate(x, y)
+      const scale = this.getScale()
+      this.ctx.rect(tx, ty, width * scale, height * scale)
       this.ctx.stroke()
     }
   }

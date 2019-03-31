@@ -51,7 +51,7 @@ const Physics = ({
   }
 })
 
-export function PlayerPhysics({ x, y, rad = 20, mass = 100 }) {
+export function PlayerPhysics({ x, y, rad, mass }) {
   return Physics({
     pos: { x, y },
     rad,
@@ -60,6 +60,14 @@ export function PlayerPhysics({ x, y, rad = 20, mass = 100 }) {
     controlSystem: OriginControlSystem({
       originFinder: OriginFinder()
     })
+  })
+}
+
+export function PlanetPhysics({ x, y, rad, mass }) {
+  return Physics({
+    pos: { x, y },
+    rad,
+    mass
   })
 }
 

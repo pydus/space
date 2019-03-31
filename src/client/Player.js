@@ -4,8 +4,8 @@ export default ({
   color = '#4e8',
   x,
   y,
-  rad,
-  mass,
+  rad = 20,
+  mass = 100,
   originLineColor ='#48e',
   drawOriginLine = false
 }) => ({

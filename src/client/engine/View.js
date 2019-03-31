@@ -1,8 +1,6 @@
-export default ({ canvas, width, height, camera }) => {
+export default ({ canvas, camera }) => {
   const view = {
     canvas,
-    width,
-    height,
     camera,
 
     ctx: canvas.getContext('2d'),

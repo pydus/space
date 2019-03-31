@@ -4,9 +4,9 @@ import View from './engine/View'
 
 const canvas = document.getElementById('canvas')
 
-function SpaceGame({ width, height, camera }) {
+function SpaceGame({ camera }) {
   const loop = Loop({ updatesPerSecond: 60 })
-  const view = View({ canvas, width, height, camera })
+  const view = View({ canvas, camera })
   return Game({ loop, view })
 }
 

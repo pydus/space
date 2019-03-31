@@ -1,6 +1,12 @@
 import { getDistance } from './engine/tools'
 
-export default () => ({
+export default ({ width, height }) => ({
+  width,
+  height,
+
+  gridColor: '#222',
+  gridLineSpacing: 1000,
+
   planets: [],
   players: [],
   spaceships: [],
@@ -67,7 +73,25 @@ export default () => ({
     this.runOriginFinders()
   },
 
+  renderBackground: function({ setStrokeStyle, drawLine }) {
+    setStrokeStyle(this.gridColor)
+
+    const ny = Math.floor(this.height / this.gridLineSpacing)
+    const nx = Math.floor(this.width / this.gridLineSpacing)
+
+    const xSpacing = this.width / nx
+    const ySpacing = this.height / ny
+
+    for (let y = 0; y < this.height + 1; y += ySpacing) {
+      drawLine(0, y, this.width, y)
+      for (let x = 0; x < this.width + 1; x += xSpacing) {
+        drawLine(x, 0, x, this.height)
+      }
+    }
+  },
+
   render: function(view) {
+    this.renderBackground(view)
     this.planets.forEach(planet => planet.render(view))
     this.players.forEach(player => player.render(view))
     this.spaceships.forEach(spaceship => spaceship.render(view))

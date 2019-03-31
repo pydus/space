@@ -24,15 +24,15 @@ function run() {
   const pla3 = Player({ x: 1600, y: 550, rad: 20 })
   const pla4 = Player({ x: 1600, y: 550, rad: 20 })
 
-  spaceship.addPassenger(pla.physics)
-  spaceship.addPassenger(pla2.physics)
-  spaceship.addPassenger(pla3.physics)
-  spaceship.addPassenger(pla4.physics)
-
   const camera = Camera({ width: 2000 })
   const cameraController = CameraController({ p: player.physics, camera })
 
   const game = SpaceGame({ width: 10000, height: 10000, camera })
+
+  spaceship.addPassenger(pla.physics)
+  spaceship.addPassenger(pla2.physics)
+  spaceship.addPassenger(pla3.physics)
+  spaceship.addPassenger(pla4.physics)
 
   space.addPlanet(planet)
   space.addPlanet(planet2)

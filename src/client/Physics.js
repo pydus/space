@@ -34,6 +34,8 @@ export default ({
   },
 
   update: function() {
+    if (!this.controlSystem) return
+
     const { pos, vel, angle } = this.controlSystem.update(
       { pos: this.pos, vel: this.vel, angle: this.angle }
     )

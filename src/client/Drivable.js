@@ -1,18 +1,29 @@
 export default ({
   vehicle,
-  driverPos,
-  passengerSeats,
-  enterDistance = 100,
-  maxPassengers = 2
+  driverSeat,
+  passengerSeats = [],
+  enterDistance = 100
 }) => ({
   vehicle,
-  driverPos,
+  driverSeat,
   passengerSeats,
-  maxPassengers,
   enterDistance,
 
   driver: null,
   passengers: [],
+
+  enter: function(p) {
+    if (!this.addDriver(p)) {
+      return this.addPassenger(p)
+    }
+    return true
+  },
+
+  exit: function(p)  {
+    if (this.removeDriver(p)) {
+      return true
+    }
+  },
 
   addDriver: function(p) {
     if (this.driver) return false
@@ -25,7 +36,7 @@ export default ({
   },
 
   removeDriver: function(p) {
-    if (!this.driver) return false
+    if (this.driver !== p) return false
     if (p.controlSystem) {
       p.controlSystem.enable()
       this.vehicle.physics.controlSystem.disable()
@@ -35,10 +46,12 @@ export default ({
   },
 
   addPassenger: function(p) {
-    if (p.controlSystem) {
+    if (this.passengers.length >= this.passengerSeats.length) {
+      return false
+    } else if (p.controlSystem) {
       p.controlSystem.disable()
     }
-    this.passengers.push(p)
+    return this.passengers.push(p)
   },
 
   removePassenger: function(p) {
@@ -46,32 +59,38 @@ export default ({
       p.controlSystem.enable()
     }
     const i = this.passengers.indexOf(p)
+    if (i === -1) return false
     this.passengers.splice(i, 1)
+    return true
   },
 
-  moveDriver: function() {
+  setPositionOf: function(p, seat) {
+    const { distance, angle } = seat
+    const vp = this.vehicle.physics
+
+    p.setPos({
+      x: vp.pos.x + distance * Math.cos(vp.angle + angle),
+      y: vp.pos.y + distance * Math.sin(vp.angle + angle)
+    })
+
+    p.vel = this.vehicle.physics.vel
+  },
+
+  updateDriverPosition: function() {
     if (this.driver) {
-      const { distance, angle } = this.driverPos
-      const p = this.vehicle.physics
-
-      this.driver.setPos({
-        x: p.pos.x + distance * Math.cos(p.angle + angle + Math.PI),
-        y: p.pos.y + distance * Math.sin(p.angle + angle + Math.PI)
-      })
-
-      this.driver.vel = this.vehicle.physics.vel
+      this.setPositionOf(this.driver, this.driverSeat)
     }
   },
 
-  movePassengers: function() {
-    this.passengers.forEach(passenger => (
-      passenger.setPos(this.vehicle.physics.pos)
-    ))
+  updatePassengerPositions: function() {
+    this.passengers.forEach((passenger, i) => {
+      this.setPositionOf(passenger, this.passengerSeats[i])
+    })
   },
 
   update: function() {
-    this.moveDriver()
-    this.movePassengers()
+    this.updateDriverPosition()
+    this.updatePassengerPositions()
     this.vehicle.update()
   }
 })

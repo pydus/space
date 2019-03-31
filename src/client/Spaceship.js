@@ -18,7 +18,6 @@ const keys = {
   'a': 'left',
   'd': 'right',
   'arrowup': 'up',
-  'arrowdown': 'down',
   'arrowleft': 'left',
   'arrowright': 'right'
 }
@@ -64,11 +63,20 @@ export default ({ x, y, rad = 100, mass = 150, color = '#e48', engine = e }) => 
 
   const controller = Controller({ keys, mapFunction })
 
-  const driverPos = { distance: spaceship.physics.rad - 20, angle: 0 }
+  const distance = spaceship.physics.rad - 20
+
+  const driverSeat = { distance, angle: Math.PI }
+
+  const passengerSeats = [
+    { distance: 0, angle: 0 },
+    { distance, angle: Math.PI / 2 },
+    { distance, angle: -Math.PI / 2 }
+  ]
 
   const drivable = Drivable({
     vehicle: spaceship,
-    driverPos,
+    driverSeat,
+    passengerSeats,
     enterDistance: rad + 20
   })
 

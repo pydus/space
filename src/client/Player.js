@@ -1,15 +1,21 @@
+import PlayerPhysics from './PlayerPhysics'
+
 export default ({
-  color = '#ea8',
-  physics,
+  color = '#4e8',
+  x,
+  y,
+  rad,
+  mass,
   originLineColor ='#48e',
   drawOriginLine = false
 }) => ({
   color,
-  physics,
   originLineColor,
   drawOriginLine,
   isEntering: false,
   isInside: false,
+
+  physics: PlayerPhysics({ x, y, rad, mass }),
 
   controlMovement: function(direction, isKeyDown) {
     this.physics.setMoving(direction, isKeyDown)
@@ -36,7 +42,10 @@ export default ({
   render: function({ drawCircle, setStrokeStyle, drawLine }) {
     setStrokeStyle(this.color)
     drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
-    if (this.physics.controlSystem.origin && this.drawOriginLine) {
+
+    const controlSystem = this.physics.controlSystem
+
+    if (controlSystem && controlSystem.origin && this.drawOriginLine) {
       setStrokeStyle(this.originLineColor)
       drawLine(
         this.physics.pos.x,

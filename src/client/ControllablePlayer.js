@@ -1,6 +1,5 @@
 import Player from './Player'
 import Controller from './engine/Controller'
-import PlayerPhysics from './PlayerPhysics'
 
 const keys = {
   'w': 'up',
@@ -17,8 +16,7 @@ const keys = {
 export default args => {
   const { x, y, rad, mass, ...rest } = args
 
-  const physics = PlayerPhysics({ x, y, rad, mass })
-  const player = Player({ physics, ...rest })
+  const player = Player({ x, y, rad, mass, color: '#ea8', ...rest })
 
   const mapFunction = (command, isKeyDown) => {
     switch (command) {

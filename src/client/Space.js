@@ -23,9 +23,9 @@ export default () => ({
         const p = player.physics
         this.spaceships.forEach(spaceship => {
           if (getDistance(p, spaceship.physics) < spaceship.enterDistance) {
-            if (!player.isInside && spaceship.addDriver(p)) {
+            if (!player.isInside && spaceship.enter(p)) {
               player.enter()
-            } else if (player.isInside && spaceship.removeDriver(p)) {
+            } else if (player.isInside && spaceship.exit(p)) {
               player.exit()
             }
           }
@@ -47,10 +47,13 @@ export default () => ({
 
   runOriginFinders: function() {
     this.players.forEach(player => {
-      const originFinder = player.physics.controlSystem.originFinder
-      if (originFinder) {
-        const planets = this.planets.map(planet => planet.physics)
-        originFinder.run.call(player.physics, planets)
+      const controlSystem = player.physics.controlSystem
+      if (controlSystem) {
+        const originFinder = controlSystem.originFinder
+        if (originFinder) {
+          const planets = this.planets.map(planet => planet.physics)
+          originFinder.run.call(player.physics, planets)
+        }
       }
     })
   },

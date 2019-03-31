@@ -5,7 +5,6 @@ export default ({ maxVel, acc, angAcc, angDec, maxAngVel }) => ({
   angDec,
   maxAngVel,
   angVel: 0,
-
   pos: {},
   vel: {},
   angle: null,

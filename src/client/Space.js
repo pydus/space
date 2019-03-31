@@ -93,7 +93,7 @@ export default ({ width, height }) => ({
   render: function(view) {
     this.renderBackground(view)
     this.planets.forEach(planet => planet.render(view))
-    this.players.forEach(player => player.render(view))
     this.spaceships.forEach(spaceship => spaceship.render(view))
+    this.players.forEach(player => player.render(view))
   }
 })

@@ -8,6 +8,7 @@ export default ({ canvas, camera }) => {
     init: function() {
       this.setFillStyle = this.setFillStyle.bind(this)
       this.drawCircle = this.drawCircle.bind(this)
+      this.fillCircle = this.fillCircle.bind(this)
       this.setStrokeStyle = this.setStrokeStyle.bind(this)
       this.drawLine = this.drawLine.bind(this)
       this.drawRect = this.drawRect.bind(this)
@@ -48,12 +49,22 @@ export default ({ canvas, camera }) => {
       this.ctx.strokeStyle = style
     },
 
-    drawCircle: function(x, y, rad) {
+    circleArc: function(x, y, rad) {
       const [ tx, ty ] = this.translate(x, y)
       const scale = this.getScale()
-      this.ctx.beginPath()
       this.ctx.arc(tx, ty, scale * rad, 0, 2 * Math.PI)
+    },
+
+    drawCircle: function(x, y, rad) {
+      this.ctx.beginPath()
+      this.circleArc(x, y, rad)
       this.ctx.stroke()
+    },
+
+    fillCircle: function(x, y, rad) {
+      this.ctx.beginPath()
+      this.circleArc(x, y, rad)
+      this.ctx.fill()
     },
 
     drawLine: function(x0, y0, x1, y1) {

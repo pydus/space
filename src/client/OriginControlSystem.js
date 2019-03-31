@@ -83,15 +83,6 @@ export default ({
       this.pos.y = this.origin.pos.y + distance * Math.sin(this.angle)
     },
 
-    updateDerivedPosition: function() {
-      if (this.vel.x !== 0) {
-        this.pos.x += this.vel.x
-      }
-      if (this.vel.y !== 0) {
-        this.pos.y += this.vel.y
-      }
-    },
-
     updateDerivedVelocity: function() {
       if (Math.abs(this.vel.x) > this.minDerivedVel) {
         this.vel.x *= this.derivedVelUpdateRatio
@@ -120,7 +111,6 @@ export default ({
           this.updateAngle()
         }
         this.updatePosition()
-        this.updateDerivedPosition()
         this.updateDerivedVelocity()
       }
 

@@ -41,9 +41,17 @@ export default ({ x, y, rad = 100, mass = 150, angle = 0, color = '#e48', engine
 
     update: function() {
       this.physics.update()
+      const p = this.physics
+      const engineX = p.pos.x - p.rad * Math.cos(p.angle)
+      const engineY = p.pos.y - p.rad * Math.sin(p.angle)
+      this.engine.physics.setPos({ x: engineX, y: engineY })
+      this.engine.physics.setAngle(p.angle - Math.PI)
+      this.engine.update()
     },
 
-    render: function({ setStrokeStyle, drawCircle }) {
+    render: function(view) {
+      const { setStrokeStyle, drawCircle } = view
+      this.engine.render(view)
       setStrokeStyle(this.color)
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
     }
@@ -52,6 +60,11 @@ export default ({ x, y, rad = 100, mass = 150, angle = 0, color = '#e48', engine
   const mapFunction = (command, isKeyDown) => {
     switch (command) {
       case 'up':
+        if (isKeyDown) {
+          spaceship.engine.fire()
+        } else {
+          spaceship.engine.stopFiring()
+        }
       case 'left':
       case 'right':
         spaceship.controlMovement(command, isKeyDown)

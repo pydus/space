@@ -80,11 +80,6 @@ export default ({ maxVel, acc, angAcc, angDec, maxAngVel }) => ({
     this.angle += this.angVel
   },
 
-  updatePosition: function() {
-    this.pos.x += this.vel.x
-    this.pos.y += this.vel.y
-  },
-
   setNewProps: function(pos, vel, angle) {
     this.pos = Object.assign({}, pos)
     this.vel = Object.assign({}, vel)
@@ -100,8 +95,6 @@ export default ({ maxVel, acc, angAcc, angDec, maxAngVel }) => ({
       this.updateAngVel()
       this.updateAngle()
     }
-
-    this.updatePosition()
 
     return { pos: this.pos, vel: this.vel, angle: this.angle }
   }

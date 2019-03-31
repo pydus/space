@@ -31,6 +31,10 @@ const Physics = ({
     this.pos = pos
   },
 
+  setAngle: function(angle) {
+    this.angle = angle
+  },
+
   attract: function(other) {
     const angle = getAngle(this, other)
     const force = getGravitationalForce(this, other)
@@ -38,16 +42,23 @@ const Physics = ({
     other.pos.y -= force * Math.sin(angle)
   },
 
+  updatePosition: function() {
+    this.pos.x += this.vel.x
+    this.pos.y += this.vel.y
+  },
+
   update: function() {
-    if (!this.controlSystem) return
+    if (this.controlSystem) {
+      const { pos, vel, angle } = this.controlSystem.update(
+        { pos: this.pos, vel: this.vel, angle: this.angle }
+      )
 
-    const { pos, vel, angle } = this.controlSystem.update(
-      { pos: this.pos, vel: this.vel, angle: this.angle }
-    )
+      this.pos = pos
+      this.vel = vel
+      this.angle = angle
+    }
 
-    this.pos = pos
-    this.vel = vel
-    this.angle = angle
+    this.updatePosition()
   }
 })
 

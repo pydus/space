@@ -63,11 +63,6 @@ export default ({ maxVel = 2, acc = 0.1, dec = 0.1 }) => ({
     }
   },
 
-  updatePosition: function() {
-    this.pos.x += this.vel.x
-    this.pos.y += this.vel.y
-  },
-
   setNewProps: function(pos, vel) {
     this.pos = Object.assign({}, pos)
     this.vel = Object.assign({}, vel)
@@ -79,7 +74,6 @@ export default ({ maxVel = 2, acc = 0.1, dec = 0.1 }) => ({
       this.updateVelocities()
       this.putVelocitiesInBounds()
     }
-    this.updatePosition()
     return { pos: this.pos, vel: this.vel }
   }
 })

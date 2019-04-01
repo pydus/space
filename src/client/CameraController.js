@@ -3,7 +3,7 @@ export default ({ p, camera, velFactor = 0.025 }) => ({
   velFactor,
 
   updateWidth: function() {
-    const vel = Math.abs(p.vel.x + p.vel.y)
+    const vel = Math.abs(p.vel.x) + Math.abs(p.vel.y)
     camera.setWidth(this.originalWidth * (1 + vel * this.velFactor))
   },
 

@@ -1,4 +1,4 @@
-import { getAngle, getDistance } from './engine/tools'
+import { getDistance } from './engine/tools'
 
 // TODO: only accept physics objects of world, not entire world
 export default ({ world }) => ({
@@ -11,11 +11,8 @@ export default ({ world }) => ({
 
   tryCollision: function(p1, p2) {
     if (this.areOverlapping(p1, p2)) {
-      const distance = getDistance(p1, p2)
-      const angle = getAngle(p1, p2)
-
-      p1.collide(p2, angle, distance)
-      p2.collide(p1, angle, distance)
+      p1.collideWith(p2)
+      p2.collideWith(p1)
     }
   },
 

@@ -2,7 +2,6 @@ import XYControlSystem from './XYControlSystem'
 import OriginControlSystem from './OriginControlSystem'
 import RotationalControlSystem from './RotationalControlSystem'
 import OriginFinder from './OriginFinder'
-import { hardCollide } from './engine/collisions'
 import { getAngle, getDistance } from './engine/tools'
 import { getGravitationalForce } from './space-tools'
 
@@ -12,7 +11,8 @@ const Physics = ({
   rad,
   mass = rad,
   angle = 0,
-  collide = () => {},
+  mobile = true,
+  smoothness = 1,
   controlSystem
 }) => ({
   pos,
@@ -20,7 +20,8 @@ const Physics = ({
   rad,
   mass,
   angle,
-  collide,
+  mobile,
+  smoothness,
   controlSystem,
 
   setMoving: function(direction, bool) {
@@ -35,11 +36,47 @@ const Physics = ({
     this.angle = angle
   },
 
-  attract: function(other) {
+  collideWith: function(p) {
+    if (!this.mobile) return
+
+    const angle = getAngle(p, this)
+
+    this.setPos({
+      x: p.pos.x + (p.rad + this.rad) * Math.cos(angle),
+      y: p.pos.y + (p.rad + this.rad) * Math.sin(angle)
+    })
+
+    this.applyFrictionFrom(p)
+  },
+
+  applyFrictionFrom: function(p) {
+    const factor = Math.min(
+      1,
+      (this.smoothness + p.smoothness) / 2
+    )
+
+    this.vel.x *= factor
+    this.vel.y *= factor
+  },
+
+  applyForce: function(force, angle) {
+    this.vel.x += force * Math.cos(angle)
+    this.vel.y += force * Math.sin(angle)
+  },
+
+  applyForceTo: function(other, force) {
     const angle = getAngle(this, other)
+    other.applyForce(force, angle)
+  },
+
+  attract: function(other) {
+    const force = -1 * getGravitationalForce(this, other)
+    this.applyForceTo(other, force)
+  },
+
+  repel: function(other) {
     const force = getGravitationalForce(this, other)
-    other.pos.x -= force * Math.cos(angle)
-    other.pos.y -= force * Math.sin(angle)
+    this.applyForceTo(other, force)
   },
 
   updatePosition: function() {
@@ -67,7 +104,7 @@ export function PlayerPhysics({ x, y, rad, mass }) {
     pos: { x, y },
     rad,
     mass,
-    collide: hardCollide,
+    smoothness: 0.9,
     controlSystem: OriginControlSystem({
       originFinder: OriginFinder()
     })
@@ -78,7 +115,9 @@ export function PlanetPhysics({ x, y, rad, mass }) {
   return Physics({
     pos: { x, y },
     rad,
-    mass
+    mass,
+    mobile: false,
+    smoothness: 1
   })
 }
 
@@ -88,9 +127,13 @@ export function SpaceshipPhysics({ x, y, rad, mass, angle, engine }) {
     mass,
     rad,
     angle,
-    collide: hardCollide,
+    smoothness: 0.8,
     controlSystem: RotationalControlSystem(engine)
   })
+}
+
+export function FlameParticlePhysics({ pos, rad, vel, angle }) {
+  return Physics({ pos, rad, vel, angle, smoothness: 1 })
 }
 
 export default Physics

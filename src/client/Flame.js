@@ -1,5 +1,4 @@
-import Physics from './Physics'
-import { hardCollide } from './engine/collisions'
+import FlameParticlePhysics from './Physics'
 
 export function FlameParticle({ physics, color }) {
   return {
@@ -72,7 +71,7 @@ export default ({
     const angle = this.getNextAngle()
 
     const particle = FlameParticle({
-      physics: Physics({
+      physics: FlameParticlePhysics({
         pos: {
           x: this.physics.pos.x + this.gap * Math.cos(angle),
           y: this.physics.pos.y + this.gap * Math.sin(angle)
@@ -82,8 +81,7 @@ export default ({
           x: this.intensity * Math.cos(angle),
           y: this.intensity * Math.sin(angle)
         },
-        angle,
-        collide: hardCollide
+        angle
       }),
       color: this.getNextColor()
     })

@@ -18,8 +18,6 @@ export default ({
     pos: {},
     vel: {},
     isEnabled: true,
-    minDerivedVel: 0.1,
-    derivedVelUpdateRatio: 0.99,
 
     isMoving: { up: false, down: false, left: false, right: false },
 
@@ -83,20 +81,6 @@ export default ({
       this.pos.y = this.origin.pos.y + distance * Math.sin(this.angle)
     },
 
-    updateDerivedVelocity: function() {
-      if (Math.abs(this.vel.x) > this.minDerivedVel) {
-        this.vel.x *= this.derivedVelUpdateRatio
-      } else {
-        this.vel.x = 0
-      }
-
-      if (Math.abs(this.vel.y) > this.minDerivedVel) {
-        this.vel.y *= this.derivedVelUpdateRatio
-      } else {
-        this.vel.y = 0
-      }
-    },
-
     setNewProps: function(pos, vel) {
       this.pos = Object.assign({}, pos)
       this.vel = Object.assign({}, vel)
@@ -111,7 +95,6 @@ export default ({
           this.updateAngle()
         }
         this.updatePosition()
-        this.updateDerivedVelocity()
       }
 
       return { pos: this.pos, vel: this.vel }

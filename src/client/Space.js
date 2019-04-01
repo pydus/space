@@ -68,20 +68,19 @@ export default ({ width, height }) => ({
     physicsObjects.forEach(p => {
       const rad = p.physics.rad
       let { x, y } = p.physics.pos
+      let vx = p.physics.vel.x
+      let vy = p.physics.vel.y
 
-      if (x < rad) {
-        x = rad
-      } else if (x > this.width - rad) {
-        x = this.width - rad
+      if (x < rad && vx < 0 || x > this.width - rad && vx > 0) {
+        vx *= -1
       }
 
-      if (y < rad) {
-        y = rad
-      } else if (y > this.height - rad) {
-        y = this.height - rad
+      if (y < rad && vy < 0 || y > this.height - rad && vy > 0) {
+        vy *= -1
       }
 
       p.physics.setPos({ x, y })
+      p.physics.setVel({ x: vx, y: vy })
     })
   },
 

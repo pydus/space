@@ -32,6 +32,10 @@ const Physics = ({
     this.pos = pos
   },
 
+  setVel: function(vel) {
+    this.vel = vel
+  },
+
   setAngle: function(angle) {
     this.angle = angle
   },

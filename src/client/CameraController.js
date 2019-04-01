@@ -1,4 +1,4 @@
-export default ({ p, camera, velFactor = 0.025 }) => ({
+export default ({ p, camera, velFactor = 0.04 }) => ({
   originalWidth: camera.width,
   velFactor,
 

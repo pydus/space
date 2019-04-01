@@ -1,6 +1,6 @@
 import { PlanetPhysics } from './Physics'
 
-export default ({ x, y, rad, mass = rad, color = '#84e', fillColor = '#000' }) => {
+export default ({ x, y, rad, mass, color = '#84e', fillColor = '#000' }) => {
   const physics = PlanetPhysics({ x, y, rad, mass })
 
   const planet = {

@@ -13,8 +13,8 @@ function run() {
   const space = Space({ width: 10000, height: 10000 })
   const collisionHandler = CollisionHandler({ world: space })
 
-  const planet = Planet({ x: 1350, y: 4200, rad: 1500, mass: 1000 })
-  const planet2 = Planet({ x: 4000, y: 1500, rad: 400, mass: 100 })
+  const planet = Planet({ x: 1350, y: 4200, rad: 1500 })
+  const planet2 = Planet({ x: 4000, y: 1500, rad: 400 })
   const player = ControllablePlayer({ x: 2650, y: 3200 })
 
   const spaceship = Spaceship({ x: 2600, y: 3100 })

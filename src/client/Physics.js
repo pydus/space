@@ -9,7 +9,7 @@ const Physics = ({
   pos,
   vel = { x: 0, y: 0 },
   rad,
-  mass = rad,
+  mass = Math.max(3, 0.001 * rad ** 2),
   angle = 0,
   mobile = true,
   smoothness = 1,

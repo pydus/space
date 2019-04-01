@@ -1,6 +1,6 @@
 import { getDistance } from './engine/tools'
 
-export const G = 0.5
+export const G = 20
 
 export function getGravitationalForce(p1, p2) {
   const distance = getDistance(p1, p2)

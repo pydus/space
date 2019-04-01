@@ -5,7 +5,7 @@ export default ({
   x,
   y,
   rad = 20,
-  mass = 100,
+  mass,
   originLineColor ='#48e',
   drawOriginLine = false
 }) => ({

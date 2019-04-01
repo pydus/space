@@ -6,7 +6,7 @@ import { SpaceshipPhysics } from './Physics'
 
 const e = Engine({
   maxVel: 8,
-  acc: 0.04,
+  acc: 0.2,
   angAcc: 0.006,
   angDec: 0.006,
   maxAngVel: 0.1
@@ -21,7 +21,7 @@ const keys = {
   'arrowright': 'right'
 }
 
-export default ({ x, y, rad = 100, mass = 150, angle = 0, color = '#e48', engine = e }) => {
+export default ({ x, y, rad = 100, mass, angle = 0, color = '#e48', engine = e }) => {
   const spaceship = {
     color,
     engine,

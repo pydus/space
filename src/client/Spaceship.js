@@ -87,7 +87,7 @@ export default ({ x, y, rad = 100, mass, angle = 0, color = '#e48', engine = e }
 
   const controller = Controller({ keys, mapFunction })
 
-  const distance = spaceship.physics.rad - 20
+  const distance = spaceship.physics.rad * 0.65
 
   const driverSeat = { distance, angle: Math.PI }
 

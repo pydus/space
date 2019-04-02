@@ -64,29 +64,52 @@ export default ({ width, height }) => ({
     })
   },
 
-  keepInBounds: function(physicsObjects) {
+  keepInBounds: function(p) {
+    const rad = p.physics.rad
+    let { x, y } = p.physics.pos
+
+    if (x < rad) {
+      x = rad
+    } else if (x > this.width - rad) {
+      x = this.width - rad
+    }
+
+    if (y < rad) {
+      y = rad
+    } else if (y > this.height - rad) {
+      y = this.height - rad
+    }
+
+    p.physics.setPos({ x, y })
+  },
+
+  bounceOffEdges: function(p) {
+    const rad = p.physics.rad
+    let { x, y } = p.physics.pos
+    let vx = p.physics.vel.x
+    let vy = p.physics.vel.y
+
+    if (x <= rad && vx < 0 || x >= this.width - rad && vx > 0) {
+      vx *= -1
+    }
+
+    if (y <= rad && vy < 0 || y >= this.height - rad && vy > 0) {
+      vy *= -1
+    }
+
+    p.physics.setVel({ x: vx, y: vy })
+  },
+
+  handleBoundsFor: function(physicsObjects) {
     physicsObjects.forEach(p => {
-      const rad = p.physics.rad
-      let { x, y } = p.physics.pos
-      let vx = p.physics.vel.x
-      let vy = p.physics.vel.y
-
-      if (x < rad && vx < 0 || x > this.width - rad && vx > 0) {
-        vx *= -1
-      }
-
-      if (y < rad && vy < 0 || y > this.height - rad && vy > 0) {
-        vy *= -1
-      }
-
-      p.physics.setPos({ x, y })
-      p.physics.setVel({ x: vx, y: vy })
+      this.keepInBounds(p)
+      this.bounceOffEdges(p)
     })
   },
 
   handleBounds: function() {
-    this.keepInBounds(this.players)
-    this.keepInBounds(this.spaceships)
+    this.handleBoundsFor(this.players)
+    this.handleBoundsFor(this.spaceships)
   },
 
   update: function() {

@@ -37,6 +37,7 @@ export default args => {
         break
       case 'enter':
         player.setIsEntering(isKeyDown)
+        break
       default:
     }
   }

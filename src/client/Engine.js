@@ -1,4 +1,4 @@
-import Physics from './Physics'
+import Physics from './engine/Physics'
 import Flame from './Flame'
 
 export default ({ maxVel, acc, angAcc, angDec, maxAngVel }) => ({

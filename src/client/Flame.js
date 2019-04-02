@@ -1,4 +1,4 @@
-import FlameParticlePhysics from './Physics'
+import { FlameParticlePhysics } from './physics'
 
 export function FlameParticle({ physics, color }) {
   return {

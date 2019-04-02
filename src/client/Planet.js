@@ -1,4 +1,4 @@
-import { PlanetPhysics } from './Physics'
+import { PlanetPhysics } from './physics'
 
 export default ({ x, y, rad, mass, color = '#84e', fillColor = '#000' }) => {
   const physics = PlanetPhysics({ x, y, rad, mass })

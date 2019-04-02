@@ -1,8 +1,7 @@
-import Physics from './Physics'
 import Controller from './engine/Controller'
 import Drivable from './Drivable'
 import Engine from './Engine'
-import { SpaceshipPhysics } from './Physics'
+import { SpaceshipPhysics } from './physics'
 
 const e = Engine({
   maxVel: 8,

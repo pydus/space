@@ -6,12 +6,12 @@ export default ({
   y,
   rad = 20,
   mass,
-  originLineColor ='#48e',
-  drawOriginLine = false
+  originLineColor = color,
+  shouldRenderOriginLine = false
 }) => ({
   color,
   originLineColor,
-  drawOriginLine,
+  shouldRenderOriginLine,
   isEntering: false,
   isInside: false,
 
@@ -39,20 +39,25 @@ export default ({
     this.physics.update()
   },
 
-  render: function({ drawCircle, setStrokeStyle, drawLine }) {
+  renderOriginLine: function({ setStrokeStyle, drawLine }) {
+    setStrokeStyle(this.originLineColor)
+    drawLine(
+      this.physics.pos.x,
+      this.physics.pos.y,
+      this.physics.controlSystem.origin.pos.x,
+      this.physics.controlSystem.origin.pos.y
+    )
+  },
+
+  render: function(view) {
+    const { setStrokeStyle, drawCircle } = view
+    const controlSystem = this.physics.controlSystem
+
     setStrokeStyle(this.color)
     drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
 
-    const controlSystem = this.physics.controlSystem
-
-    if (controlSystem && controlSystem.origin && this.drawOriginLine) {
-      setStrokeStyle(this.originLineColor)
-      drawLine(
-        this.physics.pos.x,
-        this.physics.pos.y,
-        this.physics.controlSystem.origin.pos.x,
-        this.physics.controlSystem.origin.pos.y
-      )
+    if (this.shouldRenderOriginLine && controlSystem && controlSystem.origin) {
+      this.renderOriginLine(view)
     }
   }
 })

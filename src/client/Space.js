@@ -27,15 +27,17 @@ export default ({ width, height }) => ({
     this.players.forEach(player => {
       if (player.isEntering) {
         const p = player.physics
-        this.spaceships.forEach(spaceship => {
+        for (const spaceship of this.spaceships) {
           if (getDistance(p, spaceship.physics) < spaceship.enterDistance) {
             if (!player.isInside && spaceship.enter(p)) {
               player.enter()
+              break
             } else if (player.isInside && spaceship.exit(p)) {
               player.exit()
+              break
             }
           }
-        })
+        }
       }
     })
   },

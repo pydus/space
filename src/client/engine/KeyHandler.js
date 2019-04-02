@@ -1,19 +1,44 @@
-export default ({ onChange, repeat = true }) => {
+export default ({ onChange, repeat = true, isEnabled = true }) => {
   const keyHandler = {
     onChange,
-    repeat
-  }
+    repeat,
+    isEnabled,
 
-  function onKey(e, isKeyDown) {
-    if (keyHandler.repeat || !e.repeat) {
-      const key = e.key.toLowerCase()
-      onChange(key, isKeyDown)
+    enable: function() {
+      this.isEnabled = true
+      addListeners()
+    },
+
+    disable: function() {
+      this.isEnabled = false
+      removeListeners()
     }
   }
 
-  function init() {
-    addEventListener('keydown', e => onKey(e, true))
-    addEventListener('keyup', e => onKey(e, false))
+  const onKey = (e, isKeyDown) => {
+    if (keyHandler.repeat || !e.repeat) {
+      const key = e.key.toLowerCase()
+      keyHandler.onChange(key, isKeyDown)
+    }
+  }
+
+  const onKeyUp = e => onKey(e, false)
+  const onKeyDown = e => onKey(e, true)
+
+  const addListeners = () => {
+    addEventListener('keydown', onKeyDown)
+    addEventListener('keyup', onKeyUp)
+  }
+
+  const removeListeners = () => {
+    removeEventListener('keydown', onKeyDown)
+    removeEventListener('keyup', onKeyUp)
+  }
+
+  const init = () => {
+    if (keyHandler.isEnabled) {
+      addListeners()
+    }
   }
 
   init()

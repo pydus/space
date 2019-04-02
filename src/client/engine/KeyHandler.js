@@ -1,11 +1,14 @@
-export default ({ listener }) => {
+export default ({ onChange, repeat = true }) => {
   const keyHandler = {
-    listener
+    onChange,
+    repeat
   }
 
   function onKey(e, isKeyDown) {
-    const key = e.key.toLowerCase()
-    listener(key, isKeyDown)
+    if (keyHandler.repeat || !e.repeat) {
+      const key = e.key.toLowerCase()
+      onChange(key, isKeyDown)
+    }
   }
 
   function init() {

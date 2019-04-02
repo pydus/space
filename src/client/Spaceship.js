@@ -12,15 +12,6 @@ const e = Engine({
   maxAngVel: 0.1
 })
 
-const keys = {
-  'w': 'up',
-  'a': 'left',
-  'd': 'right',
-  'arrowup': 'up',
-  'arrowleft': 'left',
-  'arrowright': 'right'
-}
-
 export default ({ x, y, rad = 100, mass, angle = 0, color = '#e48', engine = e }) => {
   const spaceship = {
     color,
@@ -74,7 +65,23 @@ export default ({ x, y, rad = 100, mass, angle = 0, color = '#e48', engine = e }
     }
   }
 
-  const mapFunction = (command, isKeyDown) => {
+  const getCommand = key => {
+    switch (key) {
+      case 'w':
+      case 'arrowup':
+        return 'up'
+      case 'a':
+      case 'arrowleft':
+        return 'left'
+      case 'd':
+      case 'arrowright':
+        return 'right'
+      default:
+        return ''
+    }
+  }
+
+  const runCommand = (command, isKeyDown) => {
     switch (command) {
       case 'up':
       case 'left':
@@ -85,7 +92,7 @@ export default ({ x, y, rad = 100, mass, angle = 0, color = '#e48', engine = e }
     }
   }
 
-  const controller = Controller({ keys, mapFunction })
+  const controller = Controller({ getCommand, runCommand })
 
   const distance = spaceship.physics.rad * 0.65
 

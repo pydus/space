@@ -1,4 +1,5 @@
 import { getDistance } from './engine/tools'
+import { getGravitationalForce } from './space-tools'
 
 export default ({ width, height }) => ({
   width,
@@ -45,10 +46,12 @@ export default ({ width, height }) => ({
   handleGravity: function() {
     this.planets.forEach(planet => {
       this.players.forEach(player => {
-        planet.physics.attract(player.physics)
+        const force = -1 * getGravitationalForce(planet.physics, player.physics)
+        planet.physics.applyForceTo(player.physics, force)
       })
       this.spaceships.forEach(spaceship => {
-        planet.physics.attract(spaceship.physics)
+        const force = -1 * getGravitationalForce(planet.physics, spaceship.physics)
+        planet.physics.applyForceTo(spaceship.physics, force)
       })
     })
   },

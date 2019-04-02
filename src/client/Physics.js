@@ -3,7 +3,6 @@ import OriginControlSystem from './OriginControlSystem'
 import RotationalControlSystem from './RotationalControlSystem'
 import OriginFinder from './OriginFinder'
 import { getAngle, getDistance } from './engine/tools'
-import { getGravitationalForce } from './space-tools'
 
 const Physics = ({
   pos,
@@ -71,16 +70,6 @@ const Physics = ({
   applyForceTo: function(other, force) {
     const angle = getAngle(this, other)
     other.applyForce(force, angle)
-  },
-
-  attract: function(other) {
-    const force = -1 * getGravitationalForce(this, other)
-    this.applyForceTo(other, force)
-  },
-
-  repel: function(other) {
-    const force = getGravitationalForce(this, other)
-    this.applyForceTo(other, force)
   },
 
   updatePosition: function() {

@@ -12,7 +12,7 @@ export function getClosest(physicsObjects) {
   ))
 }
 
-export default {
-  getDistance,
-  getAngle
+export function areOverlapping(p1, p2) {
+  const distance = getDistance(p1, p2)
+  return distance < p1.rad + p2.rad
 }

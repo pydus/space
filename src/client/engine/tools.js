@@ -6,6 +6,12 @@ export function getAngle(p1, p2) {
   return Math.atan2(p2.pos.y - p1.pos.y, p2.pos.x - p1.pos.x)
 }
 
+export function getClosest(physicsObjects) {
+  return physicsObjects.reduce((cur, p) => (
+    getDistance(this, p) < getDistance(this, cur) ? p : cur
+  ))
+}
+
 export default {
   getDistance,
   getAngle

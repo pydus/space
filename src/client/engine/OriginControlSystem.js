@@ -1,6 +1,7 @@
-import { getAngle, getDistance } from './engine/tools'
+import { getAngle, getDistance } from './tools'
 
 export default ({
+  origin,
   originFinder,
   vel = 0,
   maxVel = 10,
@@ -8,12 +9,12 @@ export default ({
   dec = 2.5
 }) => {
   const originControlSystem = {
+    origin,
     originFinder,
     angVel: vel,
     maxVel,
     acc,
     dec,
-    origin: null,
     angle: null,
     pos: {},
     vel: {},

@@ -1,8 +1,8 @@
 import Physics from './engine/Physics'
-import XYControlSystem from './XYControlSystem'
-import OriginControlSystem from './OriginControlSystem'
-import RotationalControlSystem from './RotationalControlSystem'
+import OriginControlSystem from './engine/OriginControlSystem'
+import RotationalControlSystem from './engine/RotationalControlSystem'
 import OriginFinder from './OriginFinder'
+import { getMostAttractive } from './space-tools'
 
 export function PlayerPhysics({ x, y, rad, mass }) {
   return Physics({
@@ -11,7 +11,9 @@ export function PlayerPhysics({ x, y, rad, mass }) {
     mass,
     smoothness: 0.9,
     controlSystem: OriginControlSystem({
-      originFinder: OriginFinder()
+      originFinder: OriginFinder({
+        findOrigin: getMostAttractive
+      })
     })
   })
 }

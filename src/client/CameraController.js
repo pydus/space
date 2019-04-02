@@ -1,14 +1,14 @@
-export default ({ p, camera, velFactor = 0.04, minWidth = p.rad * 4 }) => ({
+export default ({ p, camera, velFactor = 0.04, minHeight = p.rad * 3 }) => ({
   velFactor,
-  minWidth,
+  minHeight,
 
-  originalWidth: camera.width,
+  originalHeight: camera.height,
 
-  updateWidth: function() {
+  updateHeight: function() {
     const vel = Math.abs(p.vel.x) + Math.abs(p.vel.y)
-    const width = this.originalWidth * (1 + vel * this.velFactor)
-    const boundWidth = Math.max(this.minWidth, width)
-    camera.setWidth(boundWidth)
+    const height = this.originalHeight * (1 + vel * this.velFactor)
+    const boundHeight = Math.max(this.minHeight, height)
+    camera.setHeight(boundHeight)
   },
 
   updatePosition: function() {
@@ -19,7 +19,7 @@ export default ({ p, camera, velFactor = 0.04, minWidth = p.rad * 4 }) => ({
   },
 
   update: function() {
-    this.updateWidth()
+    this.updateHeight()
     this.updatePosition()
   }
 })

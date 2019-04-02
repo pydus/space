@@ -1,14 +1,14 @@
-export default ({ pos, width }) => ({
+export default ({ pos, height }) => ({
   pos,
-  width,
-  height: width / window.innerWidth * window.innerHeight,
+  width: height / window.innerHeight * window.innerWidth,
+  height,
 
   updateSize: function() {
-    this.height = this.width / window.innerWidth * window.innerHeight
+    this.width = this.height / window.innerHeight * window.innerWidth
   },
 
-  setWidth: function(width) {
-    this.width = width
+  setHeight: function(height) {
+    this.height = height
     this.updateSize()
   },
 

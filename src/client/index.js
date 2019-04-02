@@ -24,7 +24,7 @@ function run() {
   const pla3 = Player({ x: 1600, y: 1100, rad: 20 })
   const pla4 = Player({ x: 1600, y: 1100, rad: 20 })
 
-  const camera = Camera({ width: 2300 })
+  const camera = Camera({ height: 1000 })
   const cameraController = CameraController({ p: player.physics, camera })
 
   const game = SpaceGame({ camera })

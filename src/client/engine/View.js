@@ -1,7 +1,8 @@
-export default ({ canvas, camera }) => {
+export default ({ canvas, camera, defaultLineWidth = 1 }) => {
   const view = {
     canvas,
     camera,
+    defaultLineWidth,
 
     ctx: canvas.getContext('2d'),
 
@@ -46,7 +47,7 @@ export default ({ canvas, camera }) => {
       this.ctx.fillStyle = style
     },
 
-    setLine: function(style, width) {
+    setLine: function(style, width = this.defaultLineWidth) {
       this.ctx.strokeStyle = style
       this.ctx.lineWidth = width
     },

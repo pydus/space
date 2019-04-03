@@ -3,14 +3,6 @@ import Drivable from './Drivable'
 import Engine from './Engine'
 import { SpaceshipPhysics } from './physics'
 
-const e = Engine({
-  maxVel: 8,
-  acc: 0.2,
-  angAcc: 0.006,
-  angDec: 0.006,
-  maxAngVel: 0.1
-})
-
 export default ({
   x,
   y,
@@ -18,7 +10,13 @@ export default ({
   mass,
   angle = 0,
   color = '#30baa7',
-  engine = e
+  engine = Engine({
+    maxVel: 8,
+    acc: 0.2,
+    angAcc: 0.006,
+    angDec: 0.006,
+    maxAngVel: 0.1
+  })
 }) => {
   const spaceship = {
     color,

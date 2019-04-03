@@ -4,24 +4,28 @@ export default ({ getCommand, runCommand, repeat = false, isEnabled = true }) =>
   const controller = {
     getCommand,
     runCommand,
-    isEnabled
-  }
+    isEnabled,
 
-  const onChange = (key, isKeyDown) => {
-    const command = getCommand(key)
-    runCommand(command, isKeyDown)
-  }
+    keyHandler: KeyHandler({
+      onChange: (...args) => controller.onChange(...args),
+      repeat,
+      isEnabled
+    }),
 
-  const keyHandler = KeyHandler({ onChange, repeat, isEnabled })
+    onChange: function(key, isKeyDown) {
+      const command = this.getCommand(key)
+      this.runCommand(command, isKeyDown)
+    },
 
-  const enable = () => {
-    keyHandler.enable()
-    controller.isEnabled = true
-  }
+    enable: function() {
+      this.keyHandler.enable()
+      this.isEnabled = true
+    },
 
-  const disable = () => {
-    keyHandler.disable()
-    controller.isEnabled = false
+    disable: function() {
+      this.keyHandler.disable()
+      this.isEnabled = false
+    }
   }
 
   return controller

@@ -4,7 +4,7 @@ import Controller from './engine/Controller'
 export default args => {
   const { x, y, rad, mass, ...rest } = args
 
-  const player = Player({ x, y, rad, mass, color: '#ea8', ...rest })
+  const player = Player({ x, y, rad, mass, color: '#eb5e28', ...rest })
 
   const getCommand = key => {
     switch (key) {

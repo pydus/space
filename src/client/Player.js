@@ -1,7 +1,7 @@
 import { PlayerPhysics } from './physics'
 
 export default ({
-  color = '#4e8',
+  color = '#eaaa4f',
   x,
   y,
   rad = 20,

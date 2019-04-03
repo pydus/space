@@ -11,7 +11,15 @@ const e = Engine({
   maxAngVel: 0.1
 })
 
-export default ({ x, y, rad = 100, mass, angle = 0, color = '#e48', engine = e }) => {
+export default ({
+  x,
+  y,
+  rad = 100,
+  mass,
+  angle = 0,
+  color = '#30baa7',
+  engine = e
+}) => {
   const spaceship = {
     color,
     engine,

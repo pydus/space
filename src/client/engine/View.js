@@ -12,6 +12,7 @@ export default ({ canvas, camera }) => {
       this.setStrokeStyle = this.setStrokeStyle.bind(this)
       this.drawLine = this.drawLine.bind(this)
       this.drawRect = this.drawRect.bind(this)
+      this.fillRect = this.fillRect.bind(this)
       this.adjustViewSize()
       this.adjustViewSizeAsNeeded()
     },
@@ -76,11 +77,20 @@ export default ({ canvas, camera }) => {
       this.ctx.stroke()
     },
 
-    drawRect: function(x, y, width, height) {
+    rect: function(x, y, width, height) {
       const [ tx, ty ] = this.translate(x, y)
       const scale = this.getScale()
       this.ctx.rect(tx, ty, width * scale, height * scale)
+    },
+
+    drawRect: function(x, y, width, height) {
+      this.rect(x, y, width, height)
       this.ctx.stroke()
+    },
+
+    fillRect: function(x, y, width, height) {
+      this.rect(x, y, width, height)
+      this.ctx.fill()
     }
   }
 

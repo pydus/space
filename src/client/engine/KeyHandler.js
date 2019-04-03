@@ -4,12 +4,15 @@ export default ({ onChange, repeat = true, isEnabled = true }) => {
     repeat,
     isEnabled,
 
+    heldKeys: new Set(),
+
     enable: function() {
       this.isEnabled = true
       addListeners()
     },
 
     disable: function() {
+      liftHeldKeys()
       this.isEnabled = false
       removeListeners()
     }
@@ -18,6 +21,13 @@ export default ({ onChange, repeat = true, isEnabled = true }) => {
   const onKey = (e, isKeyDown) => {
     if (keyHandler.repeat || !e.repeat) {
       const key = e.key.toLowerCase()
+
+      if (isKeyDown) {
+        keyHandler.heldKeys.add(key)
+      } else {
+        keyHandler.heldKeys.delete(key)
+      }
+
       keyHandler.onChange(key, isKeyDown)
     }
   }
@@ -33,6 +43,13 @@ export default ({ onChange, repeat = true, isEnabled = true }) => {
   const removeListeners = () => {
     removeEventListener('keydown', onKeyDown)
     removeEventListener('keyup', onKeyUp)
+  }
+
+  const liftHeldKeys = () => {
+    keyHandler.heldKeys.forEach(key => {
+      keyHandler.onChange(key, false)
+    })
+    keyHandler.heldKeys.clear()
   }
 
   const init = () => {

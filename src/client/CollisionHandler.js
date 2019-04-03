@@ -23,5 +23,12 @@ export default ({ world }) => ({
         })
       })
     })
+    this.world.spaceships.forEach(spaceship => {
+      this.world.spaceships.forEach(otherSpaceship => {
+        if (spaceship !== otherSpaceship) {
+          this.tryCollision(spaceship.physics, otherSpaceship.physics)
+        }
+      })
+    })
   }
 })

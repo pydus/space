@@ -15,9 +15,10 @@ function run() {
 
   const planet = Planet({ x: 1350, y: 4200, rad: 1500 })
   const planet2 = Planet({ x: 4000, y: 1500, rad: 400 })
-  const player = ControllablePlayer({ x: 2650, y: 3200 })
+  const player = ControllablePlayer({ x: 3000, y: 2000 })
 
-  const spaceship = Spaceship({ x: 2600, y: 3100 })
+  const spaceship = Spaceship({ x: 3000, y: 2000 })
+  const spaceship2 = Spaceship({ x: 3100, y: 2000 })
 
   const pla = Player({ x: 1600, y: 1100, rad: 20 })
   const pla2 = Player({ x: 1600, y: 1100, rad: 20 })
@@ -44,6 +45,7 @@ function run() {
   space.addPlayer(pla4)
 
   space.addSpaceship(spaceship)
+  space.addSpaceship(spaceship2)
 
   game.addUpdatable(collisionHandler)
   game.addUpdatable(cameraController)

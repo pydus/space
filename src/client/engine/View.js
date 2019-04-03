@@ -6,6 +6,7 @@ export default ({ canvas, camera }) => {
     ctx: canvas.getContext('2d'),
 
     init: function() {
+      this.setLineWidth = this.setLineWidth.bind(this)
       this.setFillStyle = this.setFillStyle.bind(this)
       this.drawCircle = this.drawCircle.bind(this)
       this.fillCircle = this.fillCircle.bind(this)
@@ -40,6 +41,10 @@ export default ({ canvas, camera }) => {
       const tx = (x - this.camera.pos.x) * scale
       const ty = (y - this.camera.pos.y) * scale
       return [ tx, ty ]
+    },
+
+    setLineWidth: function(width) {
+      this.ctx.lineWidth = width
     },
 
     setFillStyle: function(style) {

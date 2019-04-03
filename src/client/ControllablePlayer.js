@@ -44,5 +44,7 @@ export default args => {
 
   const controller = Controller({ getCommand, runCommand })
 
+  player.setController(controller)
+
   return Object.assign(player, controller)
 }

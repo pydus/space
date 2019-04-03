@@ -21,6 +21,10 @@ export default ({
     this.physics.setMoving(direction, isKeyDown)
   },
 
+  setController: function(controller) {
+    this.controller = controller
+  },
+
   setIsEntering: function(isEntering) {
     this.isEntering = isEntering
   },

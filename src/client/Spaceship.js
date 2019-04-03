@@ -22,6 +22,10 @@ export default ({
     color,
     engine,
 
+    setController: function(controller) {
+      this.controller = controller
+    },
+
     physics: SpaceshipPhysics({
       x,
       y,
@@ -97,7 +101,9 @@ export default ({
     }
   }
 
-  const controller = Controller({ getCommand, runCommand })
+  const controller = Controller({ getCommand, runCommand, isEnabled: false })
+
+  spaceship.setController(controller)
 
   const distance = spaceship.physics.rad * 0.65
 

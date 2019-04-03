@@ -1,5 +1,5 @@
 import { getDistance } from './engine/tools'
-import { getGravitationalForce } from './space-tools'
+import { getGravitationalForce, getMostAttractive } from './space-tools'
 
 export default ({ width, height }) => ({
   width,
@@ -56,15 +56,13 @@ export default ({ width, height }) => ({
     })
   },
 
-  runOriginFinders: function() {
+  findOrigins: function() {
     this.players.forEach(player => {
       const controlSystem = player.physics.controlSystem
-      if (controlSystem) {
-        const originFinder = controlSystem.originFinder
-        if (originFinder) {
-          const planets = this.planets.map(planet => planet.physics)
-          originFinder.run.call(player.physics, planets)
-        }
+      if (controlSystem && controlSystem.type === 'origin') {
+        const planets = this.planets.map(planet => planet.physics)
+        const mostAttractive = getMostAttractive.call(player.physics, planets)
+        controlSystem.setOrigin(mostAttractive.pos)
       }
     })
   },
@@ -123,7 +121,7 @@ export default ({ width, height }) => ({
     this.spaceships.forEach(spaceship => spaceship.update())
     this.handleEntries()
     this.handleGravity()
-    this.runOriginFinders()
+    this.findOrigins()
     this.handleBounds()
   },
 

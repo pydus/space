@@ -9,8 +9,8 @@ export function FlameParticle({ physics, color }) {
       this.physics.update()
     },
 
-    render: function({ setStrokeStyle, drawCircle }) {
-      setStrokeStyle(this.color)
+    render: function({ setLine, drawCircle }) {
+      setLine(this.color)
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
     }
   }

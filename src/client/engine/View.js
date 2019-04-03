@@ -6,11 +6,10 @@ export default ({ canvas, camera }) => {
     ctx: canvas.getContext('2d'),
 
     init: function() {
-      this.setLineWidth = this.setLineWidth.bind(this)
       this.setFillStyle = this.setFillStyle.bind(this)
       this.drawCircle = this.drawCircle.bind(this)
       this.fillCircle = this.fillCircle.bind(this)
-      this.setStrokeStyle = this.setStrokeStyle.bind(this)
+      this.setLine = this.setLine.bind(this)
       this.drawLine = this.drawLine.bind(this)
       this.drawRect = this.drawRect.bind(this)
       this.fillRect = this.fillRect.bind(this)
@@ -43,16 +42,13 @@ export default ({ canvas, camera }) => {
       return [ tx, ty ]
     },
 
-    setLineWidth: function(width) {
-      this.ctx.lineWidth = width
-    },
-
     setFillStyle: function(style) {
       this.ctx.fillStyle = style
     },
 
-    setStrokeStyle: function(style) {
+    setLine: function(style, width) {
       this.ctx.strokeStyle = style
+      this.ctx.lineWidth = width
     },
 
     circleArc: function(x, y, rad) {

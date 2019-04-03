@@ -127,8 +127,8 @@ export default ({ width, height }) => ({
     this.handleBounds()
   },
 
-  renderBackground: function({ setStrokeStyle, drawLine }) {
-    setStrokeStyle(this.gridColor)
+  renderBackground: function({ setLine, drawLine }) {
+    setLine(this.gridColor)
 
     const ny = Math.floor(this.height / this.gridLineSpacing)
     const nx = Math.floor(this.width / this.gridLineSpacing)

@@ -39,8 +39,8 @@ export default ({
     this.physics.update()
   },
 
-  renderOriginLine: function({ setStrokeStyle, drawLine }) {
-    setStrokeStyle(this.originLineColor)
+  renderOriginLine: function({ setLine, drawLine }) {
+    setLine(this.originLineColor)
     drawLine(
       this.physics.pos.x,
       this.physics.pos.y,
@@ -50,10 +50,10 @@ export default ({
   },
 
   render: function(view) {
-    const { setStrokeStyle, drawCircle } = view
+    const { setLine, drawCircle } = view
     const controlSystem = this.physics.controlSystem
 
-    setStrokeStyle(this.color)
+    setLine(this.color)
     drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
 
     if (this.shouldRenderOriginLine && controlSystem && controlSystem.origin) {

@@ -66,9 +66,9 @@ export default ({
 
     render: function(view) {
       const { setLine, drawCircle } = view
-      this.engine.render(view)
       setLine(this.color)
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
+      this.engine.render(view)
     }
   }
 

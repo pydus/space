@@ -28,6 +28,7 @@ export default ({
     if (being.physics.controlSystem) {
       being.physics.controlSystem.disable()
     }
+    this.transferKeys(being, this.vehicle)
     this.vehicle.controller.enable()
     this.driver = being
     return true
@@ -38,6 +39,7 @@ export default ({
     if (being.physics.controlSystem) {
       being.physics.controlSystem.enable()
     }
+    this.transferKeys(this.vehicle, this.driver)
     this.vehicle.controller.disable()
     this.driver = null
     return true
@@ -60,6 +62,13 @@ export default ({
     if (i === -1) return false
     this.passengers.splice(i, 1)
     return true
+  },
+
+  transferKeys: function(origin, dest) {
+    if (origin.controller) {
+      const originKeys = origin.controller.keyHandler.heldKeys
+      dest.controller.keyHandler.setHeldKeys(originKeys)
+    }
   },
 
   setPositionOf: function(being, seat) {

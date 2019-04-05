@@ -6,6 +6,11 @@ export default ({ onChange, repeat = true, isEnabled = true }) => {
 
     heldKeys: new Set(),
 
+    setHeldKeys: function(heldKeys) {
+      this.heldKeys = new Set(heldKeys)
+      this.heldKeys.forEach(key => this.onChange(key, true))
+    },
+
     enable: function() {
       this.isEnabled = true
       addListeners()

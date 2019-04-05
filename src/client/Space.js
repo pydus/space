@@ -46,6 +46,7 @@ export default ({ width, height }) => ({
   handleGravity: function() {
     this.planets.forEach(planet => {
       this.players.forEach(player => {
+        if (!player.feelsGravity) return
         const force = -1 * getGravitationalForce(planet.physics, player.physics)
         planet.physics.applyForceTo(player.physics, force)
       })
@@ -62,7 +63,12 @@ export default ({ width, height }) => ({
       if (controlSystem && controlSystem.type === 'origin') {
         const planets = this.planets.map(planet => planet.physics)
         const mostAttractive = getMostAttractive.call(player.physics, planets)
-        controlSystem.setOrigin(mostAttractive.pos)
+        const origin = {
+          ...mostAttractive.pos,
+          rad: mostAttractive.rad
+        }
+        controlSystem.setOrigin(origin)
+        player.drill.physics.controlSystem.setOrigin(origin)
       }
     })
   },

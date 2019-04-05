@@ -1,6 +1,6 @@
 export default ({
   vehicle,
-  driverSeat,
+  driverSeat = { angle: 0, distance: 0 },
   passengerSeats = [],
   enterDistance = 100
 }) => ({
@@ -69,8 +69,8 @@ export default ({
     const vp = this.vehicle.physics
 
     p.setPos({
-      x: vp.pos.x + distance * Math.cos(vp.angle + angle),
-      y: vp.pos.y + distance * Math.sin(vp.angle + angle)
+      x: vp.pos.x + distance * Math.cos((vp.angle || 0) + angle),
+      y: vp.pos.y + distance * Math.sin((vp.angle || 0) + angle)
     })
 
     p.vel = this.vehicle.physics.vel

@@ -8,15 +8,12 @@ export default args => {
 
   const getCommand = key => {
     switch (key) {
-      case 'w':
-      case 'arrowup':
-        return 'up'
+      case 's':
+      case 'arrowdown':
+        return 'enter drill'
       case 'a':
       case 'arrowleft':
         return 'left'
-      case 's':
-      case 'arrowdown':
-        return 'down'
       case 'd':
       case 'arrowright':
         return 'right'
@@ -29,11 +26,12 @@ export default args => {
 
   const runCommand = (command, isKeyDown) => {
     switch (command) {
-      case 'up':
-      case 'down':
       case 'left':
       case 'right':
         player.controlMovement(command, isKeyDown)
+        break
+      case 'enter drill':
+        player.enterDrill()
         break
       case 'enter':
         player.setIsEntering(isKeyDown)

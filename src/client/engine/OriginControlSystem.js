@@ -2,17 +2,19 @@ import { getAngle, getDistance } from './tools'
 
 export default ({
   origin,
-  vel = 0,
   maxVel = 10,
   acc = 2.5,
-  dec = 2.5
+  dec = 2.5,
+  vertical = false
 }) => ({
   type: 'origin',
   origin,
-  angVel: vel,
+  angVel: 0,
+  downVel: 0,
   maxVel,
   acc,
   dec,
+  vertical,
   angle: null,
   pos: {},
   vel: {},
@@ -26,6 +28,10 @@ export default ({
 
   setMoving: function(direction, bool) {
     this.isMoving[direction] = bool
+  },
+
+  setVertical: function(vertical) {
+    this.vertical = vertical
   },
 
   enable: function() {
@@ -70,10 +76,43 @@ export default ({
     this.angle += this.angVel / distance
   },
 
+  updateVerticalMovement: function() {
+    if (!this.vertical) {
+      this.downVel = 0
+      return
+    }
+
+    if (this.isMoving.down) {
+      this.downVel += this.acc
+      if (this.downVel > this.maxVel) {
+        this.downVel = this.maxVel
+      }
+    } else if (this.downVel >= this.dec) {
+      this.downVel -= this.dec
+    }
+
+    if (this.isMoving.up) {
+      this.downVel -= this.acc
+      if (this.downVel < -this.maxVel) {
+        this.downVel = -this.maxVel
+      }
+    } else if (this.downVel <= -this.dec) {
+      this.downVel += this.dec
+    }
+
+    if (
+      !this.isMoving.up &&
+      !this.isMoving.down &&
+      Math.abs(this.downVel) < this.dec
+    ) {
+      this.downVel = 0
+    }
+  },
+
   updatePosition: function() {
     const distance = getDistance({ pos: this.origin }, this)
-    this.pos.x = this.origin.x + distance * Math.cos(this.angle)
-    this.pos.y = this.origin.y + distance * Math.sin(this.angle)
+    this.pos.x = this.origin.x + (distance - this.downVel) * Math.cos(this.angle)
+    this.pos.y = this.origin.y + (distance - this.downVel) * Math.sin(this.angle)
   },
 
   setNewProps: function(pos, vel) {
@@ -88,6 +127,7 @@ export default ({
       if (this.isEnabled) {
         this.updateAngVel()
         this.updateAngle()
+        this.updateVerticalMovement()
       }
       this.updatePosition()
     }

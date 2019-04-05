@@ -36,14 +36,14 @@ export default ({
         x: this.physics.pos.x,
         y: this.physics.pos.y
       })
-      this.drill.enter(this.physics)
+      this.drill.enter(this)
       this.enter()
       this.setIsUnderGround(true)
     }
   },
 
   exitDrill: function() {
-    this.drill.exit(this.physics)
+    this.drill.exit(this)
     this.setIsUnderGround(false)
     this.exit()
   },

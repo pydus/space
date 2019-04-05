@@ -27,13 +27,12 @@ export default ({ width, height }) => ({
   handleEntries: function() {
     this.players.forEach(player => {
       if (player.isEntering) {
-        const p = player.physics
         for (const spaceship of this.spaceships) {
-          if (getDistance(p, spaceship.physics) < spaceship.enterDistance) {
-            if (!player.isInside && spaceship.enter(p)) {
+          if (getDistance(player.physics, spaceship.physics) < spaceship.enterDistance) {
+            if (!player.isInside && spaceship.enter(player)) {
               player.enter()
               break
-            } else if (player.isInside && spaceship.exit(p)) {
+            } else if (player.isInside && spaceship.exit(player)) {
               player.exit()
               break
             }

@@ -1,13 +1,12 @@
 import SpaceGame from './SpaceGame'
 import Space from './Space'
 import Planet from './Planet'
+import Player from './Player'
 import ControllablePlayer from './ControllablePlayer'
 import CollisionHandler from './CollisionHandler'
 import Camera from './engine/Camera'
 import CameraController from './CameraController'
 import Spaceship from './Spaceship'
-
-import Player from './Player'
 
 function run() {
   const space = Space({ width: 10000, height: 10000 })
@@ -30,10 +29,10 @@ function run() {
 
   const game = SpaceGame({ camera })
 
-  spaceship.addPassenger(pla.physics)
-  spaceship.addPassenger(pla2.physics)
-  spaceship.addPassenger(pla3.physics)
-  spaceship.addPassenger(pla4.physics)
+  spaceship.addPassenger(pla)
+  spaceship.addPassenger(pla2)
+  spaceship.addPassenger(pla3)
+  spaceship.addPassenger(pla4)
 
   space.addPlanet(planet)
   space.addPlanet(planet2)

@@ -1,9 +1,9 @@
-import { getAngle, getDistance } from './engine/tools'
+import { getDistance } from './engine/tools'
 import { PlayerPhysics } from './physics'
 import Drill from './Drill'
 
 export default ({
-  drill = Drill({ power: 5 }),
+  drill = Drill({ origin: null }),
   color = '#eaaa4f',
   x,
   y,
@@ -82,11 +82,8 @@ export default ({
 
   checkIfOnSurface: function() {
     const originInfo = this.getOriginInfo()
-
     if (!originInfo) return
-
     const { rad, distance } = originInfo
-
     const distanceToPlayerEdge = Math.ceil(distance - this.physics.rad)
 
     if (
@@ -101,17 +98,12 @@ export default ({
 
   checkIfWentAboveGround: function() {
     const originInfo = this.getOriginInfo()
-
     if (!originInfo) return
-
     const { x, y, rad, distance } = originInfo
-
     const distanceToPlayerEdge = Math.ceil(distance - this.physics.rad)
 
-    if (this.isUnderGround) {
-      if (distanceToPlayerEdge > rad) {
-        this.exitDrill()
-      }
+    if (this.isUnderGround && distanceToPlayerEdge > rad) {
+      this.exitDrill()
     }
   },
 
@@ -133,33 +125,9 @@ export default ({
     this.isEntering = false
   },
 
-  updateDrill: function() {
-    if (this.isOnSurface) {
-      if (this.isTryingToDrill && !this.drill.driver) {
-        this.drill.enter(this.physics)
-        console.log('enter');
-        this.setIsUnderGround(true)
-      }
-    }
-    /*
-    if (this.physics.controlSystem.isMoving[direction] !== isUsing) {
-      this.physics.setMoving(direction, isUsing)
-    }*/
-  },
-
-  updateVertical: function() {
-    if (this.isOnSurface || this.isUnderGround) {
-      this.physics.controlSystem.setVertical(true)
-    } else if (!this.isUnderGround && !this.isOnSurface) {
-      this.physics.controlSystem.setVertical(false)
-    }
-  },
-
   update: function() {
     this.checkIfOnSurface()
     this.checkIfWentAboveGround()
-    /*this.updateDrill()
-    this.updateVertical()*/
     this.drill.update()
     this.physics.update()
   },

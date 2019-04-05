@@ -71,15 +71,18 @@ export default ({
     }
   },
 
-  setPositionOf: function(being, seat) {
+  getSeatPosition: function(seat) {
     const { distance, angle } = seat
     const vp = this.vehicle.physics
-
-    being.physics.setPos({
+    return {
       x: vp.pos.x + distance * Math.cos((vp.angle || 0) + angle),
       y: vp.pos.y + distance * Math.sin((vp.angle || 0) + angle)
-    })
+    }
+  },
 
+  setPositionOf: function(being, seat) {
+    const driverSeatPosition = this.getSeatPosition(seat)
+    being.physics.setPos(driverSeatPosition)
     being.physics.vel = this.vehicle.physics.vel
   },
 
@@ -93,6 +96,17 @@ export default ({
     this.passengers.forEach((passenger, i) => {
       this.setPositionOf(passenger, this.passengerSeats[i])
     })
+  },
+
+  render: function(view) {
+    this.vehicle.render(view)
+
+    if (!this.driver) {
+      const { setLine, drawCircle } = view
+      const { x, y } = this.getSeatPosition(this.driverSeat)
+      setLine(this.vehicle.color)
+      drawCircle(x, y, 1)
+    }
   },
 
   update: function() {

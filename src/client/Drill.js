@@ -1,14 +1,6 @@
-import Physics from './engine/Physics'
-import OriginControlSystem from './engine/OriginControlSystem'
+import { DrillPhysics } from './physics'
 import Controller from './engine/Controller'
 import Drivable from './Drivable'
-
-const DrillPhysics = ({ acc, maxVel, origin }) => (
-  Physics({
-    mobile: false,
-    controlSystem: OriginControlSystem({ acc, maxVel, origin, vertical: true })
-  })
-)
 
 export default ({ acc, maxVel, origin }) => {
   const drill = {

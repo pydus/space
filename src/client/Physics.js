@@ -12,6 +12,13 @@ export function PlayerPhysics({ x, y, rad, mass }) {
   })
 }
 
+export function DrillPhysics({ acc, maxVel, origin }) {
+  return Physics({
+    mobile: false,
+    controlSystem: OriginControlSystem({ acc, maxVel, origin, vertical: true })
+  })
+}
+
 export function PlanetPhysics({ x, y, rad, mass }) {
   return Physics({
     pos: { x, y },

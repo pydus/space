@@ -14,7 +14,7 @@ export default ({ width, height }) => ({
   gridLineSpacing: 1000,
 
   spaceshipBuildCost: 3,
-  spaceshipBuildRadius: 100,
+  spaceshipBuildRadius: 200,
 
   planets: [],
   players: [],

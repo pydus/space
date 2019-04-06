@@ -148,11 +148,11 @@ export default ({
   },
 
   update() {
-    this.updateMineralPositions()
     this.checkIfOnSurface()
     this.checkIfWentAboveGround()
     this.drill.update()
     this.physics.update()
+    this.updateMineralPositions()
   },
 
   renderOriginLine({ setLine, drawLine }) {

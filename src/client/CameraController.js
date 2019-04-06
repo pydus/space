@@ -4,21 +4,21 @@ export default ({ p, camera, velFactor = 0.04, minHeight = p.rad * 3 }) => ({
 
   originalHeight: camera.height,
 
-  updateHeight: function() {
+  updateHeight() {
     const vel = Math.abs(p.vel.x) + Math.abs(p.vel.y)
     const height = this.originalHeight * (1 + vel * this.velFactor)
     const boundHeight = Math.max(this.minHeight, height)
     camera.setHeight(boundHeight)
   },
 
-  updatePosition: function() {
+  updatePosition() {
     camera.setPos({
       x: p.pos.x - camera.width / 2,
       y: p.pos.y - camera.height / 2
     })
   },
 
-  update: function() {
+  update() {
     this.updateHeight()
     this.updatePosition()
   }

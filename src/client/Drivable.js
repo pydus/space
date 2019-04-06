@@ -12,18 +12,18 @@ export default ({
   driver: null,
   passengers: [],
 
-  enter: function(being) {
+  enter(being) {
     if (!this.addDriver(being)) {
       return this.addPassenger(being)
     }
     return true
   },
 
-  exit: function(being) {
+  exit(being) {
     return this.removeDriver(being)
   },
 
-  addDriver: function(being) {
+  addDriver(being) {
     if (this.driver) return false
     if (being.physics.controlSystem) {
       being.physics.controlSystem.disable()
@@ -34,7 +34,7 @@ export default ({
     return true
   },
 
-  removeDriver: function(being) {
+  removeDriver(being) {
     if (this.driver !== being) return false
     if (being.physics.controlSystem) {
       being.physics.controlSystem.enable()
@@ -45,7 +45,7 @@ export default ({
     return true
   },
 
-  addPassenger: function(being) {
+  addPassenger(being) {
     if (this.passengers.length >= this.passengerSeats.length) {
       return false
     } else if (being.physics.controlSystem) {
@@ -54,7 +54,7 @@ export default ({
     return this.passengers.push(being)
   },
 
-  removePassenger: function(being) {
+  removePassenger(being) {
     if (being.physics.controlSystem) {
       being.physics.controlSystem.enable()
     }
@@ -64,14 +64,14 @@ export default ({
     return true
   },
 
-  transferKeys: function(origin, dest) {
+  transferKeys(origin, dest) {
     if (origin.controller) {
       const originKeys = origin.controller.keyHandler.heldKeys
       dest.controller.keyHandler.setHeldKeys(originKeys)
     }
   },
 
-  getSeatPosition: function(seat) {
+  getSeatPosition(seat) {
     const { distance, angle } = seat
     const vp = this.vehicle.physics
     return {
@@ -80,25 +80,25 @@ export default ({
     }
   },
 
-  setPositionOf: function(being, seat) {
+  setPositionOf(being, seat) {
     const driverSeatPosition = this.getSeatPosition(seat)
     being.physics.setPos(driverSeatPosition)
     being.physics.vel = this.vehicle.physics.vel
   },
 
-  updateDriverPosition: function() {
+  updateDriverPosition() {
     if (this.driver) {
       this.setPositionOf(this.driver, this.driverSeat)
     }
   },
 
-  updatePassengerPositions: function() {
+  updatePassengerPositions() {
     this.passengers.forEach((passenger, i) => {
       this.setPositionOf(passenger, this.passengerSeats[i])
     })
   },
 
-  render: function(view) {
+  render(view) {
     this.vehicle.render(view)
 
     if (!this.driver) {
@@ -109,7 +109,7 @@ export default ({
     }
   },
 
-  update: function() {
+  update() {
     this.updateDriverPosition()
     this.updatePassengerPositions()
     this.vehicle.update()

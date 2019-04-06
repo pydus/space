@@ -3,16 +3,16 @@ export default ({ pos, height }) => ({
   width: height / window.innerHeight * window.innerWidth,
   height,
 
-  updateSize: function() {
+  updateSize() {
     this.width = this.height / window.innerHeight * window.innerWidth
   },
 
-  setHeight: function(height) {
+  setHeight(height) {
     this.height = height
     this.updateSize()
   },
 
-  setPos: function(pos) {
+  setPos(pos) {
     this.pos = pos
   }
 })

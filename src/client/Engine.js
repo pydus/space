@@ -16,15 +16,15 @@ export default ({ maxVel, acc, angAcc, angDec, maxAngVel }) => ({
     physics: Physics({ pos: { x: 0, y: 0 } })
   }),
 
-  fire: function() {
+  fire() {
     this.isFiring = true
   },
 
-  stopFiring: function() {
+  stopFiring() {
     this.isFiring = false
   },
 
-  update: function() {
+  update() {
     if (!this.isFiring) {
       this.flame.stop()
     } else if(this.flame.isDying) {
@@ -36,7 +36,7 @@ export default ({ maxVel, acc, angAcc, angDec, maxAngVel }) => ({
     this.flame.update()
   },
 
-  render: function(view) {
+  render(view) {
     if (this.flame) {
       this.flame.render(view)
     }

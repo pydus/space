@@ -22,27 +22,27 @@ export default ({
 
   isMoving: { up: false, down: false, left: false, right: false },
 
-  setOrigin: function(origin) {
+  setOrigin(origin) {
     this.origin = origin
   },
 
-  setMoving: function(direction, bool) {
+  setMoving(direction, bool) {
     this.isMoving[direction] = bool
   },
 
-  setVertical: function(vertical) {
+  setVertical(vertical) {
     this.vertical = vertical
   },
 
-  enable: function() {
+  enable() {
     this.isEnabled = true
   },
 
-  disable: function() {
+  disable() {
     this.isEnabled = false
   },
 
-  updateAngVel: function() {
+  updateAngVel() {
     if (this.isMoving.left) {
       this.angVel -= this.acc
       if (this.angVel < -this.maxVel) {
@@ -70,13 +70,13 @@ export default ({
     }
   },
 
-  updateAngle: function() {
+  updateAngle() {
     const distance = getDistance({ pos: this.origin }, this)
     this.angle = getAngle({ pos: this.origin }, this)
     this.angle += this.angVel / distance
   },
 
-  updateVerticalMovement: function() {
+  updateVerticalMovement() {
     if (!this.vertical) {
       this.downVel = 0
       return
@@ -109,18 +109,18 @@ export default ({
     }
   },
 
-  updatePosition: function() {
+  updatePosition() {
     const distance = getDistance({ pos: this.origin }, this)
     this.pos.x = this.origin.x + (distance - this.downVel) * Math.cos(this.angle)
     this.pos.y = this.origin.y + (distance - this.downVel) * Math.sin(this.angle)
   },
 
-  setNewProps: function(pos, vel) {
+  setNewProps(pos, vel) {
     this.pos = Object.assign({}, pos)
     this.vel = Object.assign({}, vel)
   },
 
-  update: function({ pos, vel }) {
+  update({ pos, vel }) {
     this.setNewProps(pos, vel)
 
     if (this.origin) {

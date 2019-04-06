@@ -5,25 +5,25 @@ export default ({ updatesPerSecond }) => ({
   children: [],
   canvas: null,
 
-  start: function() {
+  start() {
     this.isRunning = true
     this.loop()
   },
 
-  stop: function() {
+  stop() {
     this.isRunning = false
   },
 
-  add: function(child) {
+  add(child) {
     this.children.push(child)
   },
 
-  loop: function() {
+  loop() {
     this.tick()
     this.requestFrame()
   },
 
-  queueNextTick: function() {
+  queueNextTick() {
     setTimeout(() => {
       if (this.isRunning) {
         this.tick()
@@ -31,12 +31,12 @@ export default ({ updatesPerSecond }) => ({
     }, this.msBetweenUpdates)
   },
 
-  tick: function() {
+  tick() {
     this.update()
     this.queueNextTick()
   },
 
-  renderTick: function() {
+  renderTick() {
     this.render()
 
     if (this.isRunning) {
@@ -44,15 +44,15 @@ export default ({ updatesPerSecond }) => ({
     }
   },
 
-  requestFrame: function() {
+  requestFrame() {
     requestAnimationFrame(this.renderTick.bind(this))
   },
 
-  update: function() {
+  update() {
     this.children.forEach(child => child.update())
   },
 
-  render: function() {
+  render() {
     this.children.forEach(child => child.render())
   }
 })

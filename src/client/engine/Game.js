@@ -8,32 +8,32 @@ export default ({ loop, view }) => {
     children: [],
     updatable: [],
 
-    init: function() {
+    init() {
       this.loop.add(this)
     },
 
-    start: function() {
+    start() {
       this.loop.start()
     },
 
-    stop: function() {
+    stop() {
       this.loop.stop()
     },
 
-    add: function(child) {
+    add(child) {
       this.children.push(child)
     },
 
-    addUpdatable: function(updatable) {
+    addUpdatable(updatable) {
       this.updatable.push(updatable)
     },
 
-    update: function() {
+    update() {
       this.children.forEach(child => child.update())
       this.updatable.forEach(updatable => updatable.update())
     },
 
-    render: function() {
+    render() {
       this.view.clear()
       this.children.forEach(child => child.render(this.view))
     }

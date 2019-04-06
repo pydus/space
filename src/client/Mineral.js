@@ -13,7 +13,7 @@ export default ({ x, y, points = 5, rad = 5, color = '#eaaa4f' }) => ({
 
   physics: Physics({ pos: { x, y }, rad }),
 
-  setReference: function(ref) {
+  setReference(ref) {
     const rad = ref.physics.rad - this.physics.rad
     const pos = getRandomPosition({ ...ref.physics, rad })
     const offsetAngle = getAngle({ pos }, ref.physics)
@@ -22,7 +22,7 @@ export default ({ x, y, points = 5, rad = 5, color = '#eaaa4f' }) => ({
     this.offsetDistance = offsetDistance
   },
 
-  render: function({ setLine, drawCircle }) {
+  render({ setLine, drawCircle }) {
     setLine(this.color)
     drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
   }

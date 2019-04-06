@@ -28,22 +28,22 @@ export default ({
 
   physics: PlayerPhysics({ x, y, rad, mass }),
 
-  controlMovement: function(direction, isKeyDown) {
+  controlMovement(direction, isKeyDown) {
     this.physics.setMoving(direction, isKeyDown)
   },
 
-  addPoints: function(points) {
+  addPoints(points) {
     this.points += points
   },
 
-  addMineral: function(mineral) {
+  addMineral(mineral) {
     if (this.minerals.length >= this.maxMinerals) return false
     mineral.setReference(this)
     this.minerals.push(mineral)
     return true
   },
 
-  enterDrill: function() {
+  enterDrill() {
     if (!this.isInside && this.isOnSurface) {
       this.drill.physics.setPos({
         x: this.physics.pos.x,
@@ -55,13 +55,13 @@ export default ({
     }
   },
 
-  exitDrill: function() {
+  exitDrill() {
     this.drill.exit(this)
     this.setIsUnderGround(false)
     this.exit()
   },
 
-  getOriginInfo: function() {
+  getOriginInfo() {
     const origin = this.physics.controlSystem.origin
     if (!origin) return
     const { x, y, rad } = origin
@@ -69,14 +69,14 @@ export default ({
     return { origin, x, y, rad, distance }
   },
 
-  setIsOnSurface: function(isOnSurface) {
+  setIsOnSurface(isOnSurface) {
     if (this.isOnSurface !== isOnSurface) {
       this.physics.setVel({ x: 0, y: 0 })
       this.isOnSurface = isOnSurface
     }
   },
 
-  setIsUnderGround: function(isUnderGround) {
+  setIsUnderGround(isUnderGround) {
     if (this.isUnderGround === isUnderGround) return
 
     this.isUnderGround = isUnderGround
@@ -93,7 +93,7 @@ export default ({
     }
   },
 
-  checkIfOnSurface: function() {
+  checkIfOnSurface() {
     const originInfo = this.getOriginInfo()
     if (!originInfo) return
     const { rad, distance } = originInfo
@@ -109,7 +109,7 @@ export default ({
     }
   },
 
-  checkIfWentAboveGround: function() {
+  checkIfWentAboveGround() {
     const originInfo = this.getOriginInfo()
     if (!originInfo) return
     const { x, y, rad, distance } = originInfo
@@ -120,25 +120,25 @@ export default ({
     }
   },
 
-  setController: function(controller) {
+  setController(controller) {
     this.controller = controller
   },
 
-  setIsEntering: function(isEntering) {
+  setIsEntering(isEntering) {
     this.isEntering = isEntering
   },
 
-  enter: function() {
+  enter() {
     this.isInside = true
     this.isEntering = false
   },
 
-  exit: function() {
+  exit() {
     this.isInside = false
     this.isEntering = false
   },
 
-  updateMineralPositions: function() {
+  updateMineralPositions() {
     this.minerals.forEach(mineral => {
       mineral.physics.setPos({
         x: this.physics.pos.x + mineral.offsetDistance * Math.cos(mineral.offsetAngle),
@@ -147,7 +147,7 @@ export default ({
     })
   },
 
-  update: function() {
+  update() {
     this.updateMineralPositions()
     this.checkIfOnSurface()
     this.checkIfWentAboveGround()
@@ -155,7 +155,7 @@ export default ({
     this.physics.update()
   },
 
-  renderOriginLine: function({ setLine, drawLine }) {
+  renderOriginLine({ setLine, drawLine }) {
     setLine(this.originLineColor)
     drawLine(
       this.physics.pos.x,
@@ -165,11 +165,11 @@ export default ({
     )
   },
 
-  renderMinerals: function(view) {
+  renderMinerals(view) {
     this.minerals.forEach(mineral => mineral.render(view))
   },
 
-  render: function(view) {
+  render(view) {
     const { setLine, drawCircle } = view
     const controlSystem = this.physics.controlSystem
 

@@ -19,23 +19,23 @@ export default ({
   smoothness,
   controlSystem,
 
-  setMoving: function(direction, bool) {
+  setMoving(direction, bool) {
     this.controlSystem.setMoving(direction, bool)
   },
 
-  setPos: function(pos) {
+  setPos(pos) {
     this.pos = pos
   },
 
-  setVel: function(vel) {
+  setVel(vel) {
     this.vel = vel
   },
 
-  setAngle: function(angle) {
+  setAngle(angle) {
     this.angle = angle
   },
 
-  collideWith: function(p) {
+  collideWith(p) {
     if (!this.mobile) return
 
     const angle = getAngle(p, this)
@@ -48,7 +48,7 @@ export default ({
     this.applyFrictionFrom(p)
   },
 
-  applyFrictionFrom: function(p) {
+  applyFrictionFrom(p) {
     const factor = Math.min(
       1,
       (this.smoothness + p.smoothness) / 2
@@ -58,22 +58,22 @@ export default ({
     this.vel.y *= factor
   },
 
-  applyForce: function(force, angle) {
+  applyForce(force, angle) {
     this.vel.x += force * Math.cos(angle)
     this.vel.y += force * Math.sin(angle)
   },
 
-  applyForceTo: function(other, force) {
+  applyForceTo(other, force) {
     const angle = getAngle(this, other)
     other.applyForce(force, angle)
   },
 
-  updatePosition: function() {
+  updatePosition() {
     this.pos.x += this.vel.x
     this.pos.y += this.vel.y
   },
 
-  update: function() {
+  update() {
     if (this.controlSystem) {
       const { pos, vel, angle } = this.controlSystem.update(
         { pos: this.pos, vel: this.vel, angle: this.angle }

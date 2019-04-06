@@ -11,26 +11,26 @@ export default ({ maxVel, acc, angAcc, angDec, maxAngVel }) => ({
   isEnabled: true,
   isMoving: { up: false, down: false, left: false, right: false },
 
-  setMoving: function(direction, bool) {
+  setMoving(direction, bool) {
     this.isMoving[direction] = bool
   },
 
-  enable: function() {
+  enable() {
     this.isEnabled = true
   },
 
-  disable: function() {
+  disable() {
     this.isEnabled = false
   },
 
-  updateVelocities: function() {
+  updateVelocities() {
     if (this.isMoving.up) {
       this.vel.x += this.acc * Math.cos(this.angle)
       this.vel.y += this.acc * Math.sin(this.angle)
     }
   },
 
-  putVelocitiesInBounds: function() {
+  putVelocitiesInBounds() {
     if (this.vel.y < -this.maxVel) {
       this.vel.y = -this.maxVel
     }
@@ -48,7 +48,7 @@ export default ({ maxVel, acc, angAcc, angDec, maxAngVel }) => ({
     }
   },
 
-  updateAngVel: function() {
+  updateAngVel() {
     if (this.isMoving.left) {
       this.angVel -= this.angAcc
       if (this.angVel < -this.maxAngVel) {
@@ -76,17 +76,17 @@ export default ({ maxVel, acc, angAcc, angDec, maxAngVel }) => ({
     }
   },
 
-  updateAngle: function() {
+  updateAngle() {
     this.angle += this.angVel
   },
 
-  setNewProps: function(pos, vel, angle) {
+  setNewProps(pos, vel, angle) {
     this.pos = Object.assign({}, pos)
     this.vel = Object.assign({}, vel)
     this.angle = angle
   },
 
-  update: function({ pos, vel, angle }) {
+  update({ pos, vel, angle }) {
     this.setNewProps(pos, vel, angle)
 
     if (this.isEnabled) {

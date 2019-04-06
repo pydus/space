@@ -8,19 +8,19 @@ export default ({ acc, maxVel, origin }) => {
 
     controller: null,
 
-    setController: function(controller) {
+    setController(controller) {
       this.controller = controller
     },
 
-    controlMovement: function(direction, isKeyDown) {
+    controlMovement(direction, isKeyDown) {
       this.physics.setMoving(direction, isKeyDown)
     },
 
-    addPower: function(amount) {
+    addPower(amount) {
       this.power += amount
     },
 
-    update: function() {
+    update() {
       this.physics.update()
     }
   }

@@ -12,19 +12,19 @@ export default ({ width, height }) => ({
   players: [],
   spaceships: [],
 
-  addPlanet: function(planet) {
+  addPlanet(planet) {
     this.planets.push(planet)
   },
 
-  addPlayer: function(player) {
+  addPlayer(player) {
     this.players.push(player)
   },
 
-  addSpaceship: function(spaceship) {
+  addSpaceship(spaceship) {
     this.spaceships.push(spaceship)
   },
 
-  handleMineralPickups: function() {
+  handleMineralPickups() {
     this.players.forEach(player => {
       this.planets.forEach(planet => {
         const playerDistance = getDistance(player.physics, planet.physics)
@@ -44,7 +44,7 @@ export default ({ width, height }) => ({
     })
   },
 
-  handleVisibleMinerals: function() {
+  handleVisibleMinerals() {
     this.planets.forEach(planet => {
       const visibleMinerals = []
 
@@ -71,12 +71,12 @@ export default ({ width, height }) => ({
     })
   },
 
-  handleMinerals: function() {
+  handleMinerals() {
     this.handleMineralPickups()
     this.handleVisibleMinerals()
   },
 
-  handleEntries: function() {
+  handleEntries() {
     this.players.forEach(player => {
       if (player.isEntering) {
         for (const spaceship of this.spaceships) {
@@ -96,7 +96,7 @@ export default ({ width, height }) => ({
     })
   },
 
-  handleGravity: function() {
+  handleGravity() {
     this.planets.forEach(planet => {
       this.players.forEach(player => {
         if (!player.feelsGravity) return
@@ -110,7 +110,7 @@ export default ({ width, height }) => ({
     })
   },
 
-  findOrigins: function() {
+  findOrigins() {
     this.players.forEach(player => {
       const controlSystem = player.physics.controlSystem
       if (controlSystem && controlSystem.type === 'origin') {
@@ -126,7 +126,7 @@ export default ({ width, height }) => ({
     })
   },
 
-  keepInBounds: function(p) {
+  keepInBounds(p) {
     const rad = p.physics.rad
     let { x, y } = p.physics.pos
 
@@ -145,7 +145,7 @@ export default ({ width, height }) => ({
     p.physics.setPos({ x, y })
   },
 
-  bounceOffEdges: function(p) {
+  bounceOffEdges(p) {
     const rad = p.physics.rad
     let { x, y } = p.physics.pos
     let vx = p.physics.vel.x
@@ -162,19 +162,19 @@ export default ({ width, height }) => ({
     p.physics.setVel({ x: vx, y: vy })
   },
 
-  handleBoundsFor: function(physicsObjects) {
+  handleBoundsFor(physicsObjects) {
     physicsObjects.forEach(p => {
       this.keepInBounds(p)
       this.bounceOffEdges(p)
     })
   },
 
-  handleBounds: function() {
+  handleBounds() {
     this.handleBoundsFor(this.players)
     this.handleBoundsFor(this.spaceships)
   },
 
-  update: function() {
+  update() {
     this.planets.forEach(planet => planet.update())
     this.players.forEach(player => player.update())
     this.spaceships.forEach(spaceship => spaceship.update())
@@ -185,7 +185,7 @@ export default ({ width, height }) => ({
     this.handleBounds()
   },
 
-  renderBackground: function({ setLine, drawLine }) {
+  renderBackground({ setLine, drawLine }) {
     setLine(this.gridColor)
 
     const ny = Math.floor(this.height / this.gridLineSpacing)
@@ -202,7 +202,7 @@ export default ({ width, height }) => ({
     }
   },
 
-  render: function(view) {
+  render(view) {
     this.renderBackground(view)
     this.planets.forEach(planet => planet.render(view))
     this.spaceships.forEach(spaceship => spaceship.render(view))

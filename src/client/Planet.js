@@ -19,33 +19,33 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
     minerals: [],
     visibleMinerals: [],
 
-    addMineral: function(mineral) {
+    addMineral(mineral) {
       this.minerals.push(mineral)
     },
 
-    init: function() {
+    init() {
       for (let i = 0; i < this.initialMinerals; i++) {
         const randomMineral = this.createRandomMineral()
         this.addMineral(randomMineral)
       }
     },
 
-    setVisibleMinerals: function(visibleMinerals) {
+    setVisibleMinerals(visibleMinerals) {
       this.visibleMinerals = visibleMinerals
     },
 
-    startMineralCountdown: function() {
+    startMineralCountdown() {
       this.counting = true
       this.updatesUntilMineral = this.updatesBetweenMinerals
     },
 
-    createRandomMineral: function() {
+    createRandomMineral() {
       const { x, y } = getRandomPosition(this.physics)
       const mineral = Mineral({ x, y })
       return mineral
     },
 
-    update: function() {
+    update() {
       if (this.minerals.length < this.maxMinerals && this.updatesUntilMineral <= 0) {
         if (this.counting) {
           const randomMineral = this.createRandomMineral()
@@ -61,7 +61,7 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
       }
     },
 
-    renderSurfaceGlow: function({ setLine, drawCircle }) {
+    renderSurfaceGlow({ setLine, drawCircle }) {
       this.minerals.forEach(mineral => {
         setLine(mineral.color)
         const angle = getAngle(this.physics, mineral.physics)
@@ -71,7 +71,7 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
       })
     },
 
-    render: function(view) {
+    render(view) {
       const { drawCircle, setLine, setFillStyle, fillCircle } = view
       setFillStyle(this.fillColor)
       fillCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)

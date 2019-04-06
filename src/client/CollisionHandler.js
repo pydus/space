@@ -4,14 +4,14 @@ import { areOverlapping } from './engine/tools'
 export default ({ world }) => ({
   world,
 
-  tryCollision: function(p1, p2) {
+  tryCollision(p1, p2) {
     if (areOverlapping(p1, p2)) {
       p1.collideWith(p2)
       p2.collideWith(p1)
     }
   },
 
-  update: function() {
+  update() {
     this.world.planets.forEach(planet => {
       this.world.players.forEach(player => {
         this.tryCollision(planet.physics, player.physics)

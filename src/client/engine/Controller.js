@@ -12,17 +12,17 @@ export default ({ getCommand, runCommand, repeat = false, isEnabled = true }) =>
       isEnabled
     }),
 
-    onChange: function(key, isKeyDown) {
+    onChange(key, isKeyDown) {
       const command = this.getCommand(key)
       this.runCommand(command, isKeyDown)
     },
 
-    enable: function() {
+    enable() {
       this.keyHandler.enable()
       this.isEnabled = true
     },
 
-    disable: function() {
+    disable() {
       this.keyHandler.disable()
       this.isEnabled = false
     }

@@ -5,11 +5,11 @@ export function FlameParticle({ physics, color }) {
     physics,
     color,
 
-    update: function() {
+    update() {
       this.physics.update()
     },
 
-    render: function({ setLine, drawCircle }) {
+    render({ setLine, drawCircle }) {
       setLine(this.color)
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
     }
@@ -38,36 +38,36 @@ export default ({
   isDying: false,
   particles: [],
 
-  start: function() {
+  start() {
     this.isDying = false
   },
 
-  stop: function() {
+  stop() {
     this.isDying = true
   },
 
-  getNextColor: function() {
+  getNextColor() {
     const i = Math.floor(this.colors.length * Math.random())
     return this.colors[i]
   },
 
-  getNextAngle: function() {
+  getNextAngle() {
     const offset = -this.spread + 2 * this.spread * Math.random()
     return this.physics.angle + offset
   },
 
-  getNextRad: function() {
+  getNextRad() {
     return Math.floor(this.minRad + this.maxRad * Math.random())
   },
 
-  addParticle: function(particle) {
+  addParticle(particle) {
     this.particles.push(particle)
     if (this.particles.length > this.maxParticles) {
       this.particles.shift()
     }
   },
 
-  createNewParticle: function() {
+  createNewParticle() {
     const angle = this.getNextAngle()
 
     const particle = FlameParticle({
@@ -89,7 +89,7 @@ export default ({
     this.addParticle(particle)
   },
 
-  update: function() {
+  update() {
     if (this.isDying) {
       this.particles.pop()
     } else {
@@ -99,7 +99,7 @@ export default ({
     this.particles.forEach(particle => particle.update())
   },
 
-  render: function(view) {
+  render(view) {
     this.particles.forEach(particle => particle.render(view))
   }
 })

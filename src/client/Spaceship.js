@@ -22,6 +22,13 @@ export default ({
     color,
     engine,
 
+    minerals: [],
+
+    addMineral: function(mineral) {
+      mineral.setReference(this)
+      this.minerals.push(mineral)
+    },
+
     setController: function(controller) {
       this.controller = controller
     },
@@ -55,6 +62,17 @@ export default ({
       }
     },
 
+    updateMineralPositions: function() {
+      this.minerals.forEach(mineral => {
+        const p = this.physics
+        const angle = p.angle + mineral.offsetAngle
+        mineral.physics.setPos({
+          x: p.pos.x + mineral.offsetDistance * Math.cos(angle),
+          y: p.pos.y + mineral.offsetDistance * Math.sin(angle)
+        })
+      })
+    },
+
     update: function() {
       this.physics.update()
       const p = this.physics
@@ -64,12 +82,14 @@ export default ({
       this.engine.physics.setAngle(p.angle - Math.PI)
       this.handleEngine()
       this.engine.update()
+      this.updateMineralPositions()
     },
 
     render: function(view) {
       const { setLine, drawCircle } = view
       setLine(this.color)
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
+      this.minerals.forEach(mineral => mineral.render(view))
       this.engine.render(view)
     }
   }

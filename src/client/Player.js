@@ -1,5 +1,4 @@
-import { getDistance, getAngle } from './engine/tools'
-import { getRandomPosition } from './space-tools'
+import { getDistance } from './engine/tools'
 import { PlayerPhysics } from './physics'
 import Drill from './Drill'
 
@@ -39,12 +38,7 @@ export default ({
 
   addMineral: function(mineral) {
     if (this.minerals.length >= this.maxMinerals) return false
-    const rad = this.physics.rad - mineral.physics.rad
-    const pos = getRandomPosition({ ...this.physics, rad })
-    const offsetAngle = getAngle({ pos }, this.physics)
-    const offsetDistance = getDistance({ pos }, this.physics)
-    mineral.offsetAngle = offsetAngle
-    mineral.offsetDistance = offsetDistance
+    mineral.setReference(this)
     this.minerals.push(mineral)
     return true
   },
@@ -146,7 +140,6 @@ export default ({
 
   updateMineralPositions: function() {
     this.minerals.forEach(mineral => {
-      const pos = getRandomPosition(this.physics)
       mineral.physics.setPos({
         x: this.physics.pos.x + mineral.offsetDistance * Math.cos(mineral.offsetAngle),
         y: this.physics.pos.y + mineral.offsetDistance * Math.sin(mineral.offsetAngle)

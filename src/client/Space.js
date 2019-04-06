@@ -82,6 +82,8 @@ export default ({ width, height }) => ({
         for (const spaceship of this.spaceships) {
           if (getDistance(player.physics, spaceship.physics) < spaceship.enterDistance) {
             if (!player.isInside && spaceship.enter(player)) {
+              player.minerals.forEach(mineral => spaceship.addMineral(mineral))
+              player.minerals = []
               player.enter()
               break
             } else if (player.isInside && spaceship.exit(player)) {

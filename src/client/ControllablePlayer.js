@@ -18,6 +18,9 @@ export default args => {
       case 'arrowright':
         return 'right'
       case ' ':
+        if (!player.isInside && player.hasRoomToBuildSpaceship) {
+          return 'build spaceship'
+        }
         return 'enter'
       default:
         return ''
@@ -35,6 +38,9 @@ export default args => {
         break
       case 'enter':
         player.setIsEntering(isKeyDown)
+        break
+      case 'build spaceship':
+        player.setWantsToBuildSpaceship(isKeyDown)
         break
       default:
     }

@@ -1,5 +1,10 @@
+import Spaceship from './Spaceship'
 import { getDistance } from './engine/tools'
-import { getGravitationalForce, getMostAttractive } from './space-tools'
+import {
+  getGravitationalForce,
+  getMostAttractive,
+  getNearest
+} from './space-tools'
 
 export default ({ width, height }) => ({
   width,
@@ -7,6 +12,9 @@ export default ({ width, height }) => ({
 
   gridColor: '#222',
   gridLineSpacing: 1000,
+
+  spaceshipBuildCost: 3,
+  spaceshipBuildRadius: 100,
 
   planets: [],
   players: [],
@@ -96,6 +104,29 @@ export default ({ width, height }) => ({
     })
   },
 
+  handleBuilds() {
+    this.players.forEach(player => {
+      const spaceships = this.spaceships.map(spaceship => spaceship.physics)
+      const nearestSpaceship = getNearest.call(player.physics, spaceships)
+      const distanceToNearestSpaceship = getDistance(player.physics, nearestSpaceship)
+
+      player.hasRoomToBuildSpaceship =
+        distanceToNearestSpaceship > this.spaceshipBuildRadius
+
+      if (
+        player.wantsToBuildSpaceship &&
+        player.hasRoomToBuildSpaceship &&
+        player.minerals.length >= this.spaceshipBuildCost
+      ) {
+        const { x, y } = player.physics.pos
+        const spaceship = Spaceship({ x, y })
+        this.spaceships.push(spaceship)
+        player.setWantsToBuildSpaceship(false)
+        player.minerals = player.minerals.slice(this.spaceshipBuildCost)
+      }
+    })
+  },
+
   handleGravity() {
     this.planets.forEach(planet => {
       this.players.forEach(player => {
@@ -180,6 +211,7 @@ export default ({ width, height }) => ({
     this.spaceships.forEach(spaceship => spaceship.update())
     this.handleMinerals()
     this.handleEntries()
+    this.handleBuilds()
     this.handleGravity()
     this.findOrigins()
     this.handleBounds()

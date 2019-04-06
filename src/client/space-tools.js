@@ -14,6 +14,13 @@ export function getMostAttractive(physicsObjects) {
   ))
 }
 
+export function getNearest(physicsObjects) {
+  return physicsObjects.reduce((cur, p) => (
+    getDistance(this, p) < getDistance(this, cur)
+      ? p : cur
+  ))
+}
+
 export function getRandomPosition(p) {
   const angle = 2 * Math.PI * Math.random()
   const distance = p.rad * Math.random()

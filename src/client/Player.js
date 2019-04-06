@@ -25,6 +25,8 @@ export default ({
   isInside: false,
   isOnSurface: false,
   isUnderGround: false,
+  hasRoomToBuildSpaceship: false,
+  wantsToBuildSpaceship: false,
 
   physics: PlayerPhysics({ x, y, rad, mass }),
 
@@ -41,6 +43,10 @@ export default ({
     mineral.setReference(this)
     this.minerals.push(mineral)
     return true
+  },
+
+  setWantsToBuildSpaceship(wantsToBuildSpaceship) {
+    this.wantsToBuildSpaceship = wantsToBuildSpaceship
   },
 
   enterDrill() {

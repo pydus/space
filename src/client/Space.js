@@ -24,6 +24,58 @@ export default ({ width, height }) => ({
     this.spaceships.push(spaceship)
   },
 
+  handleMineralPickups: function() {
+    this.players.forEach(player => {
+      this.planets.forEach(planet => {
+        const playerDistance = getDistance(player.physics, planet.physics)
+        if (playerDistance > planet.physics.rad) return
+
+        for (let i = planet.minerals.length - 1; i >= 0; i--) {
+          const mineral = planet.minerals[i]
+          const mineralDistance = getDistance(player.physics, mineral.physics)
+          if (mineralDistance <= player.physics.rad + mineral.pickupDistance) {
+            const pickedUp = player.addMineral(mineral)
+            if (pickedUp) {
+              planet.minerals.splice(i, 1)
+            }
+          }
+        }
+      })
+    })
+  },
+
+  handleVisibleMinerals: function() {
+    this.planets.forEach(planet => {
+      const visibleMinerals = []
+
+      this.players.forEach(player => {
+        if (
+          !player.controller ||
+          !player.controller.isEnabled ||
+          !player.isUnderGround
+        ) return
+
+        const playerDistance = getDistance(player.physics, planet.physics)
+        if (playerDistance > planet.physics.rad) return
+
+        for (let i = planet.minerals.length - 1; i >= 0; i--) {
+          const mineral = planet.minerals[i]
+          const mineralDistance = getDistance(player.physics, mineral.physics)
+          if (mineralDistance <= mineral.visibleDistance) {
+            visibleMinerals.push(mineral)
+          }
+        }
+      })
+
+      planet.setVisibleMinerals(visibleMinerals)
+    })
+  },
+
+  handleMinerals: function() {
+    this.handleMineralPickups()
+    this.handleVisibleMinerals()
+  },
+
   handleEntries: function() {
     this.players.forEach(player => {
       if (player.isEntering) {
@@ -124,6 +176,7 @@ export default ({ width, height }) => ({
     this.planets.forEach(planet => planet.update())
     this.players.forEach(player => player.update())
     this.spaceships.forEach(spaceship => spaceship.update())
+    this.handleMinerals()
     this.handleEntries()
     this.handleGravity()
     this.findOrigins()

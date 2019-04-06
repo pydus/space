@@ -1,4 +1,5 @@
-import { getDistance } from './engine/tools'
+import { getDistance, getAngle } from './engine/tools'
+import { getRandomPosition } from './space-tools'
 import { PlayerPhysics } from './physics'
 import Drill from './Drill'
 
@@ -18,6 +19,8 @@ export default ({
   feelsGravity,
   originLineColor,
   shouldRenderOriginLine,
+  maxMinerals: 3,
+  minerals: [],
   surfaceThickness: 5,
   isEntering: false,
   isInside: false,
@@ -28,6 +31,22 @@ export default ({
 
   controlMovement: function(direction, isKeyDown) {
     this.physics.setMoving(direction, isKeyDown)
+  },
+
+  addPoints: function(points) {
+    this.points += points
+  },
+
+  addMineral: function(mineral) {
+    if (this.minerals.length >= this.maxMinerals) return false
+    const rad = this.physics.rad - mineral.physics.rad
+    const pos = getRandomPosition({ ...this.physics, rad })
+    const offsetAngle = getAngle({ pos }, this.physics)
+    const offsetDistance = getDistance({ pos }, this.physics)
+    mineral.offsetAngle = offsetAngle
+    mineral.offsetDistance = offsetDistance
+    this.minerals.push(mineral)
+    return true
   },
 
   enterDrill: function() {
@@ -59,8 +78,8 @@ export default ({
   setIsOnSurface: function(isOnSurface) {
     if (this.isOnSurface !== isOnSurface) {
       this.physics.setVel({ x: 0, y: 0 })
+      this.isOnSurface = isOnSurface
     }
-    this.isOnSurface = isOnSurface
   },
 
   setIsUnderGround: function(isUnderGround) {
@@ -125,7 +144,18 @@ export default ({
     this.isEntering = false
   },
 
+  updateMineralPositions: function() {
+    this.minerals.forEach(mineral => {
+      const pos = getRandomPosition(this.physics)
+      mineral.physics.setPos({
+        x: this.physics.pos.x + mineral.offsetDistance * Math.cos(mineral.offsetAngle),
+        y: this.physics.pos.y + mineral.offsetDistance * Math.sin(mineral.offsetAngle)
+      })
+    })
+  },
+
   update: function() {
+    this.updateMineralPositions()
     this.checkIfOnSurface()
     this.checkIfWentAboveGround()
     this.drill.update()
@@ -142,9 +172,15 @@ export default ({
     )
   },
 
+  renderMinerals: function(view) {
+    this.minerals.forEach(mineral => mineral.render(view))
+  },
+
   render: function(view) {
     const { setLine, drawCircle } = view
     const controlSystem = this.physics.controlSystem
+
+    this.renderMinerals(view)
 
     setLine(this.color)
     drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)

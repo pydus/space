@@ -13,3 +13,11 @@ export function getMostAttractive(physicsObjects) {
       ? p : cur
   ))
 }
+
+export function getRandomPosition(p) {
+  const angle = 2 * Math.PI * Math.random()
+  const distance = p.rad * Math.random()
+  const x = p.pos.x + distance * Math.cos(angle)
+  const y = p.pos.y + distance * Math.sin(angle)
+  return { x, y }
+}

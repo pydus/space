@@ -86,14 +86,11 @@ export default ({
     if (this.isUnderGround === isUnderGround) return
 
     this.isUnderGround = isUnderGround
-    this.physics.setVel({ x: 0, y: 0 })
 
     if (isUnderGround) {
-      this.physics.mobile = false
       this.feelsGravity = false
       this.shouldRenderOriginLine = true
     } else {
-      this.physics.mobile = true
       this.feelsGravity = true
       this.shouldRenderOriginLine = false
     }

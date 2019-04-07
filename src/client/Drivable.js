@@ -12,15 +12,27 @@ export default ({
   driver: null,
   passengers: [],
 
-  enter(being) {
+  tryToEnter(being) {
     if (!this.addDriver(being)) {
       return this.addPassenger(being)
     }
     return true
   },
 
+  enter(being) {
+    const didEnter = this.tryToEnter(being)
+    if (didEnter && typeof this.onEnter === 'function') {
+      this.onEnter(being)
+    }
+    return didEnter
+  },
+
   exit(being) {
-    return this.removeDriver(being)
+    const didExit = this.removeDriver(being)
+    if (didExit && typeof this.onExit === 'function') {
+      this.onExit(being)
+    }
+    return didExit
   },
 
   addDriver(being) {

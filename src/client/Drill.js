@@ -8,6 +8,15 @@ export default ({ acc, maxVel, origin }) => {
 
     controller: null,
 
+    onEnter(being) {
+      being.physics.setVel({ x: 0, y: 0 })
+      being.physics.mobile = false
+    },
+
+    onExit(being) {
+      being.physics.mobile = true
+    },
+
     setController(controller) {
       this.controller = controller
     },

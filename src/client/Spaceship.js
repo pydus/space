@@ -25,7 +25,7 @@ export default ({
 
     loadCounter: 0,
     updatesBetweenLoads: 20,
-    laser: Laser({}),
+    laser: Laser({ crosshairColor: color }),
     minerals: [],
 
     addMineral(mineral) {

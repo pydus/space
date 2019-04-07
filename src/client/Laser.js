@@ -57,10 +57,19 @@ export default ({
     const { pos, angle } = this.physics
     const range = this.getRange()
     const width = this.getBeamWidth()
-    const x = pos.x + range * Math.cos(angle)
-    const y = pos.y + range * Math.sin(angle)
-    setLine(this.crosshairColor, width)
-    drawLine(pos.x, pos.y, x, y)
+    const x1 = pos.x + (width / 2) * Math.cos(angle - Math.PI / 2)
+    const y1 = pos.y + (width / 2) * Math.sin(angle - Math.PI / 2)
+    const x2 = x1 + range * Math.cos(angle)
+    const y2 = y1 + range * Math.sin(angle)
+    const x3 = pos.x + (width / 2) * Math.cos(angle + Math.PI / 2)
+    const y3 = pos.y + (width / 2) * Math.sin(angle + Math.PI / 2)
+    const x4 = x3 + range * Math.cos(angle)
+    const y4 = y3 + range * Math.sin(angle)
+    setLine(this.crosshairColor)
+    drawLine(x1, y1, x2, y2)
+    drawLine(x2, y2, x4, y4)
+    drawLine(x4, y4, x3, y3)
+    drawLine(x3, y3, x1, y1)
   },
 
   render(view) {

@@ -2,6 +2,7 @@ import Controller from './engine/Controller'
 import Drivable from './Drivable'
 import Engine from './Engine'
 import { SpaceshipPhysics } from './physics'
+import Laser from './Laser'
 
 export default ({
   x,
@@ -22,7 +23,12 @@ export default ({
     color,
     engine,
 
+    rangePerMineral: 100,
+    widthPerMineral: 10,
+    updatesBetweenLoads: 20,
+    loadCounter: 0,
     minerals: [],
+    loaded: [],
 
     addMineral(mineral) {
       mineral.setReference(this)
@@ -44,6 +50,63 @@ export default ({
 
     controlMovement(direction, isKeyDown) {
       this.physics.setMoving(direction, isKeyDown)
+    },
+
+    getLaserRange() {
+      return this.rangePerMineral * this.loaded.length
+    },
+
+    getLaserWidth() {
+      return this.widthPerMineral * this.loaded.length
+    },
+
+    fireLaser() {
+      const { pos, angle, rad } = this.physics
+      const x = pos.x + rad * Math.cos(angle)
+      const y = pos.y + rad * Math.sin(angle)
+      const range = this.getLaserRange()
+      const width = this.getLaserWidth()
+      const laser = Laser({ x, y, angle, range, width })
+      this.laser = laser
+      this.loaded = []
+    },
+
+    loadNext() {
+      const mineral = this.minerals.pop()
+      if (mineral) {
+        this.loaded.push(mineral)
+        return true
+      }
+      return false
+    },
+
+    setLoading(loading) {
+      this.loading = loading
+    },
+
+    updateLoader() {
+      if (this.loading) {
+        if (this.loadCounter <= 0) {
+          const didLoad = this.loadNext()
+          if (didLoad) {
+            this.loadCounter = this.updatesBetweenLoads
+          } else {
+            this.setLoading(false)
+          }
+        } else {
+          this.loadCounter--
+        }
+      }
+    },
+
+    updateLaser() {
+      if (!this.laser) return
+
+      if (this.laser.done) {
+        this.laser = null
+      } else {
+        this.laser.update()
+      }
     },
 
     handleEngine() {
@@ -74,6 +137,8 @@ export default ({
     },
 
     update() {
+      this.updateLoader()
+      this.updateLaser()
       this.physics.update()
       const p = this.physics
       const engineX = p.pos.x - p.rad * Math.cos(p.angle)
@@ -91,13 +156,17 @@ export default ({
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
       this.minerals.forEach(mineral => mineral.render(view))
       this.engine.render(view)
+      if (this.laser) {
+        this.laser.render(view)
+      }
     }
   }
 
   const getCommand = key => {
     switch (key) {
-      case 'w':
       case 'arrowup':
+        return 'laser'
+      case 'w':
         return 'up'
       case 'a':
       case 'arrowleft':
@@ -116,6 +185,15 @@ export default ({
       case 'left':
       case 'right':
         spaceship.controlMovement(command, isKeyDown)
+        break
+      case 'load':
+        spaceship.setLoading(isKeyDown)
+        break
+      case 'laser':
+        spaceship.setLoading(isKeyDown)
+        if (!isKeyDown) {
+          spaceship.fireLaser()
+        }
         break
       default:
     }

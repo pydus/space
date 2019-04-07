@@ -2,7 +2,7 @@ import Controller from './engine/Controller'
 import Drivable from './Drivable'
 import Engine from './Engine'
 import { SpaceshipPhysics } from './physics'
-import LaserBeam from './LaserBeam'
+import Laser from './Laser'
 
 export default ({
   x,
@@ -23,13 +23,10 @@ export default ({
     color,
     engine,
 
-    beam: null,
-    rangePerMineral: 100,
-    widthPerMineral: 10,
-    updatesBetweenLoads: 20,
     loadCounter: 0,
+    updatesBetweenLoads: 20,
+    laser: Laser({}),
     minerals: [],
-    loaded: [],
 
     addMineral(mineral) {
       mineral.setReference(this)
@@ -53,36 +50,17 @@ export default ({
       this.physics.setMoving(direction, isKeyDown)
     },
 
-    getLaserRange() {
-      return this.rangePerMineral * this.loaded.length
-    },
-
-    getLaserWidth() {
-      return this.widthPerMineral * this.loaded.length
-    },
-
-    fireLaser() {
-      const { pos, angle, rad } = this.physics
-      const x = pos.x + rad * Math.cos(angle)
-      const y = pos.y + rad * Math.sin(angle)
-      const range = this.getLaserRange()
-      const width = this.getLaserWidth()
-      const beam = LaserBeam({ x, y, angle, range, width })
-      this.beam = beam
-      this.loaded = []
+    setLoading(loading) {
+      this.loading = loading
     },
 
     loadNext() {
       const mineral = this.minerals.pop()
       if (mineral) {
-        this.loaded.push(mineral)
+        this.laser.load(mineral)
         return true
       }
       return false
-    },
-
-    setLoading(loading) {
-      this.loading = loading
     },
 
     updateLoader() {
@@ -97,16 +75,6 @@ export default ({
         } else {
           this.loadCounter--
         }
-      }
-    },
-
-    updateLaserBeam() {
-      if (!this.beam) return
-
-      if (this.beam.done) {
-        this.beam = null
-      } else {
-        this.beam.update()
       }
     },
 
@@ -137,7 +105,7 @@ export default ({
       })
     },
 
-    updateEnginePosition: function() {
+    updateEnginePosition() {
       const p = this.physics
       const engineX = p.pos.x - p.rad * Math.cos(p.angle)
       const engineY = p.pos.y - p.rad * Math.sin(p.angle)
@@ -145,9 +113,18 @@ export default ({
       this.engine.physics.setAngle(p.angle - Math.PI)
     },
 
+    updateLaserPosition() {
+      const { pos, angle, rad } = this.physics
+      const x = pos.x + rad * Math.cos(angle)
+      const y = pos.y + rad * Math.sin(angle)
+      this.laser.physics.setPos({ x, y })
+      this.laser.physics.setAngle(angle)
+    },
+
     update() {
+      this.updateLaserPosition()
       this.updateLoader()
-      this.updateLaserBeam()
+      this.laser.update()
       this.physics.update()
       this.updateEnginePosition()
       this.handleEngine()
@@ -161,9 +138,7 @@ export default ({
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
       this.minerals.forEach(mineral => mineral.render(view))
       this.engine.render(view)
-      if (this.beam) {
-        this.beam.render(view)
-      }
+      this.laser.render(view)
     }
   }
 
@@ -197,7 +172,7 @@ export default ({
       case 'laser':
         spaceship.setLoading(isKeyDown)
         if (!isKeyDown) {
-          spaceship.fireLaser()
+          spaceship.laser.fire()
         }
         break
       default:

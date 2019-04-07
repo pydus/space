@@ -5,10 +5,12 @@ export default ({
   pos,
   angle,
   rangePerMineral = 100,
-  widthPerMineral  = 10
+  widthPerMineral  = 10,
+  crosshairColor = '#fff'
 }) => ({
   rangePerMineral,
   widthPerMineral,
+  crosshairColor,
 
   physics: Physics({ pos, angle }),
 
@@ -51,7 +53,18 @@ export default ({
     this.updateLaserBeam()
   },
 
+  renderCrosshair({ setLine, drawLine }) {
+    const { pos, angle } = this.physics
+    const range = this.getRange()
+    const width = this.getBeamWidth()
+    const x = pos.x + range * Math.cos(angle)
+    const y = pos.y + range * Math.sin(angle)
+    setLine(this.crosshairColor, width)
+    drawLine(pos.x, pos.y, x, y)
+  },
+
   render(view) {
+    this.renderCrosshair(view)
     if (this.beam) {
       this.beam.render(view)
     }

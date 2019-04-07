@@ -122,10 +122,10 @@ export default ({
     },
 
     update() {
-      this.updateLaserPosition()
       this.updateLoader()
       this.laser.update()
       this.physics.update()
+      this.updateLaserPosition()
       this.updateEnginePosition()
       this.handleEngine()
       this.engine.update()

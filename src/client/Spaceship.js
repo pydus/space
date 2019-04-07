@@ -137,15 +137,19 @@ export default ({
       })
     },
 
-    update() {
-      this.updateLoader()
-      this.updateLaserBeam()
-      this.physics.update()
+    updateEnginePosition: function() {
       const p = this.physics
       const engineX = p.pos.x - p.rad * Math.cos(p.angle)
       const engineY = p.pos.y - p.rad * Math.sin(p.angle)
       this.engine.physics.setPos({ x: engineX, y: engineY })
       this.engine.physics.setAngle(p.angle - Math.PI)
+    },
+
+    update() {
+      this.updateLoader()
+      this.updateLaserBeam()
+      this.physics.update()
+      this.updateEnginePosition()
       this.handleEngine()
       this.engine.update()
       this.updateMineralPositions()

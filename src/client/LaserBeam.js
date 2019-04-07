@@ -1,12 +1,12 @@
-import Physics from './engine/Physics'
-
 export default ({ x, y, angle, range, width, color = '#4e8', time = 60 }) => ({
+  x,
+  y,
+  angle,
   range,
   width,
   color,
   time,
 
-  physics: Physics({ pos: { x, y }, angle }),
   done: false,
 
   destroy() {
@@ -23,9 +23,8 @@ export default ({ x, y, angle, range, width, color = '#4e8', time = 60 }) => ({
 
   render({ setLine, drawLine }) {
     setLine(this.color, this.width)
-    const { x, y } = this.physics.pos
-    const destX = this.physics.pos.x + this.range * Math.cos(this.physics.angle)
-    const destY = this.physics.pos.y + this.range * Math.sin(this.physics.angle)
+    const destX = this.x + this.range * Math.cos(this.angle)
+    const destY = this.y + this.range * Math.sin(this.angle)
     drawLine(x, y, destX, destY)
   }
 })

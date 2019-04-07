@@ -2,7 +2,7 @@ import Controller from './engine/Controller'
 import Drivable from './Drivable'
 import Engine from './Engine'
 import { SpaceshipPhysics } from './physics'
-import Laser from './Laser'
+import LaserBeam from './LaserBeam'
 
 export default ({
   x,
@@ -23,6 +23,7 @@ export default ({
     color,
     engine,
 
+    beam: null,
     rangePerMineral: 100,
     widthPerMineral: 10,
     updatesBetweenLoads: 20,
@@ -66,8 +67,8 @@ export default ({
       const y = pos.y + rad * Math.sin(angle)
       const range = this.getLaserRange()
       const width = this.getLaserWidth()
-      const laser = Laser({ x, y, angle, range, width })
-      this.laser = laser
+      const beam = LaserBeam({ x, y, angle, range, width })
+      this.beam = beam
       this.loaded = []
     },
 
@@ -99,13 +100,13 @@ export default ({
       }
     },
 
-    updateLaser() {
-      if (!this.laser) return
+    updateLaserBeam() {
+      if (!this.beam) return
 
-      if (this.laser.done) {
-        this.laser = null
+      if (this.beam.done) {
+        this.beam = null
       } else {
-        this.laser.update()
+        this.beam.update()
       }
     },
 
@@ -138,7 +139,7 @@ export default ({
 
     update() {
       this.updateLoader()
-      this.updateLaser()
+      this.updateLaserBeam()
       this.physics.update()
       const p = this.physics
       const engineX = p.pos.x - p.rad * Math.cos(p.angle)
@@ -156,8 +157,8 @@ export default ({
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
       this.minerals.forEach(mineral => mineral.render(view))
       this.engine.render(view)
-      if (this.laser) {
-        this.laser.render(view)
+      if (this.beam) {
+        this.beam.render(view)
       }
     }
   }

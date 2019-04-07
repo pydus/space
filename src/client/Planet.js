@@ -11,6 +11,8 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
     color,
     fillColor,
 
+    arrowAngle: Math.PI / 3,
+    arrowLength: 10,
     counting: false,
     updatesBetweenMinerals: 50000 / (rad ** 0.5),
     updatesUntilMineral: 0,
@@ -61,13 +63,18 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
       }
     },
 
-    renderSurfaceGlow({ setLine, drawCircle }) {
+    renderSurfaceGlow({ setLine, drawLine }) {
       this.minerals.forEach(mineral => {
-        setLine(mineral.color)
         const angle = getAngle(this.physics, mineral.physics)
         const x = this.physics.pos.x + this.physics.rad * Math.cos(angle)
         const y = this.physics.pos.y + this.physics.rad * Math.sin(angle)
-        drawCircle(x, y, 5)
+        const x1 = x + this.arrowLength * Math.cos(angle + this.arrowAngle)
+        const y1 = y + this.arrowLength * Math.sin(angle + this.arrowAngle)
+        const x2 = x + this.arrowLength * Math.cos(angle - this.arrowAngle)
+        const y2 = y + this.arrowLength * Math.sin(angle - this.arrowAngle)
+        setLine(mineral.color)
+        drawLine(x, y, x1, y1)
+        drawLine(x, y, x2, y2)
       })
     },
 

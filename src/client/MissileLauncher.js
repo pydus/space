@@ -1,15 +1,17 @@
 import Physics from './engine/Physics'
-import LaserBeam from './LaserBeam'
+import Missile from './Missile'
 
 export default ({
   pos,
   angle,
+  missileSpeed = 20,
   rangePerMineral = 100,
-  widthPerMineral  = 10,
+  radPerMineral = 10,
   crosshairColor = '#fff'
 }) => ({
+  missileSpeed,
   rangePerMineral,
-  widthPerMineral,
+  radPerMineral,
   crosshairColor,
 
   physics: Physics({ pos, angle }),
@@ -21,8 +23,8 @@ export default ({
     return this.rangePerMineral * this.loaded.length
   },
 
-  getBeamWidth() {
-    return this.widthPerMineral * this.loaded.length
+  getMissileRadius() {
+    return this.radPerMineral * this.loaded.length
   },
 
   load(mineral) {
@@ -33,13 +35,13 @@ export default ({
     const { x, y } = this.physics.pos
     const { angle } = this.physics
     const range = this.getRange()
-    const width = this.getBeamWidth()
-    const beam = LaserBeam({ x, y, angle, range, width })
+    const rad = this.getMissileRadius()
+    const beam = Missile({ x, y, angle, speed: this.missileSpeed, range, rad })
     this.beam = beam
     this.loaded = []
   },
 
-  updateLaserBeam() {
+  updateMissile() {
     if (!this.beam) return
 
     if (this.beam.done) {
@@ -50,13 +52,13 @@ export default ({
   },
 
   update() {
-    this.updateLaserBeam()
+    this.updateMissile()
   },
 
   renderCrosshair({ setLine, drawLine }) {
     const { pos, angle } = this.physics
     const range = this.getRange()
-    const width = this.getBeamWidth()
+    const width = this.getMissileRadius()
     const x1 = pos.x + (width / 2) * Math.cos(angle - Math.PI / 2)
     const y1 = pos.y + (width / 2) * Math.sin(angle - Math.PI / 2)
     const x2 = x1 + range * Math.cos(angle)

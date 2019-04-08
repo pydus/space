@@ -2,7 +2,7 @@ import Controller from './engine/Controller'
 import Drivable from './Drivable'
 import Engine from './Engine'
 import { SpaceshipPhysics } from './physics'
-import Laser from './Laser'
+import MissileLauncher from './MissileLauncher'
 
 export default ({
   x,
@@ -25,7 +25,7 @@ export default ({
 
     loadCounter: 0,
     updatesBetweenLoads: 20,
-    laser: Laser({ crosshairColor: color }),
+    missileLauncher: MissileLauncher({ crosshairColor: color }),
     minerals: [],
 
     addMineral(mineral) {
@@ -57,7 +57,7 @@ export default ({
     loadNext() {
       const mineral = this.minerals.pop()
       if (mineral) {
-        this.laser.load(mineral)
+        this.missileLauncher.load(mineral)
         return true
       }
       return false
@@ -113,19 +113,19 @@ export default ({
       this.engine.physics.setAngle(p.angle - Math.PI)
     },
 
-    updateLaserPosition() {
+    updateMissileLauncherPosition() {
       const { pos, angle, rad } = this.physics
       const x = pos.x + rad * Math.cos(angle)
       const y = pos.y + rad * Math.sin(angle)
-      this.laser.physics.setPos({ x, y })
-      this.laser.physics.setAngle(angle)
+      this.missileLauncher.physics.setPos({ x, y })
+      this.missileLauncher.physics.setAngle(angle)
     },
 
     update() {
       this.updateLoader()
-      this.laser.update()
+      this.missileLauncher.update()
       this.physics.update()
-      this.updateLaserPosition()
+      this.updateMissileLauncherPosition()
       this.updateEnginePosition()
       this.handleEngine()
       this.engine.update()
@@ -138,14 +138,14 @@ export default ({
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
       this.minerals.forEach(mineral => mineral.render(view))
       this.engine.render(view)
-      this.laser.render(view)
+      this.missileLauncher.render(view)
     }
   }
 
   const getCommand = key => {
     switch (key) {
       case 'arrowup':
-        return 'laser'
+        return 'missile launcher'
       case 'w':
         return 'up'
       case 'a':
@@ -169,10 +169,10 @@ export default ({
       case 'load':
         spaceship.setLoading(isKeyDown)
         break
-      case 'laser':
+      case 'missile launcher':
         spaceship.setLoading(isKeyDown)
         if (!isKeyDown) {
-          spaceship.laser.fire()
+          spaceship.missileLauncher.fire()
         }
         break
       default:

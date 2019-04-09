@@ -9,6 +9,7 @@ export default ({
   speed,
   range,
   rad,
+  maxMinerals,
   color = '#4e8',
   time = Infinity
 }) => ({
@@ -32,7 +33,7 @@ export default ({
 
   done: false,
 
-  mineralCarrier: MineralCarrier({ x, y, rad, angle }),
+  mineralCarrier: MineralCarrier({ x, y, rad, angle, max: maxMinerals }),
 
   destroy() {
     this.done = true

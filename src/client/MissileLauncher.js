@@ -49,7 +49,8 @@ export default ({
       angle,
       speed: this.missileSpeed,
       range,
-      rad
+      rad,
+      maxMinerals: this.loaded.length
     })
 
     this.missile = missile

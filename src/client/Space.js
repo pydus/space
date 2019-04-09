@@ -43,8 +43,10 @@ export default ({ width, height }) => ({
           for (let i = minerals.length - 1; i >= 0; i--) {
             const mineral = minerals[i]
             if (areOverlapping(missile.physics, mineral.physics)) {
-              otherSpaceship.mineralCarrier.remove(mineral)
-              missile.mineralCarrier.add(mineral)
+              const didSteal = missile.mineralCarrier.add(mineral)
+              if (didSteal) {
+                otherSpaceship.mineralCarrier.remove(mineral)
+              }
             }
           }
         })

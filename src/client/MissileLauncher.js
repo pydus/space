@@ -15,8 +15,7 @@ export default ({
   crosshairColor,
 
   physics: Physics({ pos, angle }),
-
-  beam: null,
+  missile: null,
   loaded: [],
 
   getRange() {
@@ -36,18 +35,26 @@ export default ({
     const { angle } = this.physics
     const range = this.getRange()
     const rad = this.getMissileRadius()
-    const beam = Missile({ x, y, angle, speed: this.missileSpeed, range, rad })
-    this.beam = beam
+    const missile = Missile({
+      x,
+      y,
+      angle,
+      speed: this.missileSpeed,
+      range,
+      rad
+    })
+
+    this.missile = missile
     this.loaded = []
   },
 
   updateMissile() {
-    if (!this.beam) return
+    if (!this.missile) return
 
-    if (this.beam.done) {
-      this.beam = null
+    if (this.missile.done) {
+      this.missile = null
     } else {
-      this.beam.update()
+      this.missile.update()
     }
   },
 
@@ -76,8 +83,8 @@ export default ({
 
   render(view) {
     this.renderCrosshair(view)
-    if (this.beam) {
-      this.beam.render(view)
+    if (this.missile) {
+      this.missile.render(view)
     }
   }
 })

@@ -37,9 +37,17 @@ export default ({ width, height }) => ({
     this.minerals.push(mineral)
   },
 
+  removeMineral(mineral) {
+    const i = this.minerals.indexOf(mineral)
+    if (i === -1) return false
+    this.minerals.splice(i, 1)
+    return true
+  },
+
   handleMissiles() {
     this.spaceships.forEach(spaceship => {
       const missile = spaceship.missileLauncher.missile
+
       if (missile) {
         this.spaceships.forEach(otherSpaceship => {
           if (spaceship === otherSpaceship) return
@@ -82,6 +90,19 @@ export default ({ width, height }) => ({
           }
         }
       })
+    })
+
+    this.spaceships.forEach(spaceship => {
+      for (let i = this.minerals.length - 1; i >= 0; i--) {
+        const mineral = this.minerals[i]
+        const mineralDistance = getDistance(spaceship.physics, mineral.physics)
+        if (mineralDistance <= spaceship.physics.rad + mineral.pickupDistance) {
+          const pickedUp = spaceship.mineralCarrier.add(mineral)
+          if (pickedUp) {
+            this.removeMineral(mineral)
+          }
+        }
+      }
     })
   },
 

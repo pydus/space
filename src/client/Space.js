@@ -19,6 +19,7 @@ export default ({ width, height }) => ({
   planets: [],
   players: [],
   spaceships: [],
+  minerals: [],
 
   addPlanet(planet) {
     this.planets.push(planet)
@@ -30,6 +31,10 @@ export default ({ width, height }) => ({
 
   addSpaceship(spaceship) {
     this.spaceships.push(spaceship)
+  },
+
+  addMineral(mineral) {
+    this.minerals.push(mineral)
   },
 
   handleMissiles() {
@@ -50,6 +55,12 @@ export default ({ width, height }) => ({
             }
           }
         })
+
+        if (missile.done && missile.mineralCarrier.minerals.length === 0) {
+          spaceship.missileLauncher.loaded.forEach(mineral => {
+            this.addMineral(mineral)
+          })
+        }
       }
     })
   },
@@ -264,6 +275,7 @@ export default ({ width, height }) => ({
 
   render(view) {
     this.renderBackground(view)
+    this.minerals.forEach(mineral => mineral.render(view))
     this.planets.forEach(planet => planet.render(view))
     this.spaceships.forEach(spaceship => spaceship.render(view))
     this.players.forEach(player => player.render(view))

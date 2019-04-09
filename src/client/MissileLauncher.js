@@ -1,5 +1,6 @@
 import Physics from './engine/Physics'
 import Missile from './Missile'
+import { getRandomPosition } from './space-tools'
 
 export default ({
   pos,
@@ -74,6 +75,15 @@ export default ({
     }
   },
 
+  updateLoadedPositions() {
+    if (this.missile) {
+      this.loaded.forEach(mineral => {
+        const pos = getRandomPosition(this.missile.physics)
+        mineral.physics.setPos(pos)
+      })
+    }
+  },
+
   updateMissile() {
     if (!this.missile) return
 
@@ -90,6 +100,7 @@ export default ({
   },
 
   update() {
+    this.updateLoadedPositions()
     this.updateMissile()
   },
 

@@ -120,7 +120,7 @@ export default ({ width, height }) => ({
       ) {
         const { x, y } = player.physics.pos
         const spaceship = Spaceship({ x, y })
-        this.spaceships.push(spaceship)
+        this.addSpaceship(spaceship)
         player.setWantsToBuildSpaceship(false)
         player.minerals = player.minerals.slice(this.spaceshipBuildCost)
       }

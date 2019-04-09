@@ -1,5 +1,6 @@
 import Physics from './engine/Physics'
 import MineralCarrier from './MineralCarrier'
+import { getDistance } from './engine/tools'
 
 export default ({
   x,
@@ -16,6 +17,8 @@ export default ({
   range,
   color,
   time,
+
+  startPos: { x, y },
 
   physics: Physics({
     pos: { x, y },
@@ -35,8 +38,12 @@ export default ({
     this.done = true
   },
 
+  getDistanceFromStart() {
+    return getDistance(this.physics, { pos: this.startPos })
+  },
+
   update() {
-    if (this.time <= 0) {
+    if (this.time <= 0 || this.getDistanceFromStart() > this.range) {
       this.destroy()
     } else {
       this.time--

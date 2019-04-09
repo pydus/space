@@ -64,8 +64,14 @@ export default ({ width, height }) => ({
           }
         })
 
+        // drop minerals into space or planet
         if (missile.done && missile.mineralCarrier.minerals.length === 0) {
           spaceship.missileLauncher.loaded.forEach(mineral => {
+            for (const planet of this.planets) {
+              if (areOverlapping(planet.physics, mineral.physics)) {
+                return planet.mineralCarrier.add(mineral)
+              }
+            }
             this.addMineral(mineral)
           })
         }

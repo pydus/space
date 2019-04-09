@@ -16,13 +16,12 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
     arrowLength: 10,
     counting: false,
     updatesBetweenMinerals: 50000 / (rad ** 0.5),
+    mineralGenerationThreshold: Math.ceil(physics.rad / 150),
     updatesUntilMineral: 0,
     initialMinerals: 2,
     visibleMinerals: [],
 
-    mineralCarrier: MineralCarrier({
-      max: Math.ceil(physics.rad / 150)
-    }),
+    mineralCarrier: MineralCarrier({}),
 
     init() {
       for (let i = 0; i < this.initialMinerals; i++) {
@@ -57,7 +56,7 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
           this.counting = false
         }
 
-        if (this.mineralCarrier.minerals.length < this.mineralCarrier.max) {
+        if (this.mineralCarrier.minerals.length < this.mineralGenerationThreshold) {
           this.startMineralCountdown()
         }
       } else {

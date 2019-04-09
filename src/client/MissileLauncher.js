@@ -104,7 +104,7 @@ export default ({
     this.updateMissile()
   },
 
-  renderCrosshair({ setLine, drawLine }) {
+  renderCrosshair({ setLine, drawLine, drawCircle }) {
     const { pos, angle } = this.physics
     const range = this.getRange()
     const width = this.getMissileRadius()
@@ -116,11 +116,13 @@ export default ({
     const y3 = pos.y + width * Math.sin(angle + Math.PI / 2)
     const x4 = x3 + range * Math.cos(angle)
     const y4 = y3 + range * Math.sin(angle)
+    const destX = pos.x + range * Math.cos(angle)
+    const destY = pos.y + range * Math.sin(angle)
     setLine(this.crosshairColor)
     drawLine(x1, y1, x2, y2)
-    drawLine(x2, y2, x4, y4)
     drawLine(x4, y4, x3, y3)
     drawLine(x3, y3, x1, y1)
+    drawCircle(destX, destY, width)
   },
 
   render(view) {

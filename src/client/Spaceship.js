@@ -28,7 +28,7 @@ export default ({
 
     loadCounter: 0,
     updatesBetweenLoads: 20,
-    missileLauncher: MissileLauncher({ crosshairColor: color }),
+    missileLauncher: MissileLauncher({ pos: { x, y }, crosshairColor: color }),
 
     physics: SpaceshipPhysics({
       x,

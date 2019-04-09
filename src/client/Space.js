@@ -1,5 +1,5 @@
 import Spaceship from './Spaceship'
-import { getDistance } from './engine/tools'
+import { getDistance, areOverlapping } from './engine/tools'
 import {
   getGravitationalForce,
   getMostAttractive,
@@ -30,6 +30,26 @@ export default ({ width, height }) => ({
 
   addSpaceship(spaceship) {
     this.spaceships.push(spaceship)
+  },
+
+  handleMissiles() {
+    this.spaceships.forEach(spaceship => {
+      const missile = spaceship.missileLauncher.missile
+      if (missile) {
+        this.spaceships.forEach(otherSpaceship => {
+          if (spaceship === otherSpaceship) return
+          const minerals = otherSpaceship.mineralCarrier.minerals
+
+          for (let i = minerals.length - 1; i >= 0; i--) {
+            const mineral = minerals[i]
+            if (areOverlapping(missile.physics, mineral.physics)) {
+              otherSpaceship.mineralCarrier.remove(mineral)
+              missile.mineralCarrier.add(mineral)
+            }
+          }
+        })
+      }
+    })
   },
 
   handleMineralPickups() {
@@ -214,6 +234,7 @@ export default ({ width, height }) => ({
     this.planets.forEach(planet => planet.update())
     this.players.forEach(player => player.update())
     this.spaceships.forEach(spaceship => spaceship.update())
+    this.handleMissiles()
     this.handleMinerals()
     this.handleEntries()
     this.handleBuilds()

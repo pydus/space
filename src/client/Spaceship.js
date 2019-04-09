@@ -20,15 +20,22 @@ export default ({
     maxAngVel: 0.1
   })
 }) => {
+  const mineralCarrier = MineralCarrier({ x, y, rad, angle })
+
   const spaceship = {
     color,
     engine,
 
-    mineralCarrier: MineralCarrier({ x, y, rad, angle }),
+    mineralCarrier,
 
     loadCounter: 0,
     updatesBetweenLoads: 20,
-    missileLauncher: MissileLauncher({ pos: { x, y }, crosshairColor: color }),
+
+    missileLauncher: MissileLauncher({
+      pos: { x, y },
+      targetMineralCarrier: mineralCarrier,
+      crosshairColor: color
+    }),
 
     physics: SpaceshipPhysics({
       x,
@@ -52,23 +59,21 @@ export default ({
     },
 
     loadNext() {
-      const mineral = this.mineralCarrier.minerals.pop()
+      const i = this.mineralCarrier.minerals.length - 1
+      const mineral = this.mineralCarrier.minerals[i]
       if (mineral) {
-        this.missileLauncher.load(mineral)
-        return true
+        const didLoad = this.missileLauncher.load(mineral)
+        if (didLoad) {
+          this.mineralCarrier.remove(mineral)
+        }
       }
-      return false
     },
 
     updateLoader() {
       if (this.loading) {
         if (this.loadCounter <= 0) {
-          const didLoad = this.loadNext()
-          if (didLoad) {
-            this.loadCounter = this.updatesBetweenLoads
-          } else {
-            this.setLoading(false)
-          }
+          this.loadNext()
+          this.loadCounter = this.updatesBetweenLoads
         } else {
           this.loadCounter--
         }

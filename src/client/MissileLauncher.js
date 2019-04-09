@@ -4,11 +4,13 @@ import Missile from './Missile'
 export default ({
   pos,
   angle,
+  targetMineralCarrier,
   missileSpeed = 20,
   rangePerMineral = 100,
   radPerMineral = 10,
   crosshairColor = '#fff'
 }) => ({
+  targetMineralCarrier,
   missileSpeed,
   rangePerMineral,
   radPerMineral,
@@ -27,10 +29,16 @@ export default ({
   },
 
   load(mineral) {
-    this.loaded.push(mineral)
+    if (!this.missile) {
+      this.loaded.push(mineral)
+      return true
+    }
+    return false
   },
 
   fire() {
+    if (this.missile || this.loaded.length < 1) return false
+
     const { x, y } = this.physics.pos
     const { angle } = this.physics
     const range = this.getRange()
@@ -45,13 +53,35 @@ export default ({
     })
 
     this.missile = missile
-    this.loaded = []
+
+    return true
+  },
+
+  transferCaughtMinerals() {
+    if (this.targetMineralCarrier) {
+      this.missile.mineralCarrier.minerals.forEach(mineral => {
+        this.targetMineralCarrier.add(mineral)
+      })
+    }
+  },
+
+  returnLoadedMinerals() {
+    if (this.targetMineralCarrier) {
+      this.loaded.forEach(mineral => {
+        this.targetMineralCarrier.add(mineral)
+      })
+    }
   },
 
   updateMissile() {
     if (!this.missile) return
 
     if (this.missile.done) {
+      if (this.missile.mineralCarrier.minerals.length > 0) {
+        this.returnLoadedMinerals()
+        this.transferCaughtMinerals()
+      }
+      this.loaded = []
       this.missile = null
     } else {
       this.missile.update()
@@ -82,9 +112,10 @@ export default ({
   },
 
   render(view) {
-    this.renderCrosshair(view)
     if (this.missile) {
       this.missile.render(view)
+    } else {
+      this.renderCrosshair(view)
     }
   }
 })

@@ -1,4 +1,5 @@
 import Physics from './engine/Physics'
+import MineralCarrier from './MineralCarrier'
 
 export default ({
   x,
@@ -28,6 +29,8 @@ export default ({
 
   done: false,
 
+  mineralCarrier: MineralCarrier({ x, y, rad, angle }),
+
   destroy() {
     this.done = true
   },
@@ -38,15 +41,18 @@ export default ({
     } else {
       this.time--
       this.physics.update()
+      this.mineralCarrier.physics.setPos(this.physics.pos)
+      this.mineralCarrier.physics.setAngle(this.physics.angle)
+      this.mineralCarrier.update()
     }
   },
 
-  render({ setLine, drawCircle }) {
+  render(view) {
+    const { setLine, drawCircle } = view
     const { x, y } = this.physics.pos
     const rad = this.physics.rad
-    const destX = x + rad * Math.cos(this.angle)
-    const destY = y + rad * Math.sin(this.angle)
+    this.mineralCarrier.render(view)
     setLine(this.color, this.physics.width)
-    drawCircle(destX, destY, rad)
+    drawCircle(x, y, rad)
   }
 })

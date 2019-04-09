@@ -1,6 +1,15 @@
 import Physics from './engine/Physics'
 
-export default ({ x, y, angle, speed, range, rad, color = '#4e8', time = 60 }) => ({
+export default ({
+  x,
+  y,
+  angle,
+  speed,
+  range,
+  rad,
+  color = '#4e8',
+  time = 60
+}) => ({
   angle,
   speed,
   range,
@@ -8,10 +17,7 @@ export default ({ x, y, angle, speed, range, rad, color = '#4e8', time = 60 }) =
   time,
 
   physics: Physics({
-    pos: {
-      x,
-      y
-    },
+    pos: { x, y },
     angle,
     rad,
     vel: {
@@ -38,9 +44,9 @@ export default ({ x, y, angle, speed, range, rad, color = '#4e8', time = 60 }) =
   render({ setLine, drawCircle }) {
     const { x, y } = this.physics.pos
     const rad = this.physics.rad
-    setLine(this.color, this.physics.width)
     const destX = x + rad * Math.cos(this.angle)
     const destY = y + rad * Math.sin(this.angle)
+    setLine(this.color, this.physics.width)
     drawCircle(destX, destY, rad)
   }
 })

@@ -10,7 +10,7 @@ export default ({
   range,
   rad,
   color = '#4e8',
-  time = 60
+  time = Infinity
 }) => ({
   angle,
   speed,

@@ -1,6 +1,7 @@
 import { getDistance } from './engine/tools'
 import { PlayerPhysics } from './physics'
 import Drill from './Drill'
+import MineralCarrier from './MineralCarrier'
 
 export default ({
   drill = Drill({ origin: null }),
@@ -18,8 +19,6 @@ export default ({
   feelsGravity,
   originLineColor,
   shouldRenderOriginLine,
-  maxMinerals: 3,
-  minerals: [],
   surfaceThickness: 5,
   isEntering: false,
   isInside: false,
@@ -27,6 +26,8 @@ export default ({
   isUnderGround: false,
   hasRoomToBuildSpaceship: false,
   wantsToBuildSpaceship: false,
+
+  mineralCarrier: MineralCarrier({ x, y, rad, max: 3 }),
 
   physics: PlayerPhysics({ x, y, rad, mass }),
 
@@ -36,13 +37,6 @@ export default ({
 
   addPoints(points) {
     this.points += points
-  },
-
-  addMineral(mineral) {
-    if (this.minerals.length >= this.maxMinerals) return false
-    mineral.setReference(this)
-    this.minerals.push(mineral)
-    return true
   },
 
   setWantsToBuildSpaceship(wantsToBuildSpaceship) {
@@ -141,21 +135,13 @@ export default ({
     this.isEntering = false
   },
 
-  updateMineralPositions() {
-    this.minerals.forEach(mineral => {
-      mineral.physics.setPos({
-        x: this.physics.pos.x + mineral.offsetDistance * Math.cos(mineral.offsetAngle),
-        y: this.physics.pos.y + mineral.offsetDistance * Math.sin(mineral.offsetAngle)
-      })
-    })
-  },
-
   update() {
     this.checkIfOnSurface()
     this.checkIfWentAboveGround()
     this.drill.update()
     this.physics.update()
-    this.updateMineralPositions()
+    this.mineralCarrier.physics.setPos(this.physics.pos)
+    this.mineralCarrier.update()
   },
 
   renderOriginLine({ setLine, drawLine }) {
@@ -168,15 +154,11 @@ export default ({
     )
   },
 
-  renderMinerals(view) {
-    this.minerals.forEach(mineral => mineral.render(view))
-  },
-
   render(view) {
     const { setLine, drawCircle } = view
     const controlSystem = this.physics.controlSystem
 
-    this.renderMinerals(view)
+    this.mineralCarrier.render(view)
 
     setLine(this.color)
     drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)

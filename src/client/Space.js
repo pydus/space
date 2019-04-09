@@ -38,13 +38,13 @@ export default ({ width, height }) => ({
         const playerDistance = getDistance(player.physics, planet.physics)
         if (playerDistance > planet.physics.rad) return
 
-        for (let i = planet.minerals.length - 1; i >= 0; i--) {
-          const mineral = planet.minerals[i]
+        for (let i = planet.mineralCarrier.minerals.length - 1; i >= 0; i--) {
+          const mineral = planet.mineralCarrier.minerals[i]
           const mineralDistance = getDistance(player.physics, mineral.physics)
           if (mineralDistance <= player.physics.rad + mineral.pickupDistance) {
-            const pickedUp = player.addMineral(mineral)
+            const pickedUp = player.mineralCarrier.add(mineral)
             if (pickedUp) {
-              planet.minerals.splice(i, 1)
+              planet.mineralCarrier.minerals.splice(i, 1)
             }
           }
         }
@@ -66,8 +66,8 @@ export default ({ width, height }) => ({
         const playerDistance = getDistance(player.physics, planet.physics)
         if (playerDistance > planet.physics.rad) return
 
-        for (let i = planet.minerals.length - 1; i >= 0; i--) {
-          const mineral = planet.minerals[i]
+        for (let i = planet.mineralCarrier.minerals.length - 1; i >= 0; i--) {
+          const mineral = planet.mineralCarrier.minerals[i]
           const mineralDistance = getDistance(player.physics, mineral.physics)
           if (mineralDistance <= mineral.visibleDistance) {
             visibleMinerals.push(mineral)
@@ -90,8 +90,10 @@ export default ({ width, height }) => ({
         for (const spaceship of this.spaceships) {
           if (getDistance(player.physics, spaceship.physics) < spaceship.enterDistance) {
             if (!player.isInside && spaceship.enter(player)) {
-              player.minerals.forEach(mineral => spaceship.addMineral(mineral))
-              player.minerals = []
+              player.mineralCarrier.minerals.forEach(mineral =>
+                spaceship.mineralCarrier.add(mineral)
+              )
+              player.mineralCarrier.minerals = []
               player.enter()
               break
             } else if (player.isInside && spaceship.exit(player)) {
@@ -113,16 +115,19 @@ export default ({ width, height }) => ({
       player.hasRoomToBuildSpaceship =
         distanceToNearestSpaceship > this.spaceshipBuildRadius
 
+      const playerMinerals = player.mineralCarrier.minerals
+
       if (
         player.wantsToBuildSpaceship &&
         player.hasRoomToBuildSpaceship &&
-        player.minerals.length >= this.spaceshipBuildCost
+        playerMinerals.length >= this.spaceshipBuildCost
       ) {
         const { x, y } = player.physics.pos
         const spaceship = Spaceship({ x, y })
         this.addSpaceship(spaceship)
         player.setWantsToBuildSpaceship(false)
-        player.minerals = player.minerals.slice(this.spaceshipBuildCost)
+        const newPlayerMinerals = playerMinerals.slice(this.spaceshipBuildCost)
+        player.mineralCarrier.minerals = newPlayerMinerals
       }
     })
   },

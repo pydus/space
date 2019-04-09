@@ -3,6 +3,7 @@ import Drivable from './Drivable'
 import Engine from './Engine'
 import { SpaceshipPhysics } from './physics'
 import MissileLauncher from './MissileLauncher'
+import MineralCarrier from './MineralCarrier'
 
 export default ({
   x,
@@ -23,19 +24,11 @@ export default ({
     color,
     engine,
 
+    mineralCarrier: MineralCarrier({ x, y, rad, angle }),
+
     loadCounter: 0,
     updatesBetweenLoads: 20,
     missileLauncher: MissileLauncher({ crosshairColor: color }),
-    minerals: [],
-
-    addMineral(mineral) {
-      mineral.setReference(this)
-      this.minerals.push(mineral)
-    },
-
-    setController(controller) {
-      this.controller = controller
-    },
 
     physics: SpaceshipPhysics({
       x,
@@ -46,6 +39,10 @@ export default ({
       engine
     }),
 
+    setController(controller) {
+      this.controller = controller
+    },
+
     controlMovement(direction, isKeyDown) {
       this.physics.setMoving(direction, isKeyDown)
     },
@@ -55,7 +52,7 @@ export default ({
     },
 
     loadNext() {
-      const mineral = this.minerals.pop()
+      const mineral = this.mineralCarrier.minerals.pop()
       if (mineral) {
         this.missileLauncher.load(mineral)
         return true
@@ -94,17 +91,6 @@ export default ({
       }
     },
 
-    updateMineralPositions() {
-      this.minerals.forEach(mineral => {
-        const p = this.physics
-        const angle = p.angle + mineral.offsetAngle
-        mineral.physics.setPos({
-          x: p.pos.x + mineral.offsetDistance * Math.cos(angle),
-          y: p.pos.y + mineral.offsetDistance * Math.sin(angle)
-        })
-      })
-    },
-
     updateEnginePosition() {
       const p = this.physics
       const engineX = p.pos.x - p.rad * Math.cos(p.angle)
@@ -129,14 +115,16 @@ export default ({
       this.updateEnginePosition()
       this.handleEngine()
       this.engine.update()
-      this.updateMineralPositions()
+      this.mineralCarrier.physics.setPos(this.physics.pos)
+      this.mineralCarrier.physics.setAngle(this.physics.angle)
+      this.mineralCarrier.update()
     },
 
     render(view) {
       const { setLine, drawCircle } = view
       setLine(this.color)
       drawCircle(this.physics.pos.x, this.physics.pos.y, this.physics.rad)
-      this.minerals.forEach(mineral => mineral.render(view))
+      this.mineralCarrier.render(view)
       this.engine.render(view)
       this.missileLauncher.render(view)
     }

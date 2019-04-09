@@ -1,5 +1,6 @@
 import { PlanetPhysics } from './physics'
 import Mineral from './Mineral'
+import MineralCarrier from './MineralCarrier'
 import { getAngle } from './engine/tools'
 import { getRandomPosition } from './space-tools'
 
@@ -17,18 +18,16 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
     updatesBetweenMinerals: 50000 / (rad ** 0.5),
     updatesUntilMineral: 0,
     initialMinerals: 2,
-    maxMinerals: Math.ceil(physics.rad / 150),
-    minerals: [],
     visibleMinerals: [],
 
-    addMineral(mineral) {
-      this.minerals.push(mineral)
-    },
+    mineralCarrier: MineralCarrier({
+      max: Math.ceil(physics.rad / 150)
+    }),
 
     init() {
       for (let i = 0; i < this.initialMinerals; i++) {
         const randomMineral = this.createRandomMineral()
-        this.addMineral(randomMineral)
+        this.mineralCarrier.add(randomMineral)
       }
     },
 
@@ -48,14 +47,17 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
     },
 
     update() {
-      if (this.minerals.length < this.maxMinerals && this.updatesUntilMineral <= 0) {
+      if (
+        this.mineralCarrier.minerals.length < this.mineralCarrier.max &&
+        this.updatesUntilMineral <= 0
+      ) {
         if (this.counting) {
           const randomMineral = this.createRandomMineral()
-          this.addMineral(randomMineral)
+          this.mineralCarrier.add(randomMineral)
           this.counting = false
         }
 
-        if (this.minerals.length < this.maxMinerals) {
+        if (this.mineralCarrier.minerals.length < this.mineralCarrier.max) {
           this.startMineralCountdown()
         }
       } else {
@@ -64,7 +66,7 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
     },
 
     renderSurfaceGlow({ setLine, drawLine }) {
-      this.minerals.forEach(mineral => {
+      this.mineralCarrier.minerals.forEach(mineral => {
         const angle = getAngle(this.physics, mineral.physics)
         const x = this.physics.pos.x + this.physics.rad * Math.cos(angle)
         const y = this.physics.pos.y + this.physics.rad * Math.sin(angle)

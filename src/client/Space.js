@@ -1,4 +1,5 @@
 import Spaceship from './Spaceship'
+import Planet from './Planet'
 import { getDistance, areOverlapping } from './engine/tools'
 import {
   getGravitationalForce,
@@ -42,6 +43,59 @@ export default ({ width, height }) => ({
     if (i === -1) return false
     this.minerals.splice(i, 1)
     return true
+  },
+
+  generatePlanets(
+    minRad = this.width / 50,
+    maxRad = this.width / 10,
+    padding = this.width / 20,
+    n = Infinity,
+    maxAttempts = 100
+  ) {
+    for (let i = 0; i < n; i++) {
+      const rad = minRad + Math.floor((maxRad - minRad) * Math.random())
+
+      let x, y
+      let attempts = 0
+
+      while (true) {
+        if (attempts > maxAttempts) {
+          break
+        }
+
+        x = Math.floor(this.width * Math.random())
+        y = Math.floor(this.height * Math.random())
+
+        let canCreate = true
+
+        for (const planet of this.planets) {
+          const quasiPhysics = { pos: { x, y } }
+          const distance = getDistance(planet.physics, quasiPhysics)
+          if (
+            distance <= planet.physics.rad + rad + padding
+            || x < rad + padding
+            || x > this.width - rad - padding
+            || y < rad + padding
+            || y > this.height - rad - padding
+          ) {
+            canCreate = false
+            break
+          }
+        }
+
+        if (canCreate) {
+          const planet = Planet({ x, y, rad })
+          this.addPlanet(planet)
+          break
+        }
+
+        attempts++
+      }
+
+      if (attempts > maxAttempts) {
+        break
+      }
+    }
   },
 
   handleMissiles() {

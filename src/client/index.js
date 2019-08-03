@@ -1,6 +1,5 @@
 import SpaceGame from './SpaceGame'
 import Space from './Space'
-import Planet from './Planet'
 import Player from './Player'
 import ControllablePlayer from './ControllablePlayer'
 import CollisionHandler from './CollisionHandler'
@@ -13,8 +12,6 @@ function run() {
   const space = Space({ width: 25000, height: 25000 })
   const collisionHandler = CollisionHandler({ world: space })
 
-  const planet = Planet({ x: 10000, y: 10000, rad: 2000 })
-  const planet2 = Planet({ x: 6000, y: 1500, rad: 600 })
   const player = ControllablePlayer({ x: 10000, y: 7900 })
 
   const spaceship = Spaceship({ x: 3500, y: 1600 })
@@ -35,8 +32,7 @@ function run() {
   spaceship.addPassenger(pla3)
   spaceship.addPassenger(pla4)
 
-  space.addPlanet(planet)
-  space.addPlanet(planet2)
+  space.generatePlanets(250, 2000)
 
   space.addPlayer(player)
   space.addPlayer(pla)

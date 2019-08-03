@@ -7,16 +7,17 @@ import CollisionHandler from './CollisionHandler'
 import Camera from './engine/Camera'
 import CameraController from './CameraController'
 import Spaceship from './Spaceship'
+import Mineral from './Mineral'
 
 function run() {
-  const space = Space({ width: 10000, height: 10000 })
+  const space = Space({ width: 25000, height: 25000 })
   const collisionHandler = CollisionHandler({ world: space })
 
-  const planet = Planet({ x: 1350, y: 4200, rad: 1500 })
-  const planet2 = Planet({ x: 4000, y: 1500, rad: 400 })
-  const player = ControllablePlayer({ x: 3000, y: 2000 })
+  const planet = Planet({ x: 10000, y: 10000, rad: 2000 })
+  const planet2 = Planet({ x: 6000, y: 1500, rad: 600 })
+  const player = ControllablePlayer({ x: 10000, y: 7900 })
 
-  const spaceship = Spaceship({ x: 3000, y: 2000 })
+  const spaceship = Spaceship({ x: 3500, y: 1600 })
   const spaceship2 = Spaceship({ x: 3100, y: 2000 })
 
   const pla = Player({ x: 1600, y: 1100, rad: 20 })
@@ -45,6 +46,9 @@ function run() {
 
   space.addSpaceship(spaceship)
   space.addSpaceship(spaceship2)
+
+  for (let i = 0; i < 300; i++) spaceship.mineralCarrier.add(Mineral({}))
+  for (let i = 0; i < 20; i++) spaceship2.mineralCarrier.add(Mineral({}))
 
   game.addUpdatable(collisionHandler)
   game.addUpdatable(cameraController)

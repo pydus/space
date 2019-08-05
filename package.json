@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --open"
+    "dev": "webpack-dev-server --open",
+    "start": "node ./src/server/main.js"
   },
   "author": "",
   "devDependencies": {
@@ -15,5 +16,8 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }

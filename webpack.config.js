@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 
 module.exports = {
-  entry: './src/space-game/index.js',
+  entry: './src/client/index.js',
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'

@@ -1,12 +1,12 @@
-import SpaceGame from './SpaceGame'
-import Space from './Space'
-import Player from './Player'
-import ControllablePlayer from './ControllablePlayer'
-import CollisionHandler from './CollisionHandler'
+import SpaceGameClient from '../space-game/SpaceGameClient'
+import Space from '../space-game/Space'
+import Player from '../space-game/Player'
+import ControllablePlayer from '../space-game/ControllablePlayer'
+import CollisionHandler from '../space-game/CollisionHandler'
 import Camera from '../engine/Camera'
-import CameraController from './CameraController'
-import Spaceship from './Spaceship'
-import Mineral from './Mineral'
+import CameraController from '../space-game/CameraController'
+import Spaceship from '../space-game/Spaceship'
+import Mineral from '../space-game/Mineral'
 
 function run() {
   const space = Space({ width: 25000, height: 25000 })
@@ -25,7 +25,7 @@ function run() {
   const camera = Camera({ height: 1000 })
   const cameraController = CameraController({ p: player.physics, camera })
 
-  const game = SpaceGame({ camera })
+  const game = SpaceGameClient({ camera })
 
   spaceship.addPassenger(pla)
   spaceship.addPassenger(pla2)

@@ -4,10 +4,10 @@ import View from '../engine/View'
 
 const canvas = document.getElementById('canvas')
 
-function SpaceGame({ camera }) {
+function SpaceGameClient({ camera }) {
   const loop = Loop({ updatesPerSecond: 60, renders: true })
   const view = View({ canvas, camera, defaultLineWidth: 1.5 })
   return Game({ loop, view })
 }
 
-export default SpaceGame
+export default SpaceGameClient

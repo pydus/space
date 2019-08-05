@@ -18,7 +18,7 @@ export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {
     updatesBetweenMinerals: 50000 / (rad ** 0.5),
     mineralGenerationThreshold: Math.ceil(physics.rad / 150),
     updatesUntilMineral: 0,
-    initialMinerals: 2,
+    initialMinerals: 6,
     visibleMinerals: [],
 
     mineralCarrier: MineralCarrier({}),

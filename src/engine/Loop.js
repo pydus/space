@@ -1,5 +1,6 @@
-export default ({ updatesPerSecond }) => ({
+export default ({ updatesPerSecond, renders = true }) => ({
   updatesPerSecond,
+  renders,
   msBetweenUpdates: 1000 / updatesPerSecond,
   isRunning: false,
   children: [],
@@ -20,7 +21,9 @@ export default ({ updatesPerSecond }) => ({
 
   loop() {
     this.tick()
-    this.requestFrame()
+    if (this.renders) {
+      this.requestFrame()
+    }
   },
 
   queueNextTick() {

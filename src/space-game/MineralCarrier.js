@@ -1,4 +1,4 @@
-import Physics from './engine/Physics'
+import Physics from '../engine/Physics'
 
 export default ({ x, y, rad, angle = 0, max = Infinity }) => ({
   physics: Physics({

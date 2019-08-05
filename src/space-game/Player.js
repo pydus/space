@@ -1,4 +1,4 @@
-import { getDistance } from './engine/tools'
+import { getDistance } from '../engine/tools'
 import { PlayerPhysics } from './physics'
 import Drill from './Drill'
 import MineralCarrier from './MineralCarrier'

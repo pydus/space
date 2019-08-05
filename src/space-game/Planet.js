@@ -1,7 +1,7 @@
 import { PlanetPhysics } from './physics'
 import Mineral from './Mineral'
 import MineralCarrier from './MineralCarrier'
-import { getAngle } from './engine/tools'
+import { getAngle } from '../engine/tools'
 import { getRandomPosition } from './space-tools'
 
 export default ({ x, y, rad, mass, color = '#265b8e', fillColor = '#000' }) => {

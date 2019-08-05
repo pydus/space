@@ -1,4 +1,4 @@
-import { areOverlapping } from './engine/tools'
+import { areOverlapping } from '../engine/tools'
 
 // TODO: only accept physics objects of world, not entire world
 export default ({ world }) => ({

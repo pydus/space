@@ -1,6 +1,6 @@
-import Physics from './engine/Physics'
-import OriginControlSystem from './engine/OriginControlSystem'
-import RotationalControlSystem from './engine/RotationalControlSystem'
+import Physics from '../engine/Physics'
+import OriginControlSystem from '../engine/OriginControlSystem'
+import RotationalControlSystem from '../engine/RotationalControlSystem'
 
 export function PlayerPhysics({ x, y, rad, mass }) {
   return Physics({

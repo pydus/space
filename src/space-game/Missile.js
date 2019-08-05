@@ -1,6 +1,6 @@
-import Physics from './engine/Physics'
+import Physics from '../engine/Physics'
 import MineralCarrier from './MineralCarrier'
-import { getDistance } from './engine/tools'
+import { getDistance } from '../engine/tools'
 
 export default ({
   x,

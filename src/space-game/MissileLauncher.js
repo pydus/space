@@ -1,4 +1,4 @@
-import Physics from './engine/Physics'
+import Physics from '../engine/Physics'
 import Missile from './Missile'
 import { getRandomPosition } from './space-tools'
 

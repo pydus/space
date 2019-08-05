@@ -1,5 +1,5 @@
 import { DrillPhysics } from './physics'
-import Controller from './engine/Controller'
+import Controller from '../engine/Controller'
 import Drivable from './Drivable'
 
 export default ({ acc, maxVel, origin }) => {

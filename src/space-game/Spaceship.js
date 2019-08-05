@@ -1,4 +1,4 @@
-import Controller from './engine/Controller'
+import Controller from '../engine/Controller'
 import Drivable from './Drivable'
 import Engine from './Engine'
 import { SpaceshipPhysics } from './physics'

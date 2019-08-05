@@ -1,5 +1,5 @@
 import Player from './Player'
-import Controller from './engine/Controller'
+import Controller from '../engine/Controller'
 
 export default args => {
   const { x, y, rad, mass, ...rest } = args

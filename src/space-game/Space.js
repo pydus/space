@@ -1,6 +1,6 @@
 import Spaceship from './Spaceship'
 import Planet from './Planet'
-import { getDistance, areOverlapping } from './engine/tools'
+import { getDistance, areOverlapping } from '../engine/tools'
 import {
   getGravitationalForce,
   getMostAttractive,

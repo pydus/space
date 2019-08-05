@@ -1,4 +1,4 @@
-import { getDistance } from './engine/tools'
+import { getDistance } from '../engine/tools'
 
 export const G = 20
 

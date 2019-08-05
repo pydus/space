@@ -1,6 +1,6 @@
 import { getRandomPosition } from './space-tools'
-import { getDistance, getAngle } from './engine/tools'
-import Physics from './engine/Physics'
+import { getDistance, getAngle } from '../engine/tools'
+import Physics from '../engine/Physics'
 
 export default ({ x, y, points = 5, rad = 5, color = '#eaaa4f' }) => ({
   points,

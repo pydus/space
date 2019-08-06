@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --open",
+    "build": "webpack",
     "start": "node ./src/main.js"
   },
   "author": "",

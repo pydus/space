@@ -4,6 +4,8 @@ const app = express()
 const publicPath = '../public'
 const port = 3000
 
+require('../build/server-bundle.js')
+
 app.use(express.static(path.join(__dirname, publicPath)))
 
 app.get('/', (req, res) => {

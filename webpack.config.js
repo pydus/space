@@ -1,20 +1,4 @@
-const webpack = require('webpack')
-const path = require('path')
+const clientConfig = require('./webpack-client.config.js')
+const serverConfig = require('./webpack-server.config.js')
 
-module.exports = {
-  entry: './src/client/index.js',
-  output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'bundle.js'
-  },
-  module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
-    }
-  ]},
-  devServer: {
-    contentBase: './public'
-  }
-}
+module.exports = [clientConfig, serverConfig]

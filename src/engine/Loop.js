@@ -4,7 +4,6 @@ export default ({ updatesPerSecond, renders = true }) => ({
   msBetweenUpdates: 1000 / updatesPerSecond,
   isRunning: false,
   children: [],
-  canvas: null,
 
   start() {
     this.isRunning = true

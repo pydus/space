@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --open",
     "build": "webpack",
@@ -13,7 +13,10 @@
   "author": "",
   "devDependencies": {
     "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.12.1",
+    "babel-jest": "^26.6.3",
     "babel-loader": "^8.0.5",
+    "jest": "^26.6.3",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
